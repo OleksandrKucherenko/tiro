@@ -7,12 +7,13 @@ compileJava.options.encoding = 'UTF-8'
 
 dependencies {
   compile 'org.slf4j:slf4j-api:+'
+  compile 'javax:javaee-api:+'
 
   testCompile 'junit:junit:+'
 }
 
 test {
-    testLogging {
-        events "passed", "skipped", "failed", "standardOut", "standardError"
-    }
+  testLogging {
+    events "passed", "skipped", "failed", "standardOut", "standardError"
+  }
 }
