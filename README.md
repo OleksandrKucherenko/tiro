@@ -30,5 +30,7 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR
 ## References
 
 https://www.nginx.com/resources/admin-guide/compression-and-decompression/
+
 https://nginx.org/en/docs/http/configuring_https_servers.html
+
 https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-with-ssl-as-a-reverse-proxy-for-jenkins
