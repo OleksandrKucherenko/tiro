@@ -1,56 +1,57 @@
-
 /* CONNECT PLUGINS */
 buildscript {
-    repositories {
-        jcenter()
-    }
-    /* PLUGINS DEPENDENCIES. */
-    dependencies {
-        /* WEB SERVER INTEGRATION */
-        classpath 'org.akhikhl.gretty:gretty:+'
-        /* DEPENDENCIES UPDATES REPORTS */
-        classpath 'com.github.ben-manes:gradle-versions-plugin:+'
-    }
+  repositories {
+    jcenter()
+  }
+  /* PLUGINS DEPENDENCIES. */
+  dependencies {
+    /* WEB SERVER INTEGRATION */
+    classpath 'org.akhikhl.gretty:gretty:+'
+    /* DEPENDENCIES UPDATES REPORTS */
+    classpath 'com.github.ben-manes:gradle-versions-plugin:+'
+  }
 }
 
 apply plugin: 'org.akhikhl.gretty'
 apply plugin: 'com.github.ben-manes.versions'
 
 /* Get GIT revision unique number. */
-def gitRevision(){
+
+def gitRevision() {
   return "git rev-list --count HEAD".execute().text.trim();
 }
 
 /* Get GIT Branch name. */
-def gitBranch(){
+
+def gitBranch() {
   return "git rev-parse --abbrev-ref HEAD".execute().text.trim();
 }
 
 /* PUBLISH GLOBAL VARIABLES FOR ALL SUB-PROJECTS */
 allprojects {
-    ext {
-      GIT_REVISION = "${gitRevision()}"
-      GIT_BRANCH = "${gitBranch()}"
+  ext {
+    GIT_REVISION = "${gitRevision()}"
+    GIT_BRANCH = "${gitBranch()}"
 
-      APP_MAJOR = '1.0'
-      APP_MINOR = '1'
-      APP_VERSION = "$APP_MAJOR.$APP_MINOR.$GIT_REVISION"
-    }
+    APP_MAJOR = '1.0'
+    APP_MINOR = '1'
+    APP_VERSION = "$APP_MAJOR.$APP_MINOR.$GIT_REVISION"
+  }
 
-    repositories {
-        mavenLocal()
-        jcenter()
-        mavenCentral()
-    }
+  repositories {
+    mavenLocal()
+    jcenter()
+    mavenCentral()
+  }
 }
 
 /* CREATE A FARM FOR EXECUTING MULTIPLE WAR FILES */
 farms {
-    farm 'Server', {
-        port = 9191
-        webapp project(':war-time')
-        webapp project(':war-tasks')
-    }
+  farm 'Server', {
+    port = 9191
+    webapp project(':war-time')
+    webapp project(':war-tasks')
+  }
 }
 
 /**

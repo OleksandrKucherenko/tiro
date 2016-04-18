@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Examples:
+	https://gist.github.com/mortezaadi/8619433
+	https://docs.oracle.com/cd/E26576_01/doc.312/e24930/jpa.htm#GSDVG00136
+	
+    Overview:
+	http://tomee.apache.org/examples-trunk/injection-of-entitymanager/README.html
+-->
+<persistence
+        xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+        version="1.0">
+
+    <persistence-unit name="default" transaction-type="JTA">
+        <jta-data-source>jdbc/tiro</jta-data-source>
+    </persistence-unit>
+
+</persistence>
