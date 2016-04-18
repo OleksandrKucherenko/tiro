@@ -1,0 +1,12 @@
+// JAR libraries
+include ':lib-core'
+
+// WAR packages
+include ':war-time'
+include ':war-tasks'
+
+// Application
+include ':ear-app'
+
+// Server
+//include ':srv-farm'

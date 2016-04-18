@@ -1,0 +1,39 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.akhikhl.gretty:gretty:+'
+    }
+}
+
+apply plugin: 'war'
+apply plugin: 'org.akhikhl.gretty'
+
+// we will use lambda
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
+
+war {
+    jar.enabled = false
+}
+
+dependencies {
+  compile project(":lib-core")
+  
+  // compile 'joda-time:joda-time:+'
+
+  // providedCompile 'joda-time:joda-time:+'
+}
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+}
+
+gretty {
+    contextPath = '/time'
+}

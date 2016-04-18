@@ -1,0 +1,16 @@
+.DS_Store
+
+*.iml
+*.class
+
+db.properties.local
+
+*.jar
+*.war
+*.ear
+
+.idea/
+.gradle/
+build/
+target/
+out/
