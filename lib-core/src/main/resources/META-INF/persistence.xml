@@ -9,6 +9,9 @@
             http://www.vogella.com/tutorials/JavaPersistenceAPI/article.html
             https://gist.github.com/mortezaadi/8619433
             https://docs.oracle.com/cd/E26576_01/doc.312/e24930/jpa.htm#GSDVG00136
+            https://docs.jboss.org/hibernate/entitymanager/3.6/reference/en/html/configuration.html
+            http://www.objectdb.com/java/jpa/entity/persistence-unit
+            https://en.wikibooks.org/wiki/Java_Persistence/Runtime
 
         Overview:
             http://tomee.apache.org/examples-trunk/injection-of-entitymanager/README.html
@@ -17,5 +20,4 @@
     <persistence-unit name="default" transaction-type="JTA">
         <jta-data-source>jdbc/tiro</jta-data-source>
     </persistence-unit>
-
 </persistence>
