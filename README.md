@@ -25,7 +25,18 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR
 - Web Application Server should stay behind the NGINX;
 - Web Application Server implements only HTTP protocol, NGINX takes HTTPS side;
 - NGINX should take responsibilities of: compression, security, caching; 
-- Web Application Server implements JSON, ByteBuffer etc. - additional data transfare types;
+- Web Application Server implements JSON, ByteBuffer etc. - additional data transfer types;
+
+### Persistence
+
+- JavaX Persistence API used for working with data entities and become agnostic to DB implementation
+- Will be used MySQL instance for storing the data (most common case in our life)
+- Tutorials:
+    - http://www.vogella.com/tutorials/JavaPersistenceAPI/article.html
+    -
+- Testing/Validation:
+    - ```./gradlew checkPersistenceXml```
+
 
 ## References
 
