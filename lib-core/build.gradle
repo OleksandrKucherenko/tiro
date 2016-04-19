@@ -17,3 +17,40 @@ test {
     events "passed", "skipped", "failed", "standardOut", "standardError"
   }
 }
+
+import javax.xml.XMLConstants
+import javax.xml.transform.stream.StreamSource
+import javax.xml.validation.SchemaFactory
+
+def fileToUrl(def filePath) {
+  return new File(filePath).toURI().toURL();
+}
+
+def validateXml(def xmlUrl, def xsdUrl) {
+//  xsdUrl = 'http://abbot.sourceforge.net/doc/abbot.xsd'
+//  xmlUrl = 'http://abbot.sourceforge.net/src/example/SimpleApplet.xml'
+
+  new URL("${xsdUrl}").withInputStream { xsd ->
+    new URL("${xmlUrl}").withInputStream { xml ->
+      SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI)
+          .newSchema(new StreamSource(xsd))
+          .newValidator()
+          .validate(new StreamSource(xml))
+    }
+  }
+}
+
+task checkPersistenceXml {
+  group 'verification'
+  description 'Check persistence.xml file against the validation schema.'
+
+  def pathXml = "${project.projectDir}/src/main/resources/META-INF/persistence.xml"
+  def pathXsd = "${rootProject.projectDir}/gradle/schemas/persistence_2_0.xsd"
+
+  def xmlUrl = fileToUrl(pathXml)
+  def xsdUrl = fileToUrl(pathXsd)
+
+  validateXml(xmlUrl, xsdUrl)
+}
+
+check.dependsOn checkPersistenceXml
