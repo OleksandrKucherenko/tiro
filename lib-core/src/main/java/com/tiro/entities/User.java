@@ -6,6 +6,7 @@ import com.tiro.schema.Tables;
 import com.tiro.schema.UserColumns;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,13 +15,11 @@ import static javax.persistence.CascadeType.ALL;
 /** User entity. */
 @Entity
 @Table(name = Tables.USERS)
-public class User implements UserColumns {
+public class User extends BaseEntity implements UserColumns {
+
   /** Unique identifier, */
   @Id @GeneratedValue
   @Column(name = ID) private long _id;
-
-  /** Timestamp, when instance was created. */
-  @Column(name = INSERT_TIME) private long timestampCreation;
 
   /** User nick name. */
   @Column(name = NICKNAME) private String nickName;
@@ -41,4 +40,23 @@ public class User implements UserColumns {
       joinColumns = {@JoinColumn(name = UserColumns.ID)},
       inverseJoinColumns = {@JoinColumn(name = GroupColumns.ID)})
   private Set<Group> groups = new HashSet<>();
+
+  public User(@NotNull final String email, @NotNull final String name) {
+    super();
+
+    this.nickName = name;
+    this.email = email;
+  }
+
+  @NotNull
+  public User addRole(@NotNull final Role role) {
+    this.roles.add(role);
+    return this;
+  }
+
+  @NotNull
+  public User addToGroup(@NotNull final Group group) {
+    this.groups.add(group);
+    return this;
+  }
 }

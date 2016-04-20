@@ -16,13 +16,11 @@ apply plugin: 'org.akhikhl.gretty'
 apply plugin: 'com.github.ben-manes.versions'
 
 /* Get GIT revision unique number. */
-
 def gitRevision() {
   return "git rev-list --count HEAD".execute().text.trim();
 }
 
 /* Get GIT Branch name. */
-
 def gitBranch() {
   return "git rev-parse --abbrev-ref HEAD".execute().text.trim();
 }
@@ -45,6 +43,16 @@ allprojects {
   }
 }
 
+/* Cleanup root project too. */
+task clean(type: Delete) {
+  delete rootProject.buildDir
+}
+
+/* DEFINE SERVER CONFIGURATION FILES */
+gretty {
+//  serverConfigFile "${rootProject.projectDir}/gradle/configuration"
+}
+
 /* CREATE A FARM FOR EXECUTING MULTIPLE WAR FILES */
 farms {
   farm 'Server', {
@@ -59,7 +67,6 @@ farms {
  * Run Server on Local Machine:
  *  > ./gradlew farmRunServer
  *
- *
  * Compile EAR (Enterprise ARchive):
  *  > ./gradlew ear
  *
@@ -67,5 +74,11 @@ farms {
  *  > zipinfo -1 ear-app/build/libs/ear-app.ear
  *  > zipinfo -1 war-tasks/build/libs/war-tasks.war
  *  > zipinfo -1 war-time/build/libs/war-time.war
+ *
+ * Debug Server:
+ *  > ./gradlew farmRunDebugServer
+ *
+ * Deployment:
+ *  > ./gradlew buildProduct
  *
  * */
