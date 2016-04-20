@@ -5,11 +5,16 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
 
+repositories {
+  maven { url "http://m2.objectdb.com" }
+}
+
 dependencies {
   compile 'org.slf4j:slf4j-api:+'
   compile 'javax:javaee-api:+'
 
   testCompile 'junit:junit:+'
+  testCompile 'com.objectdb:objectdb:+'
 }
 
 /* [ UNIT TESTING ] ================================================================================================= */
