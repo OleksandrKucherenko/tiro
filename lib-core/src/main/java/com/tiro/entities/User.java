@@ -59,4 +59,15 @@ public class User extends BaseEntity implements UserColumns {
     this.groups.add(group);
     return this;
   }
+
+  @Override
+  public String toString() {
+    return "User{" +
+        " _id=" + _id +
+        ", nickName='" + nickName + '\'' +
+        ", email='" + email + '\'' +
+        ", roles=" + roles.size() +
+        ", groups=" + groups.size() +
+        super.toString() + "}";
+  }
 }

@@ -54,4 +54,14 @@ public class Group extends BaseEntity implements GroupColumns {
     this.users.add(user);
     return this;
   }
+
+  @Override
+  public String toString() {
+    return "Group{" +
+        " _id=" + _id +
+        ", name='" + name + '\'' +
+        ", roles=" + roles.size() +
+        ", users=" + users.size() +
+        super.toString() + "}";
+  }
 }

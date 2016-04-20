@@ -10,13 +10,18 @@ public abstract class BaseEntity implements BaseColumns {
   @Version private long version;
 
   /** Timestamp, when instance was created. */
-  @Column(name = C_TIME) protected long timestampCreation;
+  @Column(name = C_TIME) protected long timestamp;
 
   protected BaseEntity() {
-    this.timestampCreation = System.nanoTime();
+    this.timestamp = System.nanoTime();
   }
 
   public long getVersion() {
     return this.version;
+  }
+
+  @Override
+  public String toString() {
+    return ", version=" + version + ", timestamp=" + timestamp;
   }
 }
