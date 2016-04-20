@@ -22,4 +22,12 @@ public class Role extends BaseEntity implements RoleColumns {
 
     this.name = name;
   }
+
+  @Override
+  public String toString() {
+    return "Role{" +
+        " _id=" + _id +
+        ", name='" + name + '\'' +
+        super.toString() + "}";
+  }
 }

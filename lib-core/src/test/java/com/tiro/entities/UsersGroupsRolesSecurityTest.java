@@ -9,6 +9,7 @@ import org.junit.runners.JUnit4;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -68,8 +69,19 @@ public class UsersGroupsRolesSecurityTest {
    */
   @Test
   public void testCreateSchema() throws Exception {
+    dump(Role.class);
+    dump(User.class);
+    dump(Group.class);
 
+    dump(GroupsToRoles.class);
+    dump(GroupsToUsers.class);
+    dump(UsersToRoles.class);
+  }
 
+  private void dump(@NotNull final Class<?> klass) {
+    final TypedQuery<?> query = em.createQuery("SELECT o FROM " + klass.getName() + " o", klass);
+
+    query.getResultList().forEach(r -> System.out.print(r.toString() + "\n"));
   }
 
   @Test
