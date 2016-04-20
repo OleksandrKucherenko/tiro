@@ -4,18 +4,22 @@ import com.tiro.schema.RoleColumns;
 import com.tiro.schema.Tables;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /** Security Role. */
 @Entity
 @Table(name = Tables.ROLES)
-public class Role implements RoleColumns {
+public class Role extends BaseEntity implements RoleColumns {
   /** Unique identifier, */
   @Id @GeneratedValue
   @Column(name = ID) private long _id;
 
-  /** Timestamp, when instance was created. */
-  @Column(name = INSERT_TIME) private long timestampCreation;
-
   /** User friendly name of the Role. */
   @Column(name = NAME) private String name;
+
+  public Role(@NotNull final String name) {
+    super();
+
+    this.name = name;
+  }
 }
