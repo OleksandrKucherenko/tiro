@@ -2,7 +2,8 @@
 <persistence
         xmlns="http://java.sun.com/xml/ns/persistence"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+            http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
         version="2.0">
     <!--
         Examples:
@@ -17,7 +18,9 @@
             http://tomee.apache.org/examples-trunk/injection-of-entitymanager/README.html
     -->
 
+    <!-- Production persistence unit. -->
     <persistence-unit name="default" transaction-type="JTA">
         <jta-data-source>jdbc/tiro</jta-data-source>
     </persistence-unit>
+
 </persistence>
