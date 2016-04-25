@@ -9,12 +9,25 @@ repositories {
   maven { url "http://m2.objectdb.com" }
 }
 
+configurations {
+  /* Exclude 'nop' implementation from dependencies. We will use logback. */
+  all*.exclude group: 'org.slf4j', module: 'slf4j-nop'
+}
+
 dependencies {
   compile 'org.slf4j:slf4j-api:+'
+//  compile 'org.slf4j:slf4j-nop:+'
+  compile 'ch.qos.logback:logback-classic:+'
+
   compile 'javax:javaee-api:+'
+
 
   testCompile 'junit:junit:+'
   testCompile 'com.objectdb:objectdb:+'
+  testCompile 'org.hamcrest:hamcrest-integration:+',
+      'org.hamcrest:hamcrest-core:+',
+      'org.hamcrest:hamcrest-library:+'
+  testCompile 'org.mockito:mockito-core:+'
 }
 
 /* [ UNIT TESTING ] ================================================================================================= */
@@ -28,14 +41,13 @@ test {
 
 /* [ VALIDATIONS ] ================================================================================================== */
 
+/** Convert file system path to URL. */
 def fileToUrl(def filePath) {
   return new File(filePath).toURI().toURL();
 }
 
+/** Validate XML with specific XSD scheme. */
 def validateXml(def xmlUrl, def xsdUrl) {
-//  xsdUrl = 'http://abbot.sourceforge.net/doc/abbot.xsd'
-//  xmlUrl = 'http://abbot.sourceforge.net/src/example/SimpleApplet.xml'
-
   new URL("${xsdUrl}").withInputStream { xsd ->
     new URL("${xmlUrl}").withInputStream { xml ->
       javax.xml.validation.SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI)

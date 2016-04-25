@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
-import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.GenerationType.IDENTITY;
 
 /** User entity. */
 @Entity
@@ -18,8 +18,8 @@ import static javax.persistence.CascadeType.ALL;
 public class User extends BaseEntity implements UserColumns {
 
   /** Unique identifier, */
-  @Id @GeneratedValue
-  @Column(name = ID) private long _id;
+  @Id @GeneratedValue(strategy = IDENTITY)
+  @Column(name = ID) public long _id;
 
   /** User nick name. */
   @Column(name = NICKNAME) private String nickName;
@@ -28,14 +28,14 @@ public class User extends BaseEntity implements UserColumns {
   @Column(name = EMAIL) private String email;
 
   /** Get the list of roles associated directly with a user. */
-  @ManyToMany(cascade = {ALL})
+  @ManyToMany(cascade = {CascadeType.ALL})
   @JoinTable(name = Tables.USERS_TO_ROLES,
       joinColumns = {@JoinColumn(name = UserColumns.ID)},
       inverseJoinColumns = {@JoinColumn(name = RoleColumns.ID)})
   private Set<Role> roles = new HashSet<>();
 
   /** Get the list of groups where user included. */
-  @ManyToMany
+  @ManyToMany(cascade = {CascadeType.ALL})
   @JoinTable(name = Tables.GROUPS_TO_USERS,
       joinColumns = {@JoinColumn(name = UserColumns.ID)},
       inverseJoinColumns = {@JoinColumn(name = GroupColumns.ID)})
@@ -51,18 +51,28 @@ public class User extends BaseEntity implements UserColumns {
   @NotNull
   public User addRole(@NotNull final Role role) {
     this.roles.add(role);
+
     return this;
   }
 
   @NotNull
-  public User addToGroup(@NotNull final Group group) {
+  public User addGroup(@NotNull final Group group) {
     this.groups.add(group);
+
     return this;
+  }
+
+  public Set<Role> getRoles() {
+    return this.roles;
+  }
+
+  public Set<Group> getGroups() {
+    return this.groups;
   }
 
   @Override
   public String toString() {
-    return "User{" +
+    return "User {" +
         " _id=" + _id +
         ", nickName='" + nickName + '\'' +
         ", email='" + email + '\'' +

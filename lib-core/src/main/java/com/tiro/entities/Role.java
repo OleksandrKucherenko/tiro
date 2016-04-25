@@ -6,13 +6,15 @@ import com.tiro.schema.Tables;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 /** Security Role. */
 @Entity
 @Table(name = Tables.ROLES)
 public class Role extends BaseEntity implements RoleColumns {
   /** Unique identifier, */
-  @Id @GeneratedValue
-  @Column(name = ID) private long _id;
+  @Id @GeneratedValue(strategy = IDENTITY)
+  @Column(name = ID) public long _id;
 
   /** User friendly name of the Role. */
   @Column(name = NAME) private String name;
@@ -25,7 +27,7 @@ public class Role extends BaseEntity implements RoleColumns {
 
   @Override
   public String toString() {
-    return "Role{" +
+    return "Role {" +
         " _id=" + _id +
         ", name='" + name + '\'' +
         super.toString() + "}";
