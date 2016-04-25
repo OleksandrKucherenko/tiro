@@ -71,3 +71,4 @@ task checkPersistenceXml {
 
 /* Check task should include XML validation as a dependency. */
 check.dependsOn checkPersistenceXml
+check.dependsOn checkPersistenceXml
