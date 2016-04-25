@@ -18,12 +18,17 @@ dependencies {
   compile 'org.slf4j:slf4j-api:+'
 //  compile 'org.slf4j:slf4j-nop:+'
   compile 'ch.qos.logback:logback-classic:+'
-
   compile 'javax:javaee-api:+'
 
+  /* SQLite */
+  testCompile 'org.xerial:sqlite-jdbc:+'
+  /* Hibernate */
+  testCompile 'org.hibernate:hibernate-core:+',
+      'org.hibernate:hibernate-entitymanager:+'
+  /* SQL Dialect */
+  testCompile 'net.kemitix:sqlite-dialect:+'
 
   testCompile 'junit:junit:+'
-  testCompile 'com.objectdb:objectdb:+'
   testCompile 'org.hamcrest:hamcrest-integration:+',
       'org.hamcrest:hamcrest-core:+',
       'org.hamcrest:hamcrest-library:+'

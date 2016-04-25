@@ -37,11 +37,7 @@ public class UsersGroupsRolesSecurityTest {
 
   @Before
   public void setUp() throws Exception {
-    // register all entities
-    com.objectdb.Enhancer.enhance(ALL_MODEL_PACKAGES);
-
-    final long timestamp = System.nanoTime();
-    mFactory = Persistence.createEntityManagerFactory("objectdb:build/tmp/testing_" + timestamp + ".temp;drop");
+    mFactory = Persistence.createEntityManagerFactory("sqlite");
     mEm = mFactory.createEntityManager();
 
     // create minimalistic set of entities in tables for good testing
