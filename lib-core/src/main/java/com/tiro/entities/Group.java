@@ -66,4 +66,12 @@ public class Group extends BaseEntity implements GroupColumns {
         ", users=" + users.size() +
         super.toString() + "}";
   }
+
+  public Set<User> getUsers() {
+    return this.users;
+  }
+
+  public Set<Role> getRoles() {
+    return this.roles;
+  }
 }

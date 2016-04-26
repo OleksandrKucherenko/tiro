@@ -18,6 +18,14 @@ public class UsersToRoles implements DbEntity {
 
   @Id @Column(name = RoleColumns.ID) private long roleId;
 
+  private UsersToRoles() {
+  }
+
+  public UsersToRoles(final long userId, final long roleId) {
+    this.userId = userId;
+    this.roleId = roleId;
+  }
+
   @Override
   public String toString() {
     return "UsersToRoles {" +

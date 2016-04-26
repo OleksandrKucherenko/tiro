@@ -18,6 +18,9 @@ public class GroupsToUsers implements DbEntity {
 
   @Id @Column(name = UserColumns.ID) private long userId;
 
+  private GroupsToUsers() {
+  }
+
   public GroupsToUsers(final long groupId, final long userId) {
     this.groupId = groupId;
     this.userId = userId;

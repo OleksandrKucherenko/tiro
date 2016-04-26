@@ -14,7 +14,7 @@
     <!-- Log all SQL DML statements as they are executed -->
     <logger name="org.hibernate.SQL" level="DEBUG"/>
     <!-- Log all JDBC parameters -->
-    <logger name="org.hibernate.type" level="ALL"/>
+    <logger name="org.hibernate.type" level="OFF"/>
     <logger name="org.hibernate.type.descriptor.sql" level="TRACE"/>
     <!-- Log all SQL DDL statements as they are executed -->
     <logger name="org.hibernate.tool.hbm2ddl" level="OFF"/>

@@ -33,7 +33,7 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR
 - Will be used MySQL instance for storing the data (most common case in our life)
 - Tutorials:
     - http://www.vogella.com/tutorials/JavaPersistenceAPI/article.html
-    -
+    - http://www.srccodes.com/p/article/7/Annotation-based-Hibernate-Hello-World-example-using-Maven-build-tool-and-SQLite-database
 - Testing/Validation:
     - ```./gradlew checkPersistenceXml```
 
@@ -45,3 +45,4 @@ https://www.nginx.com/resources/admin-guide/compression-and-decompression/
 https://nginx.org/en/docs/http/configuring_https_servers.html
 
 https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-with-ssl-as-a-reverse-proxy-for-jenkins
+

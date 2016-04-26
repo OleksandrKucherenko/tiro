@@ -24,8 +24,6 @@ import static org.junit.Assert.assertThat;
  */
 @RunWith(JUnit4.class)
 public class UsersGroupsRolesSecurityTest {
-  /** Get wildcard pattern for finding entities in package. */
-  private static final String ALL_MODEL_PACKAGES = User.class.getPackage().getName() + ".*";
   /** Unit test logger. */
   private static final Logger _log = LoggerFactory.getLogger("dump");
   /** DB entity manager mFactory instance. */
@@ -96,19 +94,21 @@ public class UsersGroupsRolesSecurityTest {
 
     groupAdmins.addRole(roleAdmin);
     groupAdmins.addUser(userRoot);
-
-//    final GroupsToRoles gtr = new GroupsToRoles(groupAdmins._id, roleAdmin._id);
-//    final GroupsToUsers gtu = new GroupsToUsers(groupAdmins._id, userRoot._id);
+    userRoot.addRole(roleAdmin);
 
     mEm.getTransaction().begin();
     persistAll(groupAdmins, userRoot);
-//    persistAll(gtr, gtu);
     mEm.getTransaction().commit();
 
-//    mEm.refresh(groupAdmins);
+    assertThat(userRoot.getGroups().size(), equalTo(0));
+
+    // get group reference
     mEm.refresh(userRoot);
 
+    assertThat(userRoot.getGroups().size(), equalTo(1));
     assertThat(userRoot.getRoles().size(), equalTo(1));
+    assertThat(groupAdmins.getUsers().size(), equalTo(1));
+    assertThat(groupAdmins.getRoles().size(), equalTo(1));
 
     dumpAll();
   }

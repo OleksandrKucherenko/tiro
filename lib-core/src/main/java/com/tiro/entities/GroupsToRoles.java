@@ -18,6 +18,10 @@ public class GroupsToRoles implements DbEntity {
 
   @Id @Column(name = RoleColumns.ID) private long roleId;
 
+  /** Hidden constructor. */
+  private GroupsToRoles() {
+  }
+
   public GroupsToRoles(final long groupId, final long roleId) {
     this.groupId = groupId;
     this.roleId = roleId;
