@@ -10,16 +10,26 @@
     <!-- Unit testing persistence unit. -->
     <persistence-unit name="sqlite" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <class>com.tiro.entities.Role</class>
+        <class>com.tiro.entities.User</class>
+        <class>com.tiro.entities.Group</class>
+        <class>com.tiro.entities.GroupsToUsers</class>
+        <class>com.tiro.entities.GroupsToRoles</class>
+        <class>com.tiro.entities.UsersToRoles</class>
+
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:sqlite::memory:"/>
 
             <property name="hibernate.hbm2ddl.auto" value="create"/>
-            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.generate_statistics" value="true"/>
+
+            <!-- Logging -->
+            <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="false"/>
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.SQLiteDialect"/>
-            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
             <property name="hibernate.connection.charSet" value="UTF-8"/>
         </properties>
     </persistence-unit>

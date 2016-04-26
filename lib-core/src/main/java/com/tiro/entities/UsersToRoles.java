@@ -1,5 +1,6 @@
 package com.tiro.entities;
 
+import com.tiro.schema.DbEntity;
 import com.tiro.schema.RoleColumns;
 import com.tiro.schema.Tables;
 import com.tiro.schema.UserColumns;
@@ -12,8 +13,36 @@ import javax.persistence.Table;
 /** Many-to-Many association between {@link User} and {@link Role}. */
 @Entity
 @Table(name = Tables.USERS_TO_ROLES)
-public class UsersToRoles {
+public class UsersToRoles implements DbEntity {
   @Id @Column(name = UserColumns.ID) private long userId;
 
   @Id @Column(name = RoleColumns.ID) private long roleId;
+
+  @Override
+  public String toString() {
+    return "UsersToRoles {" +
+        " userId=" + userId +
+        ", roleId=" + roleId +
+        '}';
+  }
+
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    final UsersToRoles that = (UsersToRoles) o;
+
+    if (userId != that.userId) return false;
+
+    return roleId == that.roleId;
+  }
+
+  @Override
+  public int hashCode() {
+    final int result = (int) (userId ^ (userId >>> 32));
+    final int hash = 31 * result + (int) (roleId ^ (roleId >>> 32));
+
+    return hash;
+  }
 }

@@ -9,7 +9,32 @@
 
     <logger name="com.tiro.type" level="ALL"/>
 
-    <root level="INFO">
+    <!-- Log everything (a lot of information, but very useful for troubleshooting) -->
+    <logger name="org.hibernate" level="OFF"/>
+    <!-- Log all SQL DML statements as they are executed -->
+    <logger name="org.hibernate.SQL" level="DEBUG"/>
+    <!-- Log all JDBC parameters -->
+    <logger name="org.hibernate.type" level="ALL"/>
+    <logger name="org.hibernate.type.descriptor.sql" level="TRACE"/>
+    <!-- Log all SQL DDL statements as they are executed -->
+    <logger name="org.hibernate.tool.hbm2ddl" level="OFF"/>
+    <!-- Log the state of all entities (max 20 entities) associated with the session at flush time -->
+    <logger name="org.hibernate.pretty" level="OFF"/>
+    <!-- Log all second-level cache activity -->
+    <logger name="org.hibernate.cache" level="OFF"/>
+    <!-- Log transaction related activity -->
+    <logger name="org.hibernate.transaction" level="OFF"/>
+    <!-- Log all JDBC resource acquisition -->
+    <logger name="org.hibernate.jdbc" level="OFF"/>
+    <!-- Log HQL and SQL ASTs during query parsing -->
+    <logger name="org.hibernate.hql" level="OFF"/>
+    <logger name="org.hibernate.hql.ast.AST" level="OFF"/>
+    <!-- Log all JAAS authorization requests -->
+    <logger name="org.hibernate.secure" level="OFF"/>
+    <!-- Log hibernate statistics -->
+    <logger name="org.hibernate.stat" level="OFF"/>
+
+    <root level="ALL">
         <appender-ref ref="STDOUT"/>
     </root>
 

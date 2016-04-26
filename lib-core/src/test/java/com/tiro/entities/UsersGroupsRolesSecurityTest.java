@@ -90,23 +90,22 @@ public class UsersGroupsRolesSecurityTest {
 
   @Test
   public void testGroupsToRoles() throws Exception {
-    final Role roleAdmin = mEm.find(Role.class, 1);
-    final Group groupAdmins = mEm.find(Group.class, 1);
-    final User userRoot = mEm.find(User.class, 1);
+    final Role roleAdmin = mEm.find(Role.class, 1L);
+    final Group groupAdmins = mEm.find(Group.class, 1L);
+    final User userRoot = mEm.find(User.class, 1L);
 
-//    groupAdmins.addRole(roleAdmin);
-//    groupAdmins.addUser(userRoot);
-//    userRoot.addGroup(groupAdmins);
+    groupAdmins.addRole(roleAdmin);
+    groupAdmins.addUser(userRoot);
 
-    final GroupsToRoles gtr = new GroupsToRoles(groupAdmins._id, roleAdmin._id);
-    final GroupsToUsers gtu = new GroupsToUsers(groupAdmins._id, userRoot._id);
+//    final GroupsToRoles gtr = new GroupsToRoles(groupAdmins._id, roleAdmin._id);
+//    final GroupsToUsers gtu = new GroupsToUsers(groupAdmins._id, userRoot._id);
 
     mEm.getTransaction().begin();
-//    persistAll(groupAdmins, userRoot);
-    persistAll(gtr, gtu);
+    persistAll(groupAdmins, userRoot);
+//    persistAll(gtr, gtu);
     mEm.getTransaction().commit();
 
-    mEm.refresh(groupAdmins);
+//    mEm.refresh(groupAdmins);
     mEm.refresh(userRoot);
 
     assertThat(userRoot.getRoles().size(), equalTo(1));

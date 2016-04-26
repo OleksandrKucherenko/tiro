@@ -30,4 +30,24 @@ public class GroupsToUsers implements DbEntity {
         ", userId=" + userId +
         '}';
   }
+
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    final GroupsToUsers that = (GroupsToUsers) o;
+
+    if (groupId != that.groupId) return false;
+
+    return userId == that.userId;
+  }
+
+  @Override
+  public int hashCode() {
+    final int result = (int) (groupId ^ (groupId >>> 32));
+    final int hash = 31 * result + (int) (userId ^ (userId >>> 32));
+
+    return hash;
+  }
 }
