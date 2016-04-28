@@ -1,11 +1,11 @@
 buildscript {
-    repositories {
-        jcenter()
-    }
+  repositories {
+    jcenter()
+  }
 
-    dependencies {
-        classpath 'org.akhikhl.gretty:gretty:+'
-    }
+  dependencies {
+    classpath 'org.akhikhl.gretty:gretty:+'
+  }
 }
 
 apply plugin: 'war'
@@ -17,23 +17,29 @@ targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
 
 war {
-    jar.enabled = false
+  jar.enabled = false
 }
 
 dependencies {
   compile project(":lib-core")
 
+  compile 'com.sun.jersey:jersey-core:+'
+  compile 'com.sun.jersey:jersey-server:+'
+  compile 'com.sun.jersey:jersey-servlet:+'
+
   // compile 'joda-time:joda-time:+'
 
   // providedCompile 'joda-time:joda-time:+'
+
+  testCompile 'com.sun.jersey:jersey-client:+'
 }
 
 test {
-    testLogging {
-        events "passed", "skipped", "failed", "standardOut", "standardError"
-    }
+  testLogging {
+    events "passed", "skipped", "failed", "standardOut", "standardError"
+  }
 }
 
 gretty {
-    contextPath = '/tasks'
+  contextPath = '/tasks'
 }

@@ -14,7 +14,7 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR
 ## Features
 
 - GRADLE build system
-- Dependenies Update Report
+- Dependencies Update Report
 - Jetty Farm
 - Minimalistic RESTfull service
 - Minimalistic Web Application
@@ -37,12 +37,11 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR
 - Testing/Validation:
     - ```./gradlew checkPersistenceXml```
 
-
 ## References
 
-https://www.nginx.com/resources/admin-guide/compression-and-decompression/
+- https://www.nginx.com/resources/admin-guide/compression-and-decompression/
+- https://nginx.org/en/docs/http/configuring_https_servers.html
+- https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-with-ssl-as-a-reverse-proxy-for-jenkins
+- https://github.com/ziroby/jetty-gradle-hello-world
 
-https://nginx.org/en/docs/http/configuring_https_servers.html
-
-https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-with-ssl-as-a-reverse-proxy-for-jenkins
 
