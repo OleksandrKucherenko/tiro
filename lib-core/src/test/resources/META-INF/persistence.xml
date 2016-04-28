@@ -30,7 +30,7 @@
             <property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="hibernate.generate_statistics" value="true"/>
 
-            <!-- Show SQL in STDOUT stream, hibernate will ignore slf4j settings -->
+            <!-- Show SQL in System.out stream, hibernate will ignore slf4j settings -->
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="false"/>
 

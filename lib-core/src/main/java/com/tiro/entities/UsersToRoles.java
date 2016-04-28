@@ -18,6 +18,7 @@ public class UsersToRoles implements DbEntity {
 
   @Id @Column(name = RoleColumns.ID) private long roleId;
 
+  /** Hidden constructor. Required by JPA. */
   private UsersToRoles() {
   }
 

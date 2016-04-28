@@ -18,7 +18,7 @@ public class GroupsToRoles implements DbEntity {
 
   @Id @Column(name = RoleColumns.ID) private long roleId;
 
-  /** Hidden constructor. */
+  /** Hidden constructor. Required by JPA. */
   private GroupsToRoles() {
   }
 

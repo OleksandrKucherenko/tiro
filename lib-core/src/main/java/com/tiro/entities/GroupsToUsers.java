@@ -18,6 +18,7 @@ public class GroupsToUsers implements DbEntity {
 
   @Id @Column(name = UserColumns.ID) private long userId;
 
+  /** Hidden constructor. Required by JPA. */
   private GroupsToUsers() {
   }
 

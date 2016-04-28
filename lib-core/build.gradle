@@ -35,6 +35,10 @@ dependencies {
       'org.hamcrest:hamcrest-core:+',
       'org.hamcrest:hamcrest-library:+'
   testCompile 'org.mockito:mockito-core:+'
+  testCompile 'org.assertj:assertj-core:+'
+  testCompile 'org.reflections:reflections:+'
+//  testCompile 'org.easytesting:fest-reflect:+',
+//      'org.easytesting:fest-assert:+'
 }
 
 /* [ UNIT TESTING ] ================================================================================================= */

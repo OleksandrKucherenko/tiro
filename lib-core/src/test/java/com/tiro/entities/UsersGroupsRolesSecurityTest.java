@@ -1,23 +1,22 @@
 package com.tiro.entities;
 
+import com.tiro.Consts;
 import com.tiro.schema.DbEntity;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.validation.constraints.NotNull;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 /**
  * Unit tests of Security pattern - Users <--> Groups <--> Roles.
@@ -25,18 +24,31 @@ import static org.junit.Assert.assertThat;
 @RunWith(JUnit4.class)
 public class UsersGroupsRolesSecurityTest {
   /** Unit test logger. */
-  private static final Logger _log = LoggerFactory.getLogger("dump");
-  /** DB entity manager mFactory instance. */
-  private EntityManagerFactory mFactory;
+  private static final Logger _log = LoggerFactory.getLogger(Consts.LOG);
+  /** JPA factory. */
+  private static EntityManagerFactory _factory;
+
   /** Entity manager instance. */
   private EntityManager mEm;
   /** Test Method information. */
   @Rule public TestName mTestName = new TestName();
 
+  @BeforeClass
+  public static void initialize() {
+    _factory = Persistence.createEntityManagerFactory("sqlite");
+  }
+
+  @AfterClass
+  public static void destroy() {
+    if (null != _factory) {
+      _factory.close();
+      _factory = null;
+    }
+  }
+
   @Before
   public void setUp() throws Exception {
-    mFactory = Persistence.createEntityManagerFactory("sqlite");
-    mEm = mFactory.createEntityManager();
+    mEm = _factory.createEntityManager();
 
     // create minimalistic set of entities in tables for good testing
     final Role roleAdmin = new Role("root");
@@ -52,12 +64,13 @@ public class UsersGroupsRolesSecurityTest {
     final User userUser = new User("@2", "developer");
     final User userTester = new User("@3", "tester");
 
-    // save to DB
+    // start transaction which we can rollback at the end of the test
     mEm.getTransaction().begin();
+
+    // save to DB
     persistAll(roleAdmin, roleUser, roleBackup, roleTester);
     persistAll(groupAdmins, groupUsers, groupOther);
-    persistAll(userAdmin, userTester, userUser);
-    mEm.getTransaction().commit();
+    persistAll(userAdmin, userUser, userTester);
 
     _log.info("--> " + mTestName.getMethodName());
   }
@@ -65,13 +78,13 @@ public class UsersGroupsRolesSecurityTest {
   @After
   public void tearDown() throws Exception {
     if (null != mEm) {
+      if (mEm.getTransaction().isActive()) {
+        mEm.getTransaction().rollback();
+        _log.info("do transaction rollback...");
+      }
+
       mEm.close();
       mEm = null;
-    }
-
-    if (null != mFactory) {
-      mFactory.close();
-      mFactory = null;
     }
 
     _log.info("<-- " + mTestName.getMethodName());
@@ -96,21 +109,21 @@ public class UsersGroupsRolesSecurityTest {
     groupAdmins.addUser(userRoot);
     userRoot.addRole(roleAdmin);
 
-    mEm.getTransaction().begin();
     persistAll(groupAdmins, userRoot);
-    mEm.getTransaction().commit();
 
-    assertThat(userRoot.getGroups().size(), equalTo(0));
+    // update DB by new relations many-to-many
+//    mEm.getTransaction().commit();
+    mEm.flush();
 
-    // get group reference
+    // userRoot should get reference on Group now
     mEm.refresh(userRoot);
 
-    assertThat(userRoot.getGroups().size(), equalTo(1));
-    assertThat(userRoot.getRoles().size(), equalTo(1));
-    assertThat(groupAdmins.getUsers().size(), equalTo(1));
-    assertThat(groupAdmins.getRoles().size(), equalTo(1));
+    assertThat(userRoot.getGroups()).hasSize(1);
+    assertThat(userRoot.getRoles()).hasSize(1);
+    assertThat(groupAdmins.getUsers()).hasSize(1);
+    assertThat(groupAdmins.getRoles()).hasSize(1);
 
-    dumpAll();
+//    dumpAll();
   }
 
   private void persistAll(@NotNull final DbEntity... entities) {
@@ -120,13 +133,7 @@ public class UsersGroupsRolesSecurityTest {
   }
 
   private void dumpAll() {
-    dump(Role.class);
-    dump(Group.class);
-    dump(User.class);
-
-    dump(GroupsToRoles.class);
-    dump(GroupsToUsers.class);
-    dump(UsersToRoles.class);
+    EntitiesRegistrationTest._reflections.getTypesAnnotatedWith(Entity.class).forEach(this::dump);
   }
 
   private void dump(@NotNull final Class<?> klass) {

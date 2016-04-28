@@ -19,6 +19,10 @@ public class Role extends BaseEntity implements RoleColumns {
   /** User friendly name of the Role. */
   @Column(name = NAME) private String name;
 
+  /** Hidden constructor. Required by JPA. */
+  private Role() {
+  }
+
   public Role(@NotNull final String name) {
     super();
 

@@ -37,6 +37,10 @@ public class Group extends BaseEntity implements GroupColumns {
       inverseJoinColumns = {@JoinColumn(name = GroupColumns.ID)})
   private Set<User> users = new HashSet<>();
 
+  /** private constructor. Required by JPA. */
+  private Group() {
+  }
+
   public Group(@NotNull final String name) {
     super();
 

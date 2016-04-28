@@ -41,6 +41,10 @@ public class User extends BaseEntity implements UserColumns {
       inverseJoinColumns = {@JoinColumn(name = GroupColumns.ID)})
   private Set<Group> groups = new HashSet<>();
 
+  /** Hidden constructor. Required by JPA. */
+  private User() {
+  }
+
   public User(@NotNull final String email, @NotNull final String name) {
     super();
 
