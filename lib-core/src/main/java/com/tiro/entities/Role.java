@@ -12,6 +12,9 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Table(name = Tables.ROLES)
 public class Role extends BaseEntity implements RoleColumns {
+  /** Serialization unique identifier. */
+  private static final long serialVersionUID = 3032440515228652740L;
+
   /** Unique identifier, */
   @Id @GeneratedValue(strategy = IDENTITY)
   @Column(name = ID) public long _id;
@@ -20,6 +23,7 @@ public class Role extends BaseEntity implements RoleColumns {
   @Column(name = NAME) private String name;
 
   /** Hidden constructor. Required by JPA. */
+  @SuppressWarnings({"unused"})
   private Role() {
   }
 

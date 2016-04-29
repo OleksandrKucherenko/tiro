@@ -15,6 +15,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.metamodel.Type;
+import java.lang.reflect.Field;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,7 +24,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /** Unit test that confirms registration of all entities in JPA. */
 @RunWith(JUnit4.class)
-public class EntitiesRegistrationTest {
+@SuppressWarnings({"unchecked"})
+public class EntitiesRulesTest {
   /** Unit test logger. */
   private static final Logger _log = LoggerFactory.getLogger(Consts.LOG);
   /** Reflection helper. */
@@ -103,8 +106,57 @@ public class EntitiesRegistrationTest {
 
     types.forEach(t -> {
       assertThat(ReflectionUtils.getConstructors(t, c -> c.getParameterCount() == 0))
-          .withFailMessage("Expected default constructor for: " + t.getName())
+          .withFailMessage("Expected default constructor for: %s", t.getName())
           .isNotEmpty();
     });
+  }
+
+  /** All entities should implement 'private static final long serialVersionUID'. */
+  @Test
+  public void testSerialVersionUIDExists() {
+    final Set<Class<?>> types = _reflections.getTypesAnnotatedWith(Entity.class);
+
+    types.forEach(t -> {
+      // check that field exists
+      final Set<Field> fields = ReflectionUtils.getFields(t, f -> "serialVersionUID".equals(f.getName()));
+
+      assertThat(fields)
+          .withFailMessage("Expected serialVersionUID in class: %s", t.getName())
+          .hasSize(1);
+    });
+  }
+
+  /** All entities should implement 'private static final long serialVersionUID'. */
+  @Test
+  public void testSerialVersionUIDIsUnique() {
+    final Set<Class<?>> types = _reflections.getTypesAnnotatedWith(Entity.class);
+    final Set<Long> unique = new HashSet<>();
+
+    // check unique value of serialization version UID
+    types.forEach(t -> {
+      ReflectionUtils.getFields(t, f -> "serialVersionUID".equals(f.getName()))
+          .forEach(f -> {
+            final long value = safeGetLong(f);
+            _log.info("found: {}, serialVersionUID = {}L", t.getName(), value);
+
+            // value cannot be ZERO
+            assertThat(value).isNotEqualTo(0);
+
+            assertThat(unique.add(value))
+                .withFailMessage("Not unique serialVersionUID value detected: %s", t.getName())
+                .isTrue();
+          });
+    });
+  }
+
+  private static long safeGetLong(final Field f) {
+    try {
+      f.setAccessible(true);
+
+      return f.getLong(null);
+    } catch (IllegalAccessException ignored) {
+    }
+
+    return 0;
   }
 }

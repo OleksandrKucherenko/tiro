@@ -14,14 +14,19 @@ import javax.persistence.Table;
 @Entity
 @Table(name = Tables.GROUPS_TO_ROLES)
 public class GroupsToRoles implements DbEntity {
+  /** Serialization unique identifier. */
+  private static final long serialVersionUID = 2861829196807048776L;
+
   @Id @Column(name = GroupColumns.ID) private long groupId;
 
   @Id @Column(name = RoleColumns.ID) private long roleId;
 
   /** Hidden constructor. Required by JPA. */
+  @SuppressWarnings({"unused"})
   private GroupsToRoles() {
   }
 
+  @SuppressWarnings({"unused"})
   public GroupsToRoles(final long groupId, final long roleId) {
     this.groupId = groupId;
     this.roleId = roleId;

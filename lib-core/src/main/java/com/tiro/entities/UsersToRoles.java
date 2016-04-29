@@ -14,14 +14,19 @@ import javax.persistence.Table;
 @Entity
 @Table(name = Tables.USERS_TO_ROLES)
 public class UsersToRoles implements DbEntity {
+  /** Serialization unique identifier. */
+  private static final long serialVersionUID = -4834374782900910186L;
+
   @Id @Column(name = UserColumns.ID) private long userId;
 
   @Id @Column(name = RoleColumns.ID) private long roleId;
 
   /** Hidden constructor. Required by JPA. */
+  @SuppressWarnings({"unused"})
   private UsersToRoles() {
   }
 
+  @SuppressWarnings({"unused"})
   public UsersToRoles(final long userId, final long roleId) {
     this.userId = userId;
     this.roleId = roleId;

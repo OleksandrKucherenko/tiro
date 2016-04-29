@@ -41,6 +41,14 @@ allprojects {
     jcenter()
     mavenCentral()
   }
+
+  tasks.withType(JavaCompile) {
+    configure(options) {
+      compilerArgs << '-Xlint:all' << '-Xlint:-options'
+      deprecation = true
+      encoding = 'UTF-8'
+    }
+  }
 }
 
 /* Cleanup root project too. */

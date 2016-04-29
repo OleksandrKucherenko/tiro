@@ -16,6 +16,9 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Table(name = Tables.GROUPS)
 public class Group extends BaseEntity implements GroupColumns {
+  /** Serialization unique identifier. */
+  private static final long serialVersionUID = -8271144716636578493L;
+
   /** Unique identifier, */
   @Id @GeneratedValue(strategy = IDENTITY)
   @Column(name = ID) public long _id;
@@ -28,16 +31,17 @@ public class Group extends BaseEntity implements GroupColumns {
   @JoinTable(name = Tables.GROUPS_TO_ROLES,
       joinColumns = {@JoinColumn(name = RoleColumns.ID)},
       inverseJoinColumns = {@JoinColumn(name = GroupColumns.ID)})
-  private Set<Role> roles = new HashSet<>();
+  private final Set<Role> roles = new HashSet<>();
 
   /** Get list of users included into this group. */
   @ManyToMany(cascade = {CascadeType.ALL})
   @JoinTable(name = Tables.GROUPS_TO_USERS,
       joinColumns = {@JoinColumn(name = UserColumns.ID)},
       inverseJoinColumns = {@JoinColumn(name = GroupColumns.ID)})
-  private Set<User> users = new HashSet<>();
+  private final Set<User> users = new HashSet<>();
 
   /** private constructor. Required by JPA. */
+  @SuppressWarnings({"unused"})
   private Group() {
   }
 
@@ -45,6 +49,16 @@ public class Group extends BaseEntity implements GroupColumns {
     super();
 
     this.name = name;
+  }
+
+  @Override
+  public String toString() {
+    return "Group {" +
+        " _id=" + _id +
+        ", name='" + name + '\'' +
+        ", roles=" + roles.size() +
+        ", users=" + users.size() +
+        super.toString() + "}";
   }
 
   @NotNull
@@ -61,20 +75,12 @@ public class Group extends BaseEntity implements GroupColumns {
     return this;
   }
 
-  @Override
-  public String toString() {
-    return "Group {" +
-        " _id=" + _id +
-        ", name='" + name + '\'' +
-        ", roles=" + roles.size() +
-        ", users=" + users.size() +
-        super.toString() + "}";
-  }
-
+  @NotNull
   public Set<User> getUsers() {
     return this.users;
   }
 
+  @NotNull
   public Set<Role> getRoles() {
     return this.roles;
   }

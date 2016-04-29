@@ -16,6 +16,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Table(name = Tables.USERS)
 public class User extends BaseEntity implements UserColumns {
+  /** Serialization unique identifier. */
+  private static final long serialVersionUID = -4479053420502713622L;
 
   /** Unique identifier, */
   @Id @GeneratedValue(strategy = IDENTITY)
@@ -32,16 +34,17 @@ public class User extends BaseEntity implements UserColumns {
   @JoinTable(name = Tables.USERS_TO_ROLES,
       joinColumns = {@JoinColumn(name = UserColumns.ID)},
       inverseJoinColumns = {@JoinColumn(name = RoleColumns.ID)})
-  private Set<Role> roles = new HashSet<>();
+  private final Set<Role> roles = new HashSet<>();
 
   /** Get the list of groups where user included. */
   @ManyToMany(cascade = {CascadeType.ALL})
   @JoinTable(name = Tables.GROUPS_TO_USERS,
       joinColumns = {@JoinColumn(name = UserColumns.ID)},
       inverseJoinColumns = {@JoinColumn(name = GroupColumns.ID)})
-  private Set<Group> groups = new HashSet<>();
+  private final Set<Group> groups = new HashSet<>();
 
   /** Hidden constructor. Required by JPA. */
+  @SuppressWarnings({"unused"})
   private User() {
   }
 
@@ -50,6 +53,17 @@ public class User extends BaseEntity implements UserColumns {
 
     this.nickName = name;
     this.email = email;
+  }
+
+  @Override
+  public String toString() {
+    return "User {" +
+        " _id=" + _id +
+        ", nickName='" + nickName + '\'' +
+        ", email='" + email + '\'' +
+        ", roles=" + roles.size() +
+        ", groups=" + groups.size() +
+        super.toString() + "}";
   }
 
   @NotNull
@@ -66,22 +80,13 @@ public class User extends BaseEntity implements UserColumns {
     return this;
   }
 
+  @NotNull
   public Set<Role> getRoles() {
     return this.roles;
   }
 
+  @NotNull
   public Set<Group> getGroups() {
     return this.groups;
-  }
-
-  @Override
-  public String toString() {
-    return "User {" +
-        " _id=" + _id +
-        ", nickName='" + nickName + '\'' +
-        ", email='" + email + '\'' +
-        ", roles=" + roles.size() +
-        ", groups=" + groups.size() +
-        super.toString() + "}";
   }
 }

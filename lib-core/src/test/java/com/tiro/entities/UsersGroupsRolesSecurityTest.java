@@ -133,7 +133,7 @@ public class UsersGroupsRolesSecurityTest {
   }
 
   private void dumpAll() {
-    EntitiesRegistrationTest._reflections.getTypesAnnotatedWith(Entity.class).forEach(this::dump);
+    EntitiesRulesTest._reflections.getTypesAnnotatedWith(Entity.class).forEach(this::dump);
   }
 
   private void dump(@NotNull final Class<?> klass) {

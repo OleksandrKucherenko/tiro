@@ -1,16 +1,25 @@
+# OS Utility files
 .DS_Store
 
+# IntelliJ IDE
+.idea/
 *.iml
-*.class
 
+# local environment properties
 db.properties.local
+local.properties
 
+# Binaries
 *.jar
 *.war
 *.ear
+*.class
 
-.idea/
+# Build system output
 .gradle/
 build/
 target/
 out/
+
+# NetBeans  IDE
+.nb-gradle/

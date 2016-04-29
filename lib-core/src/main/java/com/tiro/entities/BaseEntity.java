@@ -8,6 +8,10 @@ import javax.persistence.Version;
 
 /** Base entity with tracking of version. */
 public abstract class BaseEntity implements BaseColumns, DbEntity {
+
+  /**
+   * Version of the Entity, on each modification version automatically increased.
+   */
   @Version private long version;
 
   /** Timestamp, when instance was created. */
