@@ -105,25 +105,26 @@ public class UsersGroupsRolesSecurityTest {
     final Group groupAdmins = mEm.find(Group.class, 1L);
     final User userRoot = mEm.find(User.class, 1L);
 
+    // STEP #1: relations modifications
     groupAdmins.addRole(roleAdmin);
-    groupAdmins.addUser(userRoot);
     userRoot.addRole(roleAdmin);
+
+    // NOTE: this is incorrect usage. Not following best- practices.
+    // Correct: userRoot.groups should also get a reference on groupAdmins during the call
+    groupAdmins.addUser(userRoot);
 
     persistAll(groupAdmins, userRoot);
 
-    // update DB by new relations many-to-many
-//    mEm.getTransaction().commit();
+    // STEP #2: update DB by new relations many-to-many and refresh instance by new data from DB
     mEm.flush();
-
-    // userRoot should get reference on Group now
     mEm.refresh(userRoot);
 
+    // userRoot should get reference on Group now
     assertThat(userRoot.getGroups()).hasSize(1);
+
     assertThat(userRoot.getRoles()).hasSize(1);
     assertThat(groupAdmins.getUsers()).hasSize(1);
     assertThat(groupAdmins.getRoles()).hasSize(1);
-
-//    dumpAll();
   }
 
   private void persistAll(@NotNull final DbEntity... entities) {
