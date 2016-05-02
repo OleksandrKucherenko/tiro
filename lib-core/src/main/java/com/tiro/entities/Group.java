@@ -21,7 +21,7 @@ public class Group extends BaseEntity implements GroupColumns {
 
   /** Unique identifier, */
   @Id @GeneratedValue(strategy = IDENTITY)
-  @Column(name = ID) public long _id;
+  @Column(name = ID) private long _id;
 
   /** Group name. */
   @Column(name = NAME) private String name;
@@ -65,12 +65,17 @@ public class Group extends BaseEntity implements GroupColumns {
   public Group addRole(@NotNull final Role role) {
     this.roles.add(role);
 
+    role.getGroups().add(this);
+
     return this;
   }
 
   @NotNull
   public Group addUser(@NotNull final User user) {
     this.users.add(user);
+
+    // use direct instance add, not addGroup(...)
+    user.getGroups().add(this);
 
     return this;
   }

@@ -115,9 +115,9 @@ public class UsersGroupsRolesSecurityTest {
 
     persistAll(groupAdmins, userRoot);
 
-    // STEP #2: update DB by new relations many-to-many and refresh instance by new data from DB
-    mEm.flush();
-    mEm.refresh(userRoot);
+//    // STEP #2: update DB by new relations many-to-many and refresh instance by new data from DB
+//    mEm.flush();
+//    mEm.refresh(userRoot);
 
     // userRoot should get reference on Group now
     assertThat(userRoot.getGroups()).hasSize(1);

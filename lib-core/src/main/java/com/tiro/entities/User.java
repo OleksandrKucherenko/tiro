@@ -1,6 +1,5 @@
 package com.tiro.entities;
 
-import com.tiro.schema.GroupColumns;
 import com.tiro.schema.RoleColumns;
 import com.tiro.schema.Tables;
 import com.tiro.schema.UserColumns;
@@ -21,7 +20,7 @@ public class User extends BaseEntity implements UserColumns {
 
   /** Unique identifier, */
   @Id @GeneratedValue(strategy = IDENTITY)
-  @Column(name = ID) public long _id;
+  @Column(name = ID) private long _id;
 
   /** User nick name. */
   @Column(name = NICKNAME) private String nickName;
@@ -32,15 +31,12 @@ public class User extends BaseEntity implements UserColumns {
   /** Get the list of roles associated directly with a user. */
   @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinTable(name = Tables.USERS_TO_ROLES,
-      joinColumns = {@JoinColumn(name = UserColumns.ID)},
-      inverseJoinColumns = {@JoinColumn(name = RoleColumns.ID)})
+      joinColumns = {@JoinColumn(name = RoleColumns.ID)},
+      inverseJoinColumns = {@JoinColumn(name = UserColumns.ID)})
   private final Set<Role> roles = new HashSet<>();
 
   /** Get the list of groups where user included. */
-  @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  @JoinTable(name = Tables.GROUPS_TO_USERS,
-      joinColumns = {@JoinColumn(name = UserColumns.ID)},
-      inverseJoinColumns = {@JoinColumn(name = GroupColumns.ID)})
+  @ManyToMany(mappedBy = "users")
   private final Set<Group> groups = new HashSet<>();
 
   /** Hidden constructor. Required by JPA. */
@@ -70,12 +66,16 @@ public class User extends BaseEntity implements UserColumns {
   public User addRole(@NotNull final Role role) {
     this.roles.add(role);
 
+    role.getUsers().add(this);
+
     return this;
   }
 
   @NotNull
   public User addGroup(@NotNull final Group group) {
     this.groups.add(group);
+
+    group.getUsers().add(this);
 
     return this;
   }
@@ -88,5 +88,12 @@ public class User extends BaseEntity implements UserColumns {
   @NotNull
   public Set<Group> getGroups() {
     return this.groups;
+  }
+
+  @PreRemove
+  @SuppressWarnings({"unused"})
+  protected void OnPreRemove() {
+    groups.forEach(g -> g.getUsers().remove(this));
+    roles.forEach(r -> r.getUsers().remove(this));
   }
 }

@@ -109,8 +109,7 @@ public class BasicDataOperationsTest {
     _log.info("create many-to-many relations");
 
     // build connections between the groups-2-roles & groups-2-users
-    groupAdmins.addRole(roleRoot);
-    groupAdmins.addUser(userAdmin);
+    groupAdmins.addRole(roleRoot).addUser(userAdmin);
     mEm.persist(BaseEntity.touch(groupAdmins));
 
     // build connection between users-2-roles
@@ -145,8 +144,7 @@ public class BasicDataOperationsTest {
     _log.info("create GROUP many-to-many relations");
 
     // build connections between the groups-2-roles & groups-2-users
-    groupAdmins.addRole(roleRoot);
-    groupAdmins.addUser(userAdmin);
+    groupAdmins.addRole(roleRoot).addUser(userAdmin);
     mEm.persist(BaseEntity.touch(groupAdmins));
     mEm.flush();
 
@@ -174,5 +172,38 @@ public class BasicDataOperationsTest {
     assertThat(mEm.contains(groupAdmins)).isTrue();
 
     assertThat(mEm.contains(userAdmin)).isFalse();
+  }
+
+  /** Delete of role does not delete any group or user. */
+  @Test
+  public void testDeleteCascadeRole() throws Exception {
+    final Group groupAdmins;
+    final User userAdmin;
+    final Role roleRoot, roleBackup;
+
+    _log.info("insert new instances");
+
+    mEm.persist(roleRoot = new Role("root")); // 1
+    mEm.persist(roleBackup = new Role("backup")); // 1
+    mEm.persist(groupAdmins = new Group("Administrators")); // 1
+    mEm.persist(userAdmin = new User("@1", "admin")); // 1
+
+    _log.info("create many-to-many relations");
+
+    groupAdmins.addRole(roleRoot).addUser(userAdmin);
+    userAdmin.addRole(roleRoot).addRole(roleBackup);
+    mEm.persist(BaseEntity.touch(groupAdmins));
+    mEm.persist(BaseEntity.touch(userAdmin));
+    mEm.flush();
+
+    _log.info("delete ROLE");
+
+    mEm.remove(roleRoot);
+    mEm.flush();
+
+    assertThat(mEm.contains(userAdmin)).isTrue();
+    assertThat(mEm.contains(groupAdmins)).isTrue();
+
+    assertThat(mEm.contains(roleRoot)).isFalse();
   }
 }

@@ -5,6 +5,8 @@ import com.tiro.schema.Tables;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -17,10 +19,16 @@ public class Role extends BaseEntity implements RoleColumns {
 
   /** Unique identifier, */
   @Id @GeneratedValue(strategy = IDENTITY)
-  @Column(name = ID) public long _id;
-
+  @Column(name = ID) private long _id;
   /** User friendly name of the Role. */
   @Column(name = NAME) private String name;
+  /** Groups that use the role. */
+  @ManyToMany(mappedBy = "roles")
+  private final Set<Group> groups = new HashSet<>();
+  /** Users that uses the role. */
+  @ManyToMany(mappedBy = "roles")
+  private final Set<User> users = new HashSet<>();
+
 
   /** Hidden constructor. Required by JPA. */
   @SuppressWarnings({"unused"})
@@ -33,11 +41,26 @@ public class Role extends BaseEntity implements RoleColumns {
     this.name = name;
   }
 
+  /* package */ Set<Group> getGroups() {
+    return groups;
+  }
+
+  /* package */ Set<User> getUsers() {
+    return users;
+  }
+
   @Override
   public String toString() {
     return "Role {" +
         " _id=" + _id +
         ", name='" + name + '\'' +
         super.toString() + "}";
+  }
+
+  @PreRemove
+  @SuppressWarnings({"unused"})
+  protected void OnPreRemove() {
+    groups.forEach(g -> g.getRoles().remove(this));
+    users.forEach(u -> u.getRoles().remove(this));
   }
 }
