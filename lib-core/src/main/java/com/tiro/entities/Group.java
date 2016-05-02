@@ -27,14 +27,14 @@ public class Group extends BaseEntity implements GroupColumns {
   @Column(name = NAME) private String name;
 
   /** Get a list of roles assigned to this group. */
-  @ManyToMany(cascade = {CascadeType.ALL})
+  @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinTable(name = Tables.GROUPS_TO_ROLES,
       joinColumns = {@JoinColumn(name = RoleColumns.ID)},
       inverseJoinColumns = {@JoinColumn(name = GroupColumns.ID)})
   private final Set<Role> roles = new HashSet<>();
 
   /** Get list of users included into this group. */
-  @ManyToMany(cascade = {CascadeType.ALL})
+  @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinTable(name = Tables.GROUPS_TO_USERS,
       joinColumns = {@JoinColumn(name = UserColumns.ID)},
       inverseJoinColumns = {@JoinColumn(name = GroupColumns.ID)})

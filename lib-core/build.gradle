@@ -1,8 +1,8 @@
 apply plugin: 'java'
 
 // we will use lambda
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
 archivesBaseName = "lib-core-${APP_VERSION}"
 
 compileJava.options.encoding = 'UTF-8'
@@ -45,10 +45,10 @@ dependencies {
 
 jar {
   manifest {
-    attributes("Implementation-Title" : "Core",
-               "Implementation-Version" : "${APP_VERSION}" )
+    attributes("Implementation-Title": "Core",
+        "Implementation-Version": "${APP_VERSION}")
   }
-  
+
   exclude('**/.placeholder')
 }
 

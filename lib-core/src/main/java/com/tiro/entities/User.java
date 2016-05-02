@@ -30,14 +30,14 @@ public class User extends BaseEntity implements UserColumns {
   @Column(name = EMAIL) private String email;
 
   /** Get the list of roles associated directly with a user. */
-  @ManyToMany(cascade = {CascadeType.ALL})
+  @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinTable(name = Tables.USERS_TO_ROLES,
       joinColumns = {@JoinColumn(name = UserColumns.ID)},
       inverseJoinColumns = {@JoinColumn(name = RoleColumns.ID)})
   private final Set<Role> roles = new HashSet<>();
 
   /** Get the list of groups where user included. */
-  @ManyToMany(cascade = {CascadeType.ALL})
+  @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinTable(name = Tables.GROUPS_TO_USERS,
       joinColumns = {@JoinColumn(name = UserColumns.ID)},
       inverseJoinColumns = {@JoinColumn(name = GroupColumns.ID)})

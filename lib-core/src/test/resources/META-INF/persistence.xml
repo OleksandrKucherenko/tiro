@@ -27,7 +27,7 @@
             <property name="hibernate.connection.charSet" value="UTF-8"/>
 
             <!-- Schema and Statistics -->
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="hibernate.generate_statistics" value="true"/>
 
             <!-- Show SQL in System.out stream, hibernate will ignore slf4j settings -->
