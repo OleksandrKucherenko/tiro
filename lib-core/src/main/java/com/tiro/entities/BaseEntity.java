@@ -2,12 +2,15 @@ package com.tiro.entities;
 
 import com.tiro.schema.BaseColumns;
 import com.tiro.schema.DbEntity;
-
 import javax.persistence.Column;
 import javax.persistence.Version;
 
 /** Base entity with tracking of version. */
 public abstract class BaseEntity implements BaseColumns, DbEntity {
+  /**
+   * Abstract class serialization ID.
+   */
+  private static final long serialVersionUID = -2514165106826894512L;
 
   /**
    * Version of the Entity, on each modification version automatically increased.

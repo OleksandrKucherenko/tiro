@@ -31,8 +31,12 @@ allprojects {
     GIT_REVISION = "${gitRevision()}"
     GIT_BRANCH = "${gitBranch()}"
 
-    APP_MAJOR = '1.0'
-    APP_MINOR = '1'
+    if(0 == GIT_REVISION.length()) { 
+      GIT_REVISION = '0'
+    }
+    
+    APP_MAJOR = "${project.SOLUTION_VERSION_MAJOR}"
+    APP_MINOR = "${project.SOLUTION_VERSION_MINOR}" 
     APP_VERSION = "$APP_MAJOR.$APP_MINOR.$GIT_REVISION"
   }
 
