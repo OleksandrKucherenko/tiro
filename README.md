@@ -46,6 +46,8 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
 - https://github.com/smallnest/Jax-RS-Performance-Comparison
 - http://www.asjava.com/jetty/jetty-vs-tomcat-performance-comparison/
 - http://menelic.com/2016/01/06/java-rest-api-benchmark-tomcat-vs-jetty-vs-grizzly-vs-undertow/
+- https://webtide.com/why-choose-jetty/
+- https://ibmadvantage.com/2015/09/22/lightweight-java-servers-and-developer-view-on-the-app-server-update/
 
 ## RESTfull Frameworks
 
@@ -92,3 +94,4 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
 - http://www.vogella.com/tutorials/JavaPersistenceAPI/article.html
 - http://www.srccodes.com/p/article/7/Annotation-based-Hibernate-Hello-World-example-using-Maven-build-tool-and-SQLite-database
 - http://akhikhl.github.io/gretty-doc/Feature-overview.html
+- https://github.com/marc0der/gradle-spawn-plugin

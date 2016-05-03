@@ -16,11 +16,13 @@ apply plugin: 'org.akhikhl.gretty'
 apply plugin: 'com.github.ben-manes.versions'
 
 /* Get GIT revision unique number. */
+
 def gitRevision() {
   return "git rev-list --count HEAD".execute().text.trim();
 }
 
 /* Get GIT Branch name. */
+
 def gitBranch() {
   return "git rev-parse --abbrev-ref HEAD".execute().text.trim();
 }
@@ -31,12 +33,12 @@ allprojects {
     GIT_REVISION = "${gitRevision()}"
     GIT_BRANCH = "${gitBranch()}"
 
-    if(0 == GIT_REVISION.length()) { 
+    if (0 == GIT_REVISION.length()) {
       GIT_REVISION = '0'
     }
-    
+
     APP_MAJOR = "${project.SOLUTION_VERSION_MAJOR}"
-    APP_MINOR = "${project.SOLUTION_VERSION_MINOR}" 
+    APP_MINOR = "${project.SOLUTION_VERSION_MINOR}"
     APP_VERSION = "$APP_MAJOR.$APP_MINOR.$GIT_REVISION"
   }
 
@@ -62,15 +64,15 @@ task clean(type: Delete) {
 
 /* DEFINE SERVER CONFIGURATION FILES */
 gretty {
-//  serverConfigFile "${rootProject.projectDir}/gradle/configuration"
+  // serverConfigFile "${rootProject.projectDir}/gradle/configuration"
 }
 
 /* CREATE A FARM FOR EXECUTING MULTIPLE WAR FILES */
 farms {
   farm 'Server', {
     port = 9191
-//    debugPort = 5005
-//    debugSuspend = true
+    servicePort = 9090
+
     webapp project(':war-time')
     webapp project(':war-tasks')
   }
