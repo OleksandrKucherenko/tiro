@@ -58,9 +58,12 @@ public class Role extends BaseEntity implements RoleColumns {
   }
 
   @PreRemove
+  @Override
   @SuppressWarnings({"unused"})
-  protected void OnPreRemove() {
+  protected void onPreRemove() {
     groups.forEach(g -> g.getRoles().remove(this));
     users.forEach(u -> u.getRoles().remove(this));
+
+    super.onPreRemove();
   }
 }

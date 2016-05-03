@@ -1,72 +1,17 @@
 package com.tiro.entities;
 
-import com.tiro.Consts;
-import org.junit.*;
-import org.junit.rules.TestName;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /** Test basic SQL/Data manipulation operations. */
 @RunWith(JUnit4.class)
 @SuppressWarnings({"unchecked"})
-public class BasicDataOperationsTest {
-  /** Unit test logger. */
-  private static final Logger _log = LoggerFactory.getLogger(Consts.LOG);
-  /** JPA factory. */
-  private static EntityManagerFactory _factory;
+public class CommonDataOperationsTest extends BaseDatabaseTest {
 
-  /** Entity manager instance. */
-  private EntityManager mEm;
-  /** Test Method information. */
-  @Rule public TestName mTestName = new TestName();
-
-  @BeforeClass
-  public static void initialize() {
-    _factory = Persistence.createEntityManagerFactory("sqlite");
-  }
-
-  @AfterClass
-  public static void destroy() {
-    if (null != _factory) {
-      _factory.close();
-      _factory = null;
-    }
-  }
-
-  @Before
-  public void setUp() throws Exception {
-    mEm = _factory.createEntityManager();
-
-    // start transaction which we can rollback at the end of the test
-    mEm.getTransaction().begin();
-
-    _log.info("--> " + mTestName.getMethodName());
-  }
-
-  @After
-  public void tearDown() throws Exception {
-    if (null != mEm) {
-      if (mEm.getTransaction().isActive()) {
-        mEm.getTransaction().rollback();
-        _log.info("do transaction rollback...");
-      }
-
-      mEm.close();
-      mEm = null;
-    }
-
-    _log.info("<-- " + mTestName.getMethodName());
-    System.out.print("\n");
-  }
-
+  /** Run insert and find operations. Raw low-level operations. */
   @Test
   public void testInsertEntity() throws Exception {
     mEm.persist(new Role("root")); // 1
@@ -77,6 +22,7 @@ public class BasicDataOperationsTest {
     assertThat(mEm.find(Role.class, 4L)).isNotNull();
   }
 
+  /** Run insert, find and update operations. Raw low-level operations. */
   @Test
   public void testInsertFindUpdateEntity() throws Exception {
     final Role roleFirst;

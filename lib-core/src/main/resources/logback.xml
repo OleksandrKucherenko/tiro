@@ -7,15 +7,15 @@
         </encoder>
     </appender>
 
-    <logger name="com.tiro.type" level="ALL"/>
+    <logger name="com.tiro" level="ALL"/>
 
     <!-- Log everything (a lot of information, but very useful for troubleshooting) -->
     <logger name="org.hibernate" level="OFF"/>
     <!-- Log all SQL DML statements as they are executed -->
-    <logger name="org.hibernate.SQL" level="DEBUG"/>
+    <logger name="org.hibernate.SQL" level="OFF"/>
     <!-- Log all JDBC parameters -->
     <logger name="org.hibernate.type" level="OFF"/>
-    <logger name="org.hibernate.type.descriptor.sql" level="TRACE"/>
+    <logger name="org.hibernate.type.descriptor.sql" level="OFF"/>
     <!-- Log all SQL DDL statements as they are executed -->
     <logger name="org.hibernate.tool.hbm2ddl" level="OFF"/>
     <!-- Log the state of all entities (max 20 entities) associated with the session at flush time -->
@@ -33,6 +33,10 @@
     <logger name="org.hibernate.secure" level="OFF"/>
     <!-- Log hibernate statistics -->
     <logger name="org.hibernate.stat" level="OFF"/>
+
+    <!-- Reflections library logs -->
+    <logger name="org.reflections" level="OFF"/>
+    <logger name="org.reflections.type" level="OFF"/>
 
     <root level="ALL">
         <appender-ref ref="STDOUT"/>
