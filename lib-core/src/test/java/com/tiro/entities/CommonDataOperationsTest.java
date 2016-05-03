@@ -34,13 +34,13 @@ public class CommonDataOperationsTest extends BaseDatabaseTest {
     assertThat(roleRoot).isNotNull();
     assertThat(roleFirst).isEqualTo(roleRoot);
 
-    // update operation increase version field value
-    mEm.persist(BaseEntity.touch(roleRoot));
+    // update operation increase version field value, we force this operation by timestamp field update
+    mEm.persist(BaseEntity.Timestamps.touchAt(roleRoot));
     mEm.flush();
     assertThat(roleRoot.getVersion()).isEqualTo(1);
   }
 
-  /** Delete of group does not delete the roles or users. */
+  /** Delete of group does not deleteAt the roles or users. */
   @Test
   public void testDeleteCascadeGroup() throws Exception {
     final Group groupAdmins;
@@ -56,14 +56,14 @@ public class CommonDataOperationsTest extends BaseDatabaseTest {
 
     // build connections between the groups-2-roles & groups-2-users
     groupAdmins.addRole(roleRoot).addUser(userAdmin);
-    mEm.persist(BaseEntity.touch(groupAdmins));
+    mEm.persist(groupAdmins);
 
     // build connection between users-2-roles
     userAdmin.addRole(roleRoot).addRole(roleBackup);
-    mEm.persist(BaseEntity.touch(userAdmin));
+    mEm.persist(userAdmin);
     mEm.flush();
 
-    _log.info("cascade delete of GROUP");
+    _log.info("cascade deleteAt of GROUP");
 
     // check that user and role stay after the DELETE of group
     mEm.remove(groupAdmins);
@@ -75,7 +75,7 @@ public class CommonDataOperationsTest extends BaseDatabaseTest {
     assertThat(mEm.contains(groupAdmins)).isFalse();
   }
 
-  /** Delete of user does not delete the roles or groups. */
+  /** Delete of user does not deleteAt the roles or groups. */
   @Test
   public void testDeleteCascadeUser() throws Exception {
     final Group groupAdmins;
@@ -91,7 +91,7 @@ public class CommonDataOperationsTest extends BaseDatabaseTest {
 
     // build connections between the groups-2-roles & groups-2-users
     groupAdmins.addRole(roleRoot).addUser(userAdmin);
-    mEm.persist(BaseEntity.touch(groupAdmins));
+    mEm.persist(groupAdmins);
     mEm.flush();
 
     _log.info("USER refresh own groups");
@@ -102,10 +102,10 @@ public class CommonDataOperationsTest extends BaseDatabaseTest {
 
     // build connection between users-2-roles
     userAdmin.addRole(roleRoot).addRole(roleBackup);
-    mEm.persist(BaseEntity.touch(userAdmin));
+    mEm.persist(userAdmin);
     mEm.flush();
 
-    _log.info("cascade delete of USER");
+    _log.info("cascade deleteAt of USER");
 
     // check that role stay after the DELETE of user
     mEm.remove(userAdmin);
@@ -120,7 +120,7 @@ public class CommonDataOperationsTest extends BaseDatabaseTest {
     assertThat(mEm.contains(userAdmin)).isFalse();
   }
 
-  /** Delete of role does not delete any group or user. */
+  /** Delete of role does not deleteAt any group or user. */
   @Test
   public void testDeleteCascadeRole() throws Exception {
     final Group groupAdmins;
@@ -138,11 +138,11 @@ public class CommonDataOperationsTest extends BaseDatabaseTest {
 
     groupAdmins.addRole(roleRoot).addUser(userAdmin);
     userAdmin.addRole(roleRoot).addRole(roleBackup);
-    mEm.persist(BaseEntity.touch(groupAdmins));
-    mEm.persist(BaseEntity.touch(userAdmin));
+    mEm.persist(groupAdmins);
+    mEm.persist(userAdmin);
     mEm.flush();
 
-    _log.info("delete ROLE");
+    _log.info("deleteAt ROLE");
 
     mEm.remove(roleRoot);
     mEm.flush();

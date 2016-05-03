@@ -90,12 +90,10 @@ public class User extends BaseEntity implements UserColumns {
     return this.groups;
   }
 
-  @Override
+  @PreRemove
   @SuppressWarnings({"unused"})
   protected void onPreRemove() {
     groups.forEach(g -> g.getUsers().remove(this));
     roles.forEach(r -> r.getUsers().remove(this));
-
-    super.onPreRemove();
   }
 }

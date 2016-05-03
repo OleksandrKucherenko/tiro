@@ -34,6 +34,8 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR
 - Tutorials:
     - http://www.vogella.com/tutorials/JavaPersistenceAPI/article.html
     - http://www.srccodes.com/p/article/7/Annotation-based-Hibernate-Hello-World-example-using-Maven-build-tool-and-SQLite-database
+- Hibernate Documentations:
+    - https://docs.jboss.org/hibernate/orm/4.0/hem/en-US/html/index.html
 - Testing/Validation:
     - ```./gradlew checkPersistenceXml```
 

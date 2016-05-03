@@ -3,10 +3,12 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <!-- Syntax: http://logback.qos.ch/manual/layouts.html -->
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - %msg%n</pattern>
         </encoder>
     </appender>
 
+    <!-- Log all messages from our packages -->
     <logger name="com.tiro" level="ALL"/>
 
     <!-- Log everything (a lot of information, but very useful for troubleshooting) -->
@@ -36,7 +38,6 @@
 
     <!-- Reflections library logs -->
     <logger name="org.reflections" level="OFF"/>
-    <logger name="org.reflections.type" level="OFF"/>
 
     <root level="ALL">
         <appender-ref ref="STDOUT"/>

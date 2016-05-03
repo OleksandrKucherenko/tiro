@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 
 /** Base entity with tracking of version. */
 @MappedSuperclass
+@EntityListeners(BaseEntity.Timestamps.class)
 @SuppressWarnings({"unused"})
 public abstract class BaseEntity implements BaseColumns, DbEntity {
   /** Abstract class serialization ID. */
@@ -20,7 +21,7 @@ public abstract class BaseEntity implements BaseColumns, DbEntity {
   @Column(name = C_TIME) private long createdAt;
   /** Timestamp of the last update operation. Nanos. */
   @Column(name = U_TIME) private long updatedAt;
-  /** Timestamp of the delete operation. Nanos. */
+  /** Timestamp of the deleteAt operation. Nanos. */
   @Column(name = D_TIME) private long deletedAt;
 
   /* package */ BaseEntity() {
@@ -68,32 +69,40 @@ public abstract class BaseEntity implements BaseColumns, DbEntity {
         + " }";
   }
 
-  @PrePersist
-  protected void onPrePersist() {
-    touch(this);
-  }
+  /** Utility class that updates timestamps of the entities during the Update/Delete operations. */
+  public static class Timestamps {
 
-  @PreUpdate
-  protected void onPreUpdate() {
-    touch(this);
-  }
+    @PrePersist
+    protected void onPrePersist(@NotNull final BaseEntity entity) {
+      touchAt(entity);
+    }
 
-  @PreRemove
-  protected void onPreRemove() {
-    delete(this);
-  }
+    @PreUpdate
+    protected void onPreUpdate(@NotNull final BaseEntity entity) {
+      touchAt(entity);
+    }
 
-  /** refresh the updatedAt of the entity. */
-  @NotNull
-  public static <T extends BaseEntity> T touch(@NotNull final T entity) {
-    entity.setTimeUpdated(System.nanoTime());
-    return entity;
-  }
+    @PreRemove
+    protected void onPreRemove(@NotNull final BaseEntity entity) {
+      deleteAt(entity);
+    }
 
-  /** refresh the deletedAt of the entity. */
-  @NotNull
-  public static <T extends BaseEntity> T delete(@NotNull final T entity) {
-    entity.setTimeDeleted(System.nanoTime());
-    return entity;
+    /** refresh the updatedAt of the entity. */
+    @NotNull
+    public static <T extends BaseEntity> T touchAt(@NotNull final T entity) {
+      entity.setTimeUpdated(System.nanoTime());
+      return entity;
+    }
+
+    /** refresh the deletedAt of the entity. */
+    @NotNull
+    public static <T extends BaseEntity> T deleteAt(@NotNull final T entity) {
+      entity.setTimeDeleted(System.nanoTime());
+      return entity;
+    }
+
+    public static long diff(final long start, final long stop) {
+      return stop - start;
+    }
   }
 }

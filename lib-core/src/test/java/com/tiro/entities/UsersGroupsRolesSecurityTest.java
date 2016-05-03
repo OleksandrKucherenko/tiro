@@ -47,22 +47,43 @@ public class UsersGroupsRolesSecurityTest extends BaseDatabaseTest {
   public void testGroupsToRoles() throws Exception {
     final Role roleAdmin = mEm.find(Role.class, 1L);
     final Group groupAdmins = mEm.find(Group.class, 1L);
-    final User userRoot = mEm.find(User.class, 1L);
 
-    // relations modifications
     groupAdmins.addRole(roleAdmin);
-    userRoot.addRole(roleAdmin);
-    groupAdmins.addUser(userRoot);
 
-    // userRoot should get reference on Group now
-    assertThat(userRoot.getGroups()).hasSize(1);
-    assertThat(userRoot.getRoles()).hasSize(1);
-
-    assertThat(groupAdmins.getUsers()).hasSize(1);
     assertThat(groupAdmins.getRoles()).hasSize(1);
-
-    assertThat(roleAdmin.getUsers()).hasSize(1);
     assertThat(roleAdmin.getGroups()).hasSize(1);
   }
 
+  @Test
+  public void testGroupsToUsers() throws Exception {
+    final Group groupAdmins = mEm.find(Group.class, 1L);
+    final User userRoot = mEm.find(User.class, 1L);
+
+    groupAdmins.addUser(userRoot);
+
+    assertThat(userRoot.getGroups()).hasSize(1);
+    assertThat(groupAdmins.getUsers()).hasSize(1);
+  }
+
+  @Test
+  public void testUsersToRoles() throws Exception {
+    final Role roleAdmin = mEm.find(Role.class, 1L);
+    final User userRoot = mEm.find(User.class, 1L);
+
+    userRoot.addRole(roleAdmin);
+
+    assertThat(userRoot.getRoles()).hasSize(1);
+    assertThat(roleAdmin.getUsers()).hasSize(1);
+  }
+
+  @Test
+  public void testUsersToGroups() throws Exception {
+    final Group groupAdmins = mEm.find(Group.class, 1L);
+    final User userRoot = mEm.find(User.class, 1L);
+
+    userRoot.addGroup(groupAdmins);
+
+    assertThat(userRoot.getGroups()).hasSize(1);
+    assertThat(groupAdmins.getUsers()).hasSize(1);
+  }
 }
