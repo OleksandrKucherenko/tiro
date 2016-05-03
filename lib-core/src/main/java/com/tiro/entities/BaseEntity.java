@@ -32,10 +32,6 @@ public abstract class BaseEntity implements BaseColumns, DbEntity {
     return this.version;
   }
 
-  protected void setVersion(final long version) {
-    this.version = version;
-  }
-
   public long getTimeCreated() {
     return createdAt;
   }
@@ -74,7 +70,7 @@ public abstract class BaseEntity implements BaseColumns, DbEntity {
 
     @PrePersist
     protected void onPrePersist(@NotNull final BaseEntity entity) {
-      touchAt(entity);
+      newAt(entity);
     }
 
     @PreUpdate
@@ -87,22 +83,25 @@ public abstract class BaseEntity implements BaseColumns, DbEntity {
       deleteAt(entity);
     }
 
-    /** refresh the updatedAt of the entity. */
+    /** refresh the {@link #createdAt} of the entity. */
+    @NotNull
+    public static <T extends BaseEntity> T newAt(@NotNull final T entity) {
+      entity.setTimeCreated(System.nanoTime());
+      return entity;
+    }
+
+    /** refresh the {@link #updatedAt} of the entity. */
     @NotNull
     public static <T extends BaseEntity> T touchAt(@NotNull final T entity) {
       entity.setTimeUpdated(System.nanoTime());
       return entity;
     }
 
-    /** refresh the deletedAt of the entity. */
+    /** refresh the {@link #deletedAt} of the entity. */
     @NotNull
     public static <T extends BaseEntity> T deleteAt(@NotNull final T entity) {
       entity.setTimeDeleted(System.nanoTime());
       return entity;
-    }
-
-    public static long diff(final long start, final long stop) {
-      return stop - start;
     }
   }
 }

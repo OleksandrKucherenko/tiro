@@ -69,6 +69,8 @@ gretty {
 farms {
   farm 'Server', {
     port = 9191
+//    debugPort = 5005
+//    debugSuspend = true
     webapp project(':war-time')
     webapp project(':war-tasks')
   }

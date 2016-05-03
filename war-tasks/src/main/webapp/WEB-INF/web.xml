@@ -16,17 +16,39 @@
         </cookie-config>
     </session-config>
 
+    <filter>
+        <filter-name>PagesFilter</filter-name>
+        <filter-class>com.tiro.PagesFilter</filter-class>
+    </filter>
+
     <filter-mapping>
         <filter-name>PagesFilter</filter-name>
         <url-pattern>/*</url-pattern>
+        <!--
+            The dispatcher has five legal values: FORWARD, REQUEST, INCLUDE, ASYNC, and ERROR.
+
+            A value of FORWARD means the Filter will be applied under RequestDispatcher.forward() calls.
+            A value of REQUEST means the Filter will be applied under ordinary client calls to the path or servlet.
+            A value of INCLUDE means the Filter will be applied under RequestDispatcher.include() calls.
+            A value of ASYNC means the Filter will be applied under calls dispatched from an AsyncContext.
+            A value of ERROR means the Filter will be applied under the error page mechanism.
+
+            The absence of any dispatcher elements in a filter-mapping indicates a default of applying filters only
+            under ordinary client calls to the path or servlet.
+        -->
+        <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
         <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+        <dispatcher>ERROR</dispatcher>
     </filter-mapping>
 
-    <!--<error-page>
+    <!-- -->
+    <error-page>
         <error-code>404</error-code>
         <location>/WEB-INF/pages/errors/404.jsp</location>
-    </error-page>-->
+    </error-page>
+    <!-- -->
 
     <jsp-config>
         <jsp-property-group>

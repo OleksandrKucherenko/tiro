@@ -4,7 +4,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Page Not found</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Page Not Found</title>
     </head>
     <body>
         <button onclick="history.back()">Back to Previous Page</button>

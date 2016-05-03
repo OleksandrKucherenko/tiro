@@ -3,13 +3,16 @@ package com.tiro.entities;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.ocpsoft.prettytime.PrettyTime;
 import org.reflections.ReflectionUtils;
 
 import javax.persistence.Entity;
 import javax.persistence.metamodel.Type;
 import java.lang.reflect.Field;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -96,6 +99,39 @@ public class EntitiesDesignRulesTest extends BaseDatabaseTest {
                 .isTrue();
           });
     });
+  }
+
+  @Test
+  public void testTimestamps() throws Exception {
+    final long created, start = System.nanoTime();
+
+    // by default creation time is set during instance creation
+    final Role roleTest = new Role("time");
+    assertThat(created = roleTest.getTimeCreated()).isGreaterThan(start);
+    assertThat(roleTest.getTimeUpdated()).isEqualTo(0);
+    assertThat(roleTest.getTimeDeleted()).isEqualTo(0);
+
+    // on 'persist' createdAt should be refreshed to a new value, the actual time of saving
+    mEm.persist(roleTest);
+    mEm.flush();
+    assertThat(roleTest.getTimeCreated()).isNotEqualTo(created);
+    assertThat(roleTest.getTimeUpdated()).isEqualTo(0);
+    assertThat(roleTest.getTimeDeleted()).isEqualTo(0);
+
+    // update the instance values
+    mEm.persist(roleTest.setName("time2"));
+    mEm.flush();
+    assertThat(roleTest.getTimeUpdated()).isGreaterThan(start);
+    assertThat(roleTest.getTimeDeleted()).isEqualTo(0);
+
+    // on 'delete' expected detaching of the instance and it 'deletedAt' field updates.
+    mEm.remove(roleTest);
+    mEm.flush();
+    assertThat(roleTest.getTimeDeleted()).isGreaterThan(start);
+
+    // do some pretty time printing
+    final PrettyTime pt = new PrettyTime(new Date(TimeUnit.NANOSECONDS.toMillis(start)));
+    _log.info("ROLE deleted {}", pt.format(new Date(TimeUnit.NANOSECONDS.toMillis(roleTest.getTimeDeleted()))));
   }
 
   private static long safeGetLong(final Field f) {

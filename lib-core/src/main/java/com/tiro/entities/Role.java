@@ -10,7 +10,7 @@ import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-/** Security Role. */
+/** Security Role. Design for being a CONSTANT mostly all the time. */
 @Entity
 @Table(name = Tables.ROLES)
 public class Role extends BaseEntity implements RoleColumns {
@@ -22,13 +22,14 @@ public class Role extends BaseEntity implements RoleColumns {
   @Column(name = ID) private long _id;
   /** User friendly name of the Role. */
   @Column(name = NAME) private String name;
-  /** Groups that use the role. */
+  /** User friendly description of the Role purpose. */
+  @Column(name = INFO) private String info = "";
+  /** Groups that use the role. For easier many-to-many resolving. */
   @ManyToMany(mappedBy = "roles")
   private final Set<Group> groups = new HashSet<>();
-  /** Users that uses the role. */
+  /** Users that uses the role. For easier many-to-many resolving. */
   @ManyToMany(mappedBy = "roles")
   private final Set<User> users = new HashSet<>();
-
 
   /** Hidden constructor. Required by JPA. */
   @SuppressWarnings({"unused"})
@@ -41,10 +42,37 @@ public class Role extends BaseEntity implements RoleColumns {
     this.name = name;
   }
 
+  public Role(@NotNull final String name, @NotNull final String info) {
+    this.name = name;
+    this.info = info;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  @NotNull
+  /* package */ Role setName(@NotNull final String name) {
+    this.name = name;
+    return this;
+  }
+
+  public String getInfo() {
+    return info;
+  }
+
+  @NotNull
+  /* package */ Role setInfo(@NotNull final String info) {
+    this.info = info;
+    return this;
+  }
+
+  @NotNull
   /* package */ Set<Group> getGroups() {
     return groups;
   }
 
+  @NotNull
   /* package */ Set<User> getUsers() {
     return users;
   }
@@ -54,6 +82,7 @@ public class Role extends BaseEntity implements RoleColumns {
     return "Role {" +
         " _id=" + _id +
         ", name='" + name + '\'' +
+        ", info='" + info + '\'' +
         super.toString() + "}";
   }
 

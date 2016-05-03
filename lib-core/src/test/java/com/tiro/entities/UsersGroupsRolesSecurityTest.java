@@ -86,4 +86,18 @@ public class UsersGroupsRolesSecurityTest extends BaseDatabaseTest {
     assertThat(userRoot.getGroups()).hasSize(1);
     assertThat(groupAdmins.getUsers()).hasSize(1);
   }
+
+  @Test
+  public void testRoleProperties() throws Exception {
+    final Role roleTest = new Role("test");
+    assertThat(roleTest.getName()).isNotNull().isNotEmpty().isEqualTo("test");
+    assertThat(roleTest.getInfo()).isNotNull().isEmpty();
+
+    final Role roleInfo = new Role("info", "Some additional information");
+    assertThat(roleInfo.getName()).isNotNull().isNotEmpty().isEqualTo("info");
+    assertThat(roleInfo.getInfo()).isNotNull().isNotEmpty();
+
+    roleInfo.setInfo("");
+    assertThat(roleInfo.getInfo()).isNotNull().isEmpty();
+  }
 }
