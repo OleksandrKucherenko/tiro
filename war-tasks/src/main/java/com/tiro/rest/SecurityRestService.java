@@ -1,27 +1,35 @@
-package com.tiro;
+package com.tiro.rest;
 
 import com.tiro.entities.Role;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.net.HttpURLConnection.HTTP_OK;
-
 /** */
-@Path("/v1/security")
+@Path("/security")
 public class SecurityRestService {
   @GET
+  @Path("/version")
+  @Produces(MediaType.TEXT_HTML)
+  public String getVersion() {
+    return "1.0";
+  }
+
+  @GET
   @Path("/roles")
+  @Produces(MediaType.APPLICATION_JSON)
   public Response getRoles() {
     final List<Role> roles = new ArrayList<>();
 
     roles.add(new Role("root", "dummy root"));
 
     return Response
-        .status(HTTP_OK)
+        .ok()
         .entity(roles)
         .build();
   }

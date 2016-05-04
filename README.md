@@ -55,6 +55,12 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
     - [RESTFul Web Services for Java](http://docs.jboss.org/resteasy/docs/3.0.16.Final/userguide/html_single/index.html)
 - http://vertx.io/
 
+### REST API Documentation
+
+- http://apivisualizer.cuubez.com/
+- http://swagger.io/, https://github.com/swagger-api/swagger-core
+- https://blogs.oracle.com/sandoz/entry/tracing_in_jersey
+
 ### REST Tutorials
 - http://www.mkyong.com/webservices/jax-rs/jersey-hello-world-example/
 - http://www.vogella.com/tutorials/REST/article.html

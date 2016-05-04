@@ -3,6 +3,7 @@ package com.tiro;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**  */
@@ -15,23 +16,27 @@ public class PagesFilter implements Filter {
   }
 
   @Override
-  public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain)
+  public void doFilter(final ServletRequest rq, final ServletResponse rp, final FilterChain chain)
       throws IOException, ServletException {
+    // get more concrete versions of request and response
+    final HttpServletRequest request = (HttpServletRequest) rq;
+    final HttpServletResponse response = (HttpServletResponse) rp;
 
-    final HttpServletRequest hsr = (HttpServletRequest) request;
-
-    if (hsr.getRequestURI().contains("/WEB-INF")) {
-      chain.doFilter(request, response);
-      return;
+    // files inside the WEB-INF folder should be executed without additional processing
+    if (request.getRequestURI().contains("/WEB-INF")) {
+      chain.doFilter(rq, rp);
+    } else {
+      doProcessing(request, response);
+      chain.doFilter(rq, rp);
     }
-
-    // TODO: some request processing
-
-    chain.doFilter(request, response);
   }
 
   @Override
   public void destroy() {
 
+  }
+
+  private void doProcessing(final HttpServletRequest request, final HttpServletResponse response) {
+    // TODO: some request, session and response processing
   }
 }

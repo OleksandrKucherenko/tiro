@@ -1,46 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<configuration
+    xmlns="http://ch.qos.logback/xml/ns/logback"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://ch.qos.logback/xml/ns/logback http://ch.qos.logback/xml/ns/logback/logback_1_0.xsd">
+  <!-- Appender's: http://logback.qos.ch/manual/appenders.html -->
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <!-- Syntax: http://logback.qos.ch/manual/layouts.html -->
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - %msg%n</pattern>
+    </encoder>
+  </appender>
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <!-- Syntax: http://logback.qos.ch/manual/layouts.html -->
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - %msg%n</pattern>
-        </encoder>
-    </appender>
+  <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <append>true</append>
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <!-- rollover daily -->
+      <fileNamePattern>com.tiro-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <!-- each file should be at most 5MB, keep 3 days worth of history, but at most 20MB -->
+      <maxFileSize>5MB</maxFileSize>
+      <maxHistory>3</maxHistory>
+      <totalSizeCap>20MB</totalSizeCap>
+    </rollingPolicy>
+  </appender>
 
-    <!-- Log all messages from our packages -->
-    <logger name="com.tiro" level="ALL"/>
+  <!-- VERBOSE DEBUG FOR EVERYTHING : BEGIN -->
+  <!--<logger name="" level="ALL"/>-->
+  <!-- VERBOSE DEBUG FOR EVERYTHING : END -->
 
-    <!-- Log everything (a lot of information, but very useful for troubleshooting) -->
-    <logger name="org.hibernate" level="OFF"/>
-    <!-- Log all SQL DML statements as they are executed -->
-    <logger name="org.hibernate.SQL" level="OFF"/>
-    <!-- Log all JDBC parameters -->
-    <logger name="org.hibernate.type" level="OFF"/>
-    <logger name="org.hibernate.type.descriptor.sql" level="OFF"/>
-    <!-- Log all SQL DDL statements as they are executed -->
-    <logger name="org.hibernate.tool.hbm2ddl" level="OFF"/>
-    <!-- Log the state of all entities (max 20 entities) associated with the session at flush time -->
-    <logger name="org.hibernate.pretty" level="OFF"/>
-    <!-- Log all second-level cache activity -->
-    <logger name="org.hibernate.cache" level="OFF"/>
-    <!-- Log transaction related activity -->
-    <logger name="org.hibernate.transaction" level="OFF"/>
-    <!-- Log all JDBC resource acquisition -->
-    <logger name="org.hibernate.jdbc" level="OFF"/>
-    <!-- Log HQL and SQL ASTs during query parsing -->
-    <logger name="org.hibernate.hql" level="OFF"/>
-    <logger name="org.hibernate.hql.ast.AST" level="OFF"/>
-    <!-- Log all JAAS authorization requests -->
-    <logger name="org.hibernate.secure" level="OFF"/>
-    <!-- Log hibernate statistics -->
-    <logger name="org.hibernate.stat" level="OFF"/>
+  <!-- Log all messages from our packages -->
+  <logger name="com.tiro" level="ALL"/>
 
-    <!-- Reflections library logs -->
-    <logger name="org.reflections" level="OFF"/>
+  <!-- Log everything (a lot of information, but very useful for troubleshooting) -->
+  <logger name="org.hibernate" level="OFF"/>
+  <!-- Log all SQL DML statements as they are executed -->
+  <logger name="org.hibernate.SQL" level="OFF"/>
+  <!-- Log all JDBC parameters -->
+  <logger name="org.hibernate.type" level="OFF"/>
+  <logger name="org.hibernate.type.descriptor.sql" level="OFF"/>
+  <!-- Log all SQL DDL statements as they are executed -->
+  <logger name="org.hibernate.tool.hbm2ddl" level="OFF"/>
+  <!-- Log the state of all entities (max 20 entities) associated with the session at flush time -->
+  <logger name="org.hibernate.pretty" level="OFF"/>
+  <!-- Log all second-level cache activity -->
+  <logger name="org.hibernate.cache" level="OFF"/>
+  <!-- Log transaction related activity -->
+  <logger name="org.hibernate.transaction" level="OFF"/>
+  <!-- Log all JDBC resource acquisition -->
+  <logger name="org.hibernate.jdbc" level="OFF"/>
+  <!-- Log HQL and SQL ASTs during query parsing -->
+  <logger name="org.hibernate.hql" level="OFF"/>
+  <logger name="org.hibernate.hql.ast.AST" level="OFF"/>
+  <!-- Log all JAAS authorization requests -->
+  <logger name="org.hibernate.secure" level="OFF"/>
+  <!-- Log hibernate statistics -->
+  <logger name="org.hibernate.stat" level="OFF"/>
 
-    <root level="ALL">
-        <appender-ref ref="STDOUT"/>
-    </root>
+  <!-- Reflections library logs -->
+  <logger name="org.reflections" level="OFF"/>
+
+  <!-- JAX-RS, REST api -->
+  <logger name="com.sun.jersey" level="ALL"/>
+
+  <root level="ALL">
+    <appender-ref ref="CONSOLE"/>
+    <appender-ref ref="ROLLING"/>
+  </root>
 
 </configuration>

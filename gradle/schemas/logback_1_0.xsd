@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  logback.xml schema,
-    https://github.com/enricopulatzo/logback-XSD
-    https://github.com/nkatsar/logback-XSD
+	logback.xml schema,
+		https://github.com/enricopulatzo/logback-XSD
+		https://github.com/nkatsar/logback-XSD
 -->
 <xsd:schema targetNamespace="http://ch.qos.logback/xml/ns/logback"
             xmlns="http://ch.qos.logback/xml/ns/logback"
@@ -102,7 +102,7 @@
 
   <xsd:simpleType name="FileSizes">
     <xsd:restriction base="xsd:string">
-      <xsd:pattern value="[0-9]+(KB|MB|GB)?"/>
+      <xsd:pattern value="[1-9][0-9]*(KB|MB|GB)?"/>
     </xsd:restriction>
   </xsd:simpleType>
 
@@ -134,6 +134,7 @@
     <xsd:anyAttribute/>
   </xsd:complexType>
 
+  <!-- http://logback.qos.ch/manual/appenders.html -->
   <xsd:complexType name="Appender">
     <xsd:choice maxOccurs="unbounded">
       <xsd:element name="file" minOccurs="0" maxOccurs="1" type="xsd:string"/>
