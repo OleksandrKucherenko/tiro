@@ -4,6 +4,7 @@ include ':lib-core'
 // WAR packages
 include ':war-time'
 include ':war-tasks'
+include ':war-api'
 
 // Application
 include ':ear-app'

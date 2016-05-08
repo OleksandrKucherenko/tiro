@@ -15,6 +15,9 @@ local.properties
 *.ear
 *.class
 
+# reports/logs
+*.log
+
 # Build system output
 .gradle/
 build/

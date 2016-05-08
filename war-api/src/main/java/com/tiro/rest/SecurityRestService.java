@@ -10,8 +10,13 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-/** */
-@Path("/security")
+/**
+ * Example:
+ * http://localhost:9191/tasks/api/security/version
+ * <p>
+ * curl -i
+ */
+@Path("/v1/security")
 public class SecurityRestService {
   @GET
   @Path("/version")

@@ -75,6 +75,7 @@ farms {
 
     webapp project(':war-time')
     webapp project(':war-tasks')
+    webapp project(':war-api')
   }
 }
 
