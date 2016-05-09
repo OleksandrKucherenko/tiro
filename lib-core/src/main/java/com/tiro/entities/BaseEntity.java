@@ -3,8 +3,8 @@ package com.tiro.entities;
 import com.tiro.schema.BaseColumns;
 import com.tiro.schema.DbEntity;
 
+import javax.annotation.Nonnull;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 /** Base entity with tracking of version. */
 @MappedSuperclass
@@ -69,37 +69,37 @@ public abstract class BaseEntity implements BaseColumns, DbEntity {
   public static class Timestamps {
 
     @PrePersist
-    protected void onPrePersist(@NotNull final BaseEntity entity) {
+    protected void onPrePersist(@Nonnull final BaseEntity entity) {
       newAt(entity);
     }
 
     @PreUpdate
-    protected void onPreUpdate(@NotNull final BaseEntity entity) {
+    protected void onPreUpdate(@Nonnull final BaseEntity entity) {
       touchAt(entity);
     }
 
     @PreRemove
-    protected void onPreRemove(@NotNull final BaseEntity entity) {
+    protected void onPreRemove(@Nonnull final BaseEntity entity) {
       deleteAt(entity);
     }
 
     /** refresh the {@link #createdAt} of the entity. */
-    @NotNull
-    public static <T extends BaseEntity> T newAt(@NotNull final T entity) {
+    @Nonnull
+    public static <T extends BaseEntity> T newAt(@Nonnull final T entity) {
       entity.setTimeCreated(System.nanoTime());
       return entity;
     }
 
     /** refresh the {@link #updatedAt} of the entity. */
-    @NotNull
-    public static <T extends BaseEntity> T touchAt(@NotNull final T entity) {
+    @Nonnull
+    public static <T extends BaseEntity> T touchAt(@Nonnull final T entity) {
       entity.setTimeUpdated(System.nanoTime());
       return entity;
     }
 
     /** refresh the {@link #deletedAt} of the entity. */
-    @NotNull
-    public static <T extends BaseEntity> T deleteAt(@NotNull final T entity) {
+    @Nonnull
+    public static <T extends BaseEntity> T deleteAt(@Nonnull final T entity) {
       entity.setTimeDeleted(System.nanoTime());
       return entity;
     }

@@ -55,6 +55,11 @@ allprojects {
       encoding = 'UTF-8'
     }
   }
+
+  configurations {
+    /* Exclude 'nop' implementation from dependencies. We will use logback. */
+    all*.exclude group: 'org.slf4j', module: 'slf4j-nop'
+  }
 }
 
 /* Cleanup root project too. */

@@ -23,14 +23,10 @@ war {
 dependencies {
   compile project(":lib-core")
 
-  compile 'com.sun.jersey:jersey-core:+'
-  compile 'com.sun.jersey:jersey-server:+'
-  compile 'com.sun.jersey:jersey-servlet:+'
-
-  /* Jackson JSON library */
-  compile 'com.fasterxml.jackson.core:jackson-core:+',
-      'com.fasterxml.jackson.core:jackson-databind:+',
-      'com.fasterxml.jackson.core:jackson-annotations:+'
+  /* Java RX implementation */
+  compile 'com.sun.jersey:jersey-core:+',
+      'com.sun.jersey:jersey-server:+',
+      'com.sun.jersey:jersey-servlet:+'
 
   // compile 'joda-time:joda-time:+'
 

@@ -7,35 +7,53 @@ archivesBaseName = "lib-core-${APP_VERSION}"
 
 compileJava.options.encoding = 'UTF-8'
 
-configurations {
-  /* Exclude 'nop' implementation from dependencies. We will use logback. */
-  all*.exclude group: 'org.slf4j', module: 'slf4j-nop'
-}
-
 dependencies {
+  /* [ RELEASE ] ==================================================================================================== */
   /* SLF4J + Logback + log4j-over-slf4j + jul-to-slf4j */
   compile 'org.slf4j:slf4j-api:+',
       'org.slf4j:log4j-over-slf4j:+',
       'org.slf4j:jul-to-slf4j:+'
+
+  /* Logback */
   compile 'ch.qos.logback:logback-classic:+'
+
   /* JPA */
   compile 'javax:javaee-api:+'
+
+  /* FindBugs Annotations */
+  compile 'com.google.code.findbugs:jsr305:+'
+
+  /* Jackson JSON library */
+  compile 'com.fasterxml.jackson.core:jackson-databind:+',
+      'com.fasterxml.jackson.core:jackson-core:+',
+      'com.fasterxml.jackson.core:jackson-annotations:+',
+      'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:+'
+
+  /* Hibernate */
+  compile 'org.hibernate:hibernate-core:+',
+      'org.hibernate:hibernate-entitymanager:+'
 
   /* [ TESTING ] ==================================================================================================== */
 
   /* SQLite */
   testCompile 'org.xerial:sqlite-jdbc:+'
-  /* Hibernate */
-  testCompile 'org.hibernate:hibernate-core:+',
-      'org.hibernate:hibernate-entitymanager:+'
 
+  /* Unit Testing Frameworks */
   testCompile 'junit:junit:+'
-  testCompile 'org.hamcrest:hamcrest-integration:+',
-      'org.hamcrest:hamcrest-core:+',
-      'org.hamcrest:hamcrest-library:+'
   testCompile 'org.mockito:mockito-core:+'
   testCompile 'org.assertj:assertj-core:+'
-  testCompile 'org.reflections:reflections:+'
+
+  /* Hamcrest libraries */
+//  testCompile 'org.hamcrest:hamcrest-integration:+',
+//      'org.hamcrest:hamcrest-core:+',
+//      'org.hamcrest:hamcrest-library:+'
+
+  /* Reflection utilities */
+  testCompile('org.reflections:reflections:+') {
+    exclude group: 'com.google.code.findbugs', module: 'annotations'
+  }
+
+  /* Pretty time printing for test reports */
   testCompile 'org.ocpsoft.prettytime:prettytime:+'
 }
 

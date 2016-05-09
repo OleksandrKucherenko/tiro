@@ -5,8 +5,8 @@ import com.tiro.schema.RoleColumns;
 import com.tiro.schema.Tables;
 import com.tiro.schema.UserColumns;
 
+import javax.annotation.Nonnull;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -45,7 +45,7 @@ public class Group extends BaseEntity implements GroupColumns {
   private Group() {
   }
 
-  public Group(@NotNull final String name) {
+  public Group(@Nonnull final String name) {
     super();
 
     this.name = name;
@@ -61,8 +61,8 @@ public class Group extends BaseEntity implements GroupColumns {
         super.toString() + "}";
   }
 
-  @NotNull
-  public Group addRole(@NotNull final Role role) {
+  @Nonnull
+  public Group addRole(@Nonnull final Role role) {
     this.roles.add(role);
 
     role.getGroups().add(this);
@@ -70,8 +70,8 @@ public class Group extends BaseEntity implements GroupColumns {
     return this;
   }
 
-  @NotNull
-  public Group addUser(@NotNull final User user) {
+  @Nonnull
+  public Group addUser(@Nonnull final User user) {
     this.users.add(user);
 
     // use direct instance add, not addGroup(...)
@@ -80,12 +80,12 @@ public class Group extends BaseEntity implements GroupColumns {
     return this;
   }
 
-  @NotNull
+  @Nonnull
   public Set<User> getUsers() {
     return this.users;
   }
 
-  @NotNull
+  @Nonnull
   public Set<Role> getRoles() {
     return this.roles;
   }

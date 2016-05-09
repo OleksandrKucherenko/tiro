@@ -8,11 +8,11 @@ import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.validation.constraints.NotNull;
 
 /** Abstract class that creates and rollbacks transaction. Great for all Database operations. */
 public abstract class BaseDatabaseTest {
@@ -91,7 +91,7 @@ public abstract class BaseDatabaseTest {
     // do nothing, reserved for inheritors
   }
 
-  protected void persistAll(@NotNull final DbEntity... entities) {
+  protected void persistAll(@Nonnull final DbEntity... entities) {
     for (Object data : entities) {
       mEm.persist(data);
     }
@@ -101,7 +101,7 @@ public abstract class BaseDatabaseTest {
     getReflections().getTypesAnnotatedWith(Entity.class).forEach(this::dump);
   }
 
-  protected void dump(@NotNull final Class<?> klass) {
+  protected void dump(@Nonnull final Class<?> klass) {
     mEm.createQuery("SELECT o FROM " + klass.getName() + " o", klass)
         .getResultList()
         .forEach(r -> _log.info(r.toString()));

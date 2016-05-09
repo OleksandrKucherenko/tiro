@@ -4,8 +4,8 @@ import com.tiro.schema.RoleColumns;
 import com.tiro.schema.Tables;
 import com.tiro.schema.UserColumns;
 
+import javax.annotation.Nonnull;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,7 +44,7 @@ public class User extends BaseEntity implements UserColumns {
   private User() {
   }
 
-  public User(@NotNull final String email, @NotNull final String name) {
+  public User(@Nonnull final String email, @Nonnull final String name) {
     super();
 
     this.nickName = name;
@@ -62,8 +62,8 @@ public class User extends BaseEntity implements UserColumns {
         super.toString() + "}";
   }
 
-  @NotNull
-  public User addRole(@NotNull final Role role) {
+  @Nonnull
+  public User addRole(@Nonnull final Role role) {
     this.roles.add(role);
 
     role.getUsers().add(this);
@@ -71,8 +71,8 @@ public class User extends BaseEntity implements UserColumns {
     return this;
   }
 
-  @NotNull
-  public User addGroup(@NotNull final Group group) {
+  @Nonnull
+  public User addGroup(@Nonnull final Group group) {
     this.groups.add(group);
 
     group.getUsers().add(this);
@@ -80,12 +80,12 @@ public class User extends BaseEntity implements UserColumns {
     return this;
   }
 
-  @NotNull
+  @Nonnull
   public Set<Role> getRoles() {
     return this.roles;
   }
 
-  @NotNull
+  @Nonnull
   public Set<Group> getGroups() {
     return this.groups;
   }

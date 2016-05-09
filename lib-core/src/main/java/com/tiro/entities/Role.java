@@ -3,8 +3,8 @@ package com.tiro.entities;
 import com.tiro.schema.RoleColumns;
 import com.tiro.schema.Tables;
 
+import javax.annotation.Nonnull;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,13 +36,13 @@ public class Role extends BaseEntity implements RoleColumns {
   private Role() {
   }
 
-  public Role(@NotNull final String name) {
+  public Role(@Nonnull final String name) {
     super();
 
     this.name = name;
   }
 
-  public Role(@NotNull final String name, @NotNull final String info) {
+  public Role(@Nonnull final String name, @Nonnull final String info) {
     this.name = name;
     this.info = info;
   }
@@ -51,8 +51,8 @@ public class Role extends BaseEntity implements RoleColumns {
     return name;
   }
 
-  @NotNull
-  /* package */ Role setName(@NotNull final String name) {
+  @Nonnull
+  /* package */ Role setName(@Nonnull final String name) {
     this.name = name;
     return this;
   }
@@ -61,18 +61,18 @@ public class Role extends BaseEntity implements RoleColumns {
     return info;
   }
 
-  @NotNull
-  /* package */ Role setInfo(@NotNull final String info) {
+  @Nonnull
+  /* package */ Role setInfo(@Nonnull final String info) {
     this.info = info;
     return this;
   }
 
-  @NotNull
+  @Nonnull
   /* package */ Set<Group> getGroups() {
     return groups;
   }
 
-  @NotNull
+  @Nonnull
   /* package */ Set<User> getUsers() {
     return users;
   }
