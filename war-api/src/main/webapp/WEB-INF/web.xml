@@ -9,7 +9,7 @@
           https://docs.oracle.com/cd/E24329_01/web.1211/e21049/web_xml.htm#WBAPP504
   -->
   <session-config>
-    <session-timeout>30</session-timeout>
+    <session-timeout>10</session-timeout>
     <cookie-config>
       <path>/</path>
     </cookie-config>
@@ -41,4 +41,5 @@
     <servlet-name>rest-api</servlet-name>
     <url-pattern>/*</url-pattern>
   </servlet-mapping>
+
 </web-app>

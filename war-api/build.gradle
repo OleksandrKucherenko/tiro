@@ -27,6 +27,11 @@ dependencies {
   compile 'com.sun.jersey:jersey-server:+'
   compile 'com.sun.jersey:jersey-servlet:+'
 
+  /* Jackson JSON library */
+  compile 'com.fasterxml.jackson.core:jackson-core:+',
+      'com.fasterxml.jackson.core:jackson-databind:+',
+      'com.fasterxml.jackson.core:jackson-annotations:+'
+
   // compile 'joda-time:joda-time:+'
 
   // providedCompile 'joda-time:joda-time:+'
