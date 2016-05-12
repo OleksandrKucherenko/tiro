@@ -7,6 +7,14 @@ archivesBaseName = "lib-core-${APP_VERSION}"
 
 compileJava.options.encoding = 'UTF-8'
 
+if (useJacoco) {
+  apply plugin: 'jacoco'
+
+  jacoco {
+    toolVersion = '+'
+  }
+}
+
 dependencies {
   /* [ RELEASE ] ==================================================================================================== */
   /* SLF4J + Logback + log4j-over-slf4j + jul-to-slf4j */
@@ -34,27 +42,29 @@ dependencies {
       'org.hibernate:hibernate-entitymanager:+'
 
   /* [ TESTING ] ==================================================================================================== */
+  if (useTdd) {
 
-  /* SQLite */
-  testCompile 'org.xerial:sqlite-jdbc:+'
+    /* SQLite */
+    testCompile 'org.xerial:sqlite-jdbc:+'
 
-  /* Unit Testing Frameworks */
-  testCompile 'junit:junit:+'
-  testCompile 'org.mockito:mockito-core:+'
-  testCompile 'org.assertj:assertj-core:+'
+    /* Unit Testing Frameworks */
+    testCompile 'junit:junit:+'
+    testCompile 'org.mockito:mockito-core:+'
+    testCompile 'org.assertj:assertj-core:+'
 
-  /* Hamcrest libraries */
+    /* Hamcrest libraries */
 //  testCompile 'org.hamcrest:hamcrest-integration:+',
 //      'org.hamcrest:hamcrest-core:+',
 //      'org.hamcrest:hamcrest-library:+'
 
-  /* Reflection utilities */
-  testCompile('org.reflections:reflections:+') {
-    exclude group: 'com.google.code.findbugs', module: 'annotations'
-  }
+    /* Reflection utilities */
+    testCompile('org.reflections:reflections:+') {
+      exclude group: 'com.google.code.findbugs', module: 'annotations'
+    }
 
-  /* Pretty time printing for test reports */
-  testCompile 'org.ocpsoft.prettytime:prettytime:+'
+    /* Pretty time printing for test reports */
+    testCompile 'org.ocpsoft.prettytime:prettytime:+'
+  }
 }
 
 jar {
@@ -68,6 +78,9 @@ jar {
 }
 
 /* [ UNIT TESTING ] ================================================================================================= */
+
+tasks.compileTestJava.onlyIf { useTdd }
+test.onlyIf { useTdd }
 
 test {
   /* Print tests results to the output */

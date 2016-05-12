@@ -16,6 +16,15 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
 
+
+if (useJacoco) {
+  apply plugin: 'jacoco'
+
+  jacoco {
+    toolVersion = '+'
+  }
+}
+
 war {
   jar.enabled = false
 }
@@ -32,14 +41,20 @@ dependencies {
 
   // providedCompile 'joda-time:joda-time:+'
 
-  testCompile 'com.sun.jersey:jersey-client:+'
+  if (useTdd) {
+    testCompile 'com.sun.jersey:jersey-client:+'
+  }
 }
+
+tasks.compileTestJava.onlyIf { useTdd }
+test.onlyIf { useTdd }
 
 test {
   testLogging {
     events "passed", "skipped", "failed", "standardOut", "standardError"
   }
 }
+
 
 gretty {
   contextPath = '/api'

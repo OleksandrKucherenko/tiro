@@ -27,8 +27,9 @@ def gitBranch() {
   return "git rev-parse --abbrev-ref HEAD".execute().text.trim();
 }
 
-/* PUBLISH GLOBAL VARIABLES FOR ALL SUB-PROJECTS */
+/* GLOBAL configuration for ALL PROJECTS/MODULES */
 allprojects {
+  /* PUBLISH GLOBAL VARIABLES FOR ALL SUB-PROJECTS */
   ext {
     GIT_REVISION = "${gitRevision()}"
     GIT_BRANCH = "${gitBranch()}"
@@ -40,6 +41,9 @@ allprojects {
     APP_MAJOR = "${project.SOLUTION_VERSION_MAJOR}"
     APP_MINOR = "${project.SOLUTION_VERSION_MINOR}"
     APP_VERSION = "$APP_MAJOR.$APP_MINOR.$GIT_REVISION"
+
+    useTdd = Boolean.parseBoolean("${project.USE_TDD}")
+    useJacoco = USE_TDD && Boolean.parseBoolean("${project.USE_JACOCO}")
   }
 
   repositories {

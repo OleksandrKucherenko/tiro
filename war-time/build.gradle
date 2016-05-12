@@ -10,15 +10,18 @@ buildscript {
 
 apply plugin: 'war'
 apply plugin: 'org.akhikhl.gretty'
-apply plugin: 'jacoco'
 
 // we will use lambda
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
 
-jacoco {
-  toolVersion = '+'
+if (useJacoco) {
+  apply plugin: 'jacoco'
+
+  jacoco {
+    toolVersion = '+'
+  }
 }
 
 war {
@@ -36,13 +39,21 @@ dependencies {
   // compile 'joda-time:joda-time:+'
 
   // providedCompile 'joda-time:joda-time:+'
+
+  if (useTdd) {
+    // TODO: place here unit tests dependencies
+  }
 }
+
+tasks.compileTestJava.onlyIf { useTdd }
+test.onlyIf { useTdd }
 
 test {
   testLogging {
     events "passed", "skipped", "failed", "standardOut", "standardError"
   }
 }
+
 
 gretty {
   contextPath = '/time'
