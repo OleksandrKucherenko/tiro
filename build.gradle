@@ -9,11 +9,14 @@ buildscript {
     classpath 'org.akhikhl.gretty:gretty:+'
     /* DEPENDENCIES UPDATES REPORTS */
     classpath 'com.github.ben-manes:gradle-versions-plugin:+'
+    /* RECORD TIME OF TASKS EXECUTION, https://github.com/passy/build-time-tracker-plugin */
+    classpath "net.rdrei.android.buildtimetracker:gradle-plugin:+"
   }
 }
 
 apply plugin: 'org.akhikhl.gretty'
 apply plugin: 'com.github.ben-manes.versions'
+apply plugin: "build-time-tracker"
 
 /* Get GIT revision unique number. */
 
@@ -69,6 +72,27 @@ allprojects {
 /* Cleanup root project too. */
 task clean(type: Delete) {
   delete rootProject.buildDir
+}
+
+/* */
+buildtimetracker {
+  reporters {
+    csv {
+      output "build/times.csv"
+      append true
+      header false
+    }
+
+    summary {
+      ordered false
+      threshold 50
+      barstyle "none" /* unicode | ascii | none */
+    }
+
+    csvSummary {
+      csv "build/times.csv"
+    }
+  }
 }
 
 /* DEFINE SERVER CONFIGURATION FILES */
