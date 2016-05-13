@@ -74,7 +74,7 @@ task clean(type: Delete) {
   delete rootProject.buildDir
 }
 
-/* */
+/* BUILD TASKS EXECUTION TIME TRACKING */
 buildtimetracker {
   reporters {
     csv {

@@ -16,7 +16,7 @@ import java.util.List;
  * <p>
  * curl -i
  */
-@Path("/v1/security")
+@Path(Services.V1_SECURITY)
 public class SecurityRestService {
   @GET
   @Path("/version")

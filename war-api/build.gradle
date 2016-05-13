@@ -33,16 +33,23 @@ dependencies {
   compile project(":lib-core")
 
   /* Java RX implementation */
-  compile 'com.sun.jersey:jersey-core:+',
-      'com.sun.jersey:jersey-server:+',
-      'com.sun.jersey:jersey-servlet:+'
+  compile 'com.sun.jersey:jersey-servlet:+'
+
+  /* Jackson JSON added */
+  compile 'com.fasterxml.jackson.core:jackson-databind:+'
 
   // compile 'joda-time:joda-time:+'
 
   // providedCompile 'joda-time:joda-time:+'
 
   if (useTdd) {
-    testCompile 'com.sun.jersey:jersey-client:+'
+    /* Unit Testing Frameworks */
+    testCompile 'junit:junit:+'
+    testCompile 'org.mockito:mockito-core:+'
+    testCompile 'org.assertj:assertj-core:+'
+
+    testCompile 'com.sun.jersey.jersey-test-framework:jersey-test-framework-grizzly2:+',
+        'javax.ws.rs:jsr311-api:+'
   }
 }
 

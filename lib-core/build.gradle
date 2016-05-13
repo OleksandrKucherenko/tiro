@@ -31,15 +31,11 @@ dependencies {
   /* FindBugs Annotations */
   compile 'com.google.code.findbugs:jsr305:+'
 
-  /* Jackson JSON library */
-  compile 'com.fasterxml.jackson.core:jackson-databind:+',
-      'com.fasterxml.jackson.core:jackson-core:+',
-      'com.fasterxml.jackson.core:jackson-annotations:+',
-      'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:+'
+  /* Jackson JSON Annotations */
+  compile 'com.fasterxml.jackson.core:jackson-annotations:+'
 
   /* Hibernate */
-  compile 'org.hibernate:hibernate-core:+',
-      'org.hibernate:hibernate-entitymanager:+'
+  compile 'org.hibernate:hibernate-entitymanager:+'
 
   /* [ TESTING ] ==================================================================================================== */
   if (useTdd) {
@@ -51,11 +47,6 @@ dependencies {
     testCompile 'junit:junit:+'
     testCompile 'org.mockito:mockito-core:+'
     testCompile 'org.assertj:assertj-core:+'
-
-    /* Hamcrest libraries */
-//  testCompile 'org.hamcrest:hamcrest-integration:+',
-//      'org.hamcrest:hamcrest-core:+',
-//      'org.hamcrest:hamcrest-library:+'
 
     /* Reflection utilities */
     testCompile('org.reflections:reflections:+') {

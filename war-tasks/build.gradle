@@ -32,15 +32,13 @@ dependencies {
   compile project(":lib-core")
 
   /* Java RX implementation */
-  compile 'com.sun.jersey:jersey-core:+',
-      'com.sun.jersey:jersey-server:+',
-      'com.sun.jersey:jersey-servlet:+'
+  compile 'com.sun.jersey:jersey-servlet:+'
 
   // compile 'joda-time:joda-time:+'
 
   // providedCompile 'joda-time:joda-time:+'
   if (useTdd) {
-    testCompile 'com.sun.jersey:jersey-client:+'
+    // TODO: add testing dependencies
   }
 }
 
