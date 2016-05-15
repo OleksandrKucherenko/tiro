@@ -63,6 +63,7 @@
 
   <!-- JAX-RS, REST api -->
   <logger name="com.sun.jersey" level="ALL"/>
+  <logger name="org.glassfish" level="ALL"/>
 
   <root level="ALL">
     <appender-ref ref="CONSOLE"/>

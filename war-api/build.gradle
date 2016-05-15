@@ -48,8 +48,10 @@ dependencies {
     testCompile 'org.mockito:mockito-core:+'
     testCompile 'org.assertj:assertj-core:+'
 
-    testCompile 'com.sun.jersey.jersey-test-framework:jersey-test-framework-grizzly2:+',
-        'javax.ws.rs:jsr311-api:+'
+    /* SLF4J + Logback + log4j-over-slf4j + jul-to-slf4j */
+    testCompile 'org.slf4j:jul-to-slf4j:+'
+    testCompile 'com.sun.jersey.jersey-test-framework:jersey-test-framework-grizzly2:+'
+//    testCompile 'javax.ws.rs:jsr311-api:+'
   }
 }
 
