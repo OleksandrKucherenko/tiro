@@ -8,12 +8,11 @@
       References:
           https://docs.oracle.com/cd/E24329_01/web.1211/e21049/web_xml.htm#WBAPP504
           https://jersey.java.net/apidocs/2.11/jersey/org/glassfish/jersey/server/ServerProperties.html
+          https://jersey.java.net/documentation/latest/appendix-properties.html#appendix-properties-server
   -->
   <session-config>
     <session-timeout>10</session-timeout>
-    <cookie-config>
-      <path>/</path>
-    </cookie-config>
+    <tracking-mode>URL</tracking-mode>
   </session-config>
 
   <servlet>

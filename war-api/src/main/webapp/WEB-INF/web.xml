@@ -11,9 +11,7 @@
   -->
   <session-config>
     <session-timeout>10</session-timeout>
-    <cookie-config>
-      <path>/</path>
-    </cookie-config>
+    <tracking-mode>URL</tracking-mode>
   </session-config>
 
   <!--
