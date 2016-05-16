@@ -4,6 +4,7 @@ import com.tiro.Services;
 import com.tiro.SvcVersioning;
 import com.tiro.entities.Role;
 
+import javax.annotation.Nonnull;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -13,13 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Example:
- * http://localhost:9191/tasks/api/security/version
+ * Example:<br/>
+ * http://localhost:9191/api/v1/security/version
  * <p>
- * curl -i
+ * Test:<br/>
+ * curl -i http://localhost:9191/api/v1/security/version
  */
 @Path(Services.V1_SECURITY)
 public class SecurityRestServiceV1 implements SvcVersioning {
+  @Nonnull
   @Override
   public String getVersion() {
     return "1.0";
