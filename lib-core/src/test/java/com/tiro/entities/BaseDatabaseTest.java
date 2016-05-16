@@ -17,7 +17,7 @@ import javax.persistence.Persistence;
 /** Abstract class that creates and rollbacks transaction. Great for all Database operations. */
 public abstract class BaseDatabaseTest {
   /** Unit test logger. */
-  protected static final Logger _log = LoggerFactory.getLogger(Consts.LOG);
+  protected static final Logger _log = LoggerFactory.getLogger(Consts.TAG);
   /** Reflection helper instance. */
   protected static Reflections _reflections;
   /** JPA factory. */

@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.*;
 @RunWith(JUnit4.class)
 public class RestApiRulesTest {
   /** Unit test logger. */
-  protected static final Logger _log = LoggerFactory.getLogger(Consts.LOG);
+  protected static final Logger _log = LoggerFactory.getLogger(Consts.TAG);
   /** Reflection helper instance. */
   protected static Reflections _reflections;
 

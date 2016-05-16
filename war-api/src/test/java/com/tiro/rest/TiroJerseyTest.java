@@ -15,12 +15,13 @@ import java.util.logging.Handler;
 import java.util.logging.Logger;
 
 /** Base class for REST API testing. Solves configuration issue with JUL logging. */
+@SuppressWarnings({"unused"})
 public class TiroJerseyTest extends JerseyTest {
   /** Trick: static variables initialized before the class members, we connect the SLF4J bridge for grizzly. */
-  private static final int TRICK_LOG_CONFIGURATION = configureLogger("", new SLF4JBridgeHandler());
+  private static final int TRICK_LOG_CONFIGURATION = configure("", new SLF4JBridgeHandler());
 
   /** Unit test logger. */
-  protected static final org.slf4j.Logger _log = LoggerFactory.getLogger(Consts.LOG);
+  protected static final org.slf4j.Logger _log = LoggerFactory.getLogger(Consts.TAG);
 
   /** Test Method information. */
   @Rule public TestName mTestName = new TestName();
@@ -30,7 +31,7 @@ public class TiroJerseyTest extends JerseyTest {
    *
    * @return number of handlers found in logger.
    */
-  private static int configureLogger(@Nonnull final String packageName, @Nonnull final java.util.logging.Handler handler) {
+  private static int configure(@Nonnull final String packageName, @Nonnull final java.util.logging.Handler handler) {
     final Logger logger = Logger.getLogger(packageName);
     final Handler[] handlers = logger.getHandlers();
 
