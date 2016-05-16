@@ -38,7 +38,6 @@ dependencies {
   compile 'org.glassfish.jersey.containers:jersey-container-servlet:+'
 
   // compile 'joda-time:joda-time:+'
-
   // providedCompile 'joda-time:joda-time:+'
 
   if (useTdd) {

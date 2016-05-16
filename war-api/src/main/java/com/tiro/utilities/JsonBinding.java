@@ -3,6 +3,7 @@ package com.tiro.utilities;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Singleton of the JSON mapping library, used for (de-)serialization of POJOs.
@@ -72,5 +74,21 @@ public enum JsonBinding {
     }
 
     return null;
+  }
+
+  public static <T> List<T> fromJson(@Nonnull final String json, @Nonnull final TypeReference<List<T>> type) {
+    List<T> result = null;
+
+    try {
+      result = JsonBinding.INSTANCE.mapper.readValue(json, type);
+    } catch (final Throwable ignored) {
+      _log.error("Failed deserialization of class: {} with exception: {}, json: {}", type, ignored, json);
+    }
+
+    return result;
+  }
+
+  public static <T> T fromObject(@Nonnull final Object obj, @Nonnull final Class<T> clazz) {
+    return JsonBinding.INSTANCE.mapper.convertValue(obj, clazz);
   }
 }

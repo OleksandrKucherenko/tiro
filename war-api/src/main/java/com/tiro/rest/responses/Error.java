@@ -2,6 +2,7 @@ package com.tiro.rest.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
 import java.io.PrintWriter;
@@ -49,9 +50,9 @@ public class Error {
         null == throwable.getCause() ? null : Error.from(-1, null, throwable.getCause()));
   }
 
-  public static Error from(final HttpServletRequest request, final Throwable throwable) {
+  public static Error from(@Nullable final HttpServletRequest request, final Throwable throwable) {
     // default error code
-    final String url = request.getRequestURL().toString();
+    final String url = (null != request) ? request.getRequestURL().toString() : "";
     int code = 500;
 
     // extract correct status code

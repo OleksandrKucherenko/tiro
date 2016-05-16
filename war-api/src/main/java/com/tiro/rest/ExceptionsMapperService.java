@@ -1,7 +1,6 @@
 package com.tiro.rest;
 
 import com.tiro.rest.responses.Error;
-import com.tiro.utilities.JsonBinding;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +35,7 @@ public class ExceptionsMapperService implements ExceptionMapper<Throwable> {
     return Response
         .status(Response.Status.INTERNAL_SERVER_ERROR)
         .type(MediaType.APPLICATION_JSON_TYPE)
-        .entity(JsonBinding.toJson(errorInfo))
+        .entity(errorInfo)
         .build();
   }
 }
