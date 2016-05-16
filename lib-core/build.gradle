@@ -26,8 +26,9 @@ dependencies {
   /* Logback */
   compile 'ch.qos.logback:logback-classic:+'
 
-  /* JPA */
-  compile 'javax:javaee-api:+'
+  /* JPA implementation */
+  // ALTERNATIVES: compile 'javax:javaee-api:+' OR compile 'javax.persistence:persistence-api:+'
+  compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:+'
 
   /* FindBugs Annotations */
   compile 'com.google.code.findbugs:jsr305:+'

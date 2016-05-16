@@ -1,11 +1,11 @@
 package com.tiro.rest;
 
-import com.sun.jersey.test.framework.AppDescriptor;
-import com.sun.jersey.test.framework.JerseyTest;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Test;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
-import javax.annotation.Nonnull;
+import javax.ws.rs.core.Application;
 import java.util.Arrays;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
@@ -27,23 +27,14 @@ public class VersionApiTest extends JerseyTest {
     return handlers.length;
   }
 
-  public VersionApiTest() {
-    super(packageName(SecurityRestService.class));
-  }
-
-
-  public static String packageName(@Nonnull final Class<?> clazz) {
-    return clazz.getPackage().getName();
-  }
-
   @Override
-  protected AppDescriptor configure() {
-    return super.configure();
+  protected Application configure() {
+    return new ResourceConfig(SecurityRestService.class);
   }
 
   @Test
   public void testVersionApiCall() throws Exception {
-    String version = resource().path(Services.V1_SECURITY).path("/version").get(String.class);
+    String version = target(Services.V1_SECURITY).path("/version").request().get(String.class);
 
     assertThat(version)
         .isNotEmpty()

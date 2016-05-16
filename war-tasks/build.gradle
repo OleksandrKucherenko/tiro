@@ -31,8 +31,8 @@ war {
 dependencies {
   compile project(":lib-core")
 
-  /* Java RX implementation */
-  compile 'com.sun.jersey:jersey-servlet:+'
+  /* Java RX - v2.xx */
+  compile 'org.glassfish.jersey.containers:jersey-container-servlet:+'
 
   // compile 'joda-time:joda-time:+'
 

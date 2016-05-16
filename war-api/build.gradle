@@ -32,8 +32,9 @@ war {
 dependencies {
   compile project(":lib-core")
 
-  /* Java RX implementation */
-  compile 'com.sun.jersey:jersey-servlet:+'
+  /* Java RX - v2.xx */
+  compile 'org.glassfish.jersey.containers:jersey-container-servlet:+'
+  compile 'org.glassfish.jersey.media:jersey-media-json-jackson:+'
 
   /* Jackson JSON added */
   compile 'com.fasterxml.jackson.core:jackson-databind:+'
@@ -50,8 +51,9 @@ dependencies {
 
     /* SLF4J + Logback + log4j-over-slf4j + jul-to-slf4j */
     testCompile 'org.slf4j:jul-to-slf4j:+'
-    testCompile 'com.sun.jersey.jersey-test-framework:jersey-test-framework-grizzly2:+'
-//    testCompile 'javax.ws.rs:jsr311-api:+'
+
+    /* Run tests on Grizzly2 provider instead of real server */
+    testCompile 'org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:+'
   }
 }
 
