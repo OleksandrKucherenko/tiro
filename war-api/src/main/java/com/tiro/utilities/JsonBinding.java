@@ -1,4 +1,4 @@
-package com.tiro.rest;
+package com.tiro.utilities;
 
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;

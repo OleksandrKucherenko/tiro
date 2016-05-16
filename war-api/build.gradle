@@ -49,6 +49,14 @@ dependencies {
     testCompile 'org.mockito:mockito-core:+'
     testCompile 'org.assertj:assertj-core:+'
 
+    /* Reflection utilities */
+    testCompile('org.reflections:reflections:+') {
+      exclude group: 'com.google.code.findbugs', module: 'annotations'
+    }
+
+    /* Pretty time printing for test reports */
+    testCompile 'org.ocpsoft.prettytime:prettytime:+'
+
     /* SLF4J + Logback + log4j-over-slf4j + jul-to-slf4j */
     testCompile 'org.slf4j:jul-to-slf4j:+'
 

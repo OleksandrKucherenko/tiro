@@ -65,7 +65,6 @@ public abstract class BaseDatabaseTest {
 
   @After
   public final void tearDown() throws Exception {
-
     onTearDown();
 
     if (null != mEm) {

@@ -1,5 +1,7 @@
 package com.tiro.rest;
 
+import com.tiro.Services;
+import com.tiro.SvcVersioning;
 import com.tiro.entities.Role;
 
 import javax.ws.rs.GET;
@@ -17,10 +19,8 @@ import java.util.List;
  * curl -i
  */
 @Path(Services.V1_SECURITY)
-public class SecurityRestService {
-  @GET
-  @Path("/version")
-  @Produces(MediaType.TEXT_HTML)
+public class SecurityRestServiceV1 implements SvcVersioning {
+  @Override
   public String getVersion() {
     return "1.0";
   }

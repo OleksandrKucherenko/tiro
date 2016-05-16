@@ -1,6 +1,7 @@
 package com.tiro.rest;
 
 import com.tiro.rest.responses.Error;
+import com.tiro.utilities.JsonBinding;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
