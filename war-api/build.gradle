@@ -27,6 +27,9 @@ if (useJacoco) {
 
 war {
   jar.enabled = false
+
+  /* Remove GIT empty folder .placeholder files from final binary. */
+  rootSpec.exclude('**/.placeholder')
 }
 
 dependencies {
@@ -40,7 +43,6 @@ dependencies {
   compile 'com.fasterxml.jackson.core:jackson-databind:+'
 
   // compile 'joda-time:joda-time:+'
-
   // providedCompile 'joda-time:joda-time:+'
 
   if (useTdd) {
@@ -69,8 +71,16 @@ tasks.compileTestJava.onlyIf { useTdd }
 test.onlyIf { useTdd }
 
 test {
+  /* Print tests results to the output */
   testLogging {
-    events "passed", "skipped", "failed", "standardOut", "standardError"
+    // set options for log level LIFECYCLE
+    events "failed", "passed"
+
+    // set options for log level DEBUG
+    debug.events "failed", "passed", "skipped", "standardError", "standardOut", "started"
+
+    // set options for log level INFO
+    info.events = ["failed", "passed", "skipped"]
   }
 }
 

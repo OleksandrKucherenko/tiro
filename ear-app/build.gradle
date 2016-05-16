@@ -1,14 +1,19 @@
 apply plugin: 'ear'
 
 ear {
-    /* CUSTOM ENTRIES for application.xml */
-    deploymentDescriptor {
-        webModule('war-time.war', project(':war-time').gretty.contextPath)
-        webModule('war-tasks.war', project(':war-tasks').gretty.contextPath)
-    }
+  /* CUSTOM ENTRIES for application.xml */
+  deploymentDescriptor {
+    webModule('war-time.war', project(':war-time').gretty.contextPath)
+    webModule('war-tasks.war', project(':war-tasks').gretty.contextPath)
+  }
+
+  /* Remove GIT empty folder .placeholder files from final binary. */
+  exclude('**/.placeholder')
+
 }
 
 dependencies {
+  deploy project(path: ':war-api', configuration: 'archives')
   deploy project(path: ':war-tasks', configuration: 'archives')
   deploy project(path: ':war-time', configuration: 'archives')
 

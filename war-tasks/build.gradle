@@ -26,6 +26,9 @@ if (useJacoco) {
 
 war {
   jar.enabled = false
+
+  /* Remove GIT empty folder .placeholder files from final binary. */
+  rootSpec.exclude('**/.placeholder')
 }
 
 dependencies {

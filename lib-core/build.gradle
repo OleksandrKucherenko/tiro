@@ -1,3 +1,10 @@
+//region imports
+import javax.xml.XMLConstants
+import javax.xml.transform.stream.StreamSource
+import javax.xml.validation.SchemaFactory
+
+//endregion
+
 apply plugin: 'java'
 
 // we will use lambda
@@ -100,10 +107,10 @@ def fileToUrl(def filePath) {
 def validateXml(def xmlUrl, def xsdUrl) {
   new URL("${xsdUrl}").withInputStream { xsd ->
     new URL("${xmlUrl}").withInputStream { xml ->
-      javax.xml.validation.SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI)
-          .newSchema(new javax.xml.transform.stream.StreamSource(xsd))
+      SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI)
+          .newSchema(new StreamSource(xsd))
           .newValidator()
-          .validate(new javax.xml.transform.stream.StreamSource(xml))
+          .validate(new StreamSource(xml))
     }
   }
 }
