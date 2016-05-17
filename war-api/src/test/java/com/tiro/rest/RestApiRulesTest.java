@@ -2,10 +2,8 @@ package com.tiro.rest;
 
 import com.tiro.Consts;
 import com.tiro.SvcVersioning;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import com.tiro.WarmupHelper;
+import org.junit.*;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -29,6 +27,7 @@ public class RestApiRulesTest {
   /** Reflection helper instance. */
   protected static Reflections _reflections;
 
+  protected static final long _start = WarmupHelper.TRICK_WARM_UP;
 
   /** Test Method information. */
   @Rule public TestName mTestName = new TestName();
@@ -40,6 +39,11 @@ public class RestApiRulesTest {
     }
 
     return _reflections;
+  }
+
+  @BeforeClass
+  public static void initialize() {
+    WarmupHelper.warmUpGrizzlyWaiting();
   }
 
   @Before

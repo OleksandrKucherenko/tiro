@@ -14,14 +14,6 @@ archivesBaseName = "lib-core-${APP_VERSION}"
 
 compileJava.options.encoding = 'UTF-8'
 
-if (useJacoco) {
-  apply plugin: 'jacoco'
-
-  jacoco {
-    toolVersion = '+'
-  }
-}
-
 dependencies {
   /* [ RELEASE ] ==================================================================================================== */
   /* SLF4J + Logback + log4j-over-slf4j + jul-to-slf4j */
@@ -82,6 +74,14 @@ jar {
 tasks.compileTestJava.onlyIf { useTdd }
 test.onlyIf { useTdd }
 
+if (useJacoco) {
+  apply plugin: 'jacoco'
+
+  jacoco {
+    toolVersion = '+'
+  }
+}
+
 test {
   /* Print tests results to the output */
   testLogging {
@@ -93,6 +93,27 @@ test {
 
     // set options for log level INFO
     info.events = ["failed", "passed", "skipped"]
+
+
+  }
+
+  /* Disable separated test reports, we use aggregated */
+  reports {
+    html.enabled = false
+  }
+
+  /* Time reporting for each test. */
+  if (false) {
+    Map<Object, Long> tracker = new HashMap<>();
+    beforeTest { descriptor ->
+      tracker.put(descriptor, System.nanoTime())
+    }
+
+    afterTest { descriptor ->
+      def time = (System.nanoTime() - tracker.get(descriptor)) / 1000.0 / 1000.0;
+      logger.lifecycle('')
+      logger.lifecycle("" + descriptor + " takes: " + time + "ms")
+    }
   }
 }
 

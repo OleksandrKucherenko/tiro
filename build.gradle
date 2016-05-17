@@ -18,14 +18,12 @@ apply plugin: 'org.akhikhl.gretty'
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: "build-time-tracker"
 
-/* Get GIT revision unique number. */
-
+/** Get GIT revision unique number. */
 def gitRevision() {
   return "git rev-list --count HEAD".execute().text.trim();
 }
 
-/* Get GIT Branch name. */
-
+/** Get GIT Branch name. */
 def gitBranch() {
   return "git rev-parse --abbrev-ref HEAD".execute().text.trim();
 }
@@ -69,7 +67,23 @@ allprojects {
   }
 }
 
-/* Cleanup root project too. */
+subprojects {
+  apply plugin: 'java'
+
+  // Disable the test report for the individual test task
+  test {
+    reports.html.enabled = false
+  }
+}
+
+task testReport(type: TestReport) {
+  destinationDir = file("$buildDir/reports/tests")
+
+  // Include the results from the `test` task in all sub-projects
+  reportOn subprojects*.test
+}
+
+/* CLEANUP ROOT PROJECT TOO. */
 task clean(type: Delete) {
   delete rootProject.buildDir
 }

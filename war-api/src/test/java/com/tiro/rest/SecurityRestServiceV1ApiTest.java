@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.*;
 
 /** Jersey API testing. */
 public class SecurityRestServiceV1ApiTest extends TiroJerseyTest {
+
   @Override
   protected Application configure() {
     return new ResourceConfig(SecurityRestServiceV1.class)

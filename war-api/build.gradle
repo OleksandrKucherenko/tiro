@@ -16,15 +16,6 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
 
-
-if (useJacoco) {
-  apply plugin: 'jacoco'
-
-  jacoco {
-    toolVersion = '+'
-  }
-}
-
 war {
   jar.enabled = false
 
@@ -67,8 +58,18 @@ dependencies {
   }
 }
 
+/* [ UNIT TESTING ] ================================================================================================= */
+
 tasks.compileTestJava.onlyIf { useTdd }
 test.onlyIf { useTdd }
+
+if (useJacoco) {
+  apply plugin: 'jacoco'
+
+  jacoco {
+    toolVersion = '+'
+  }
+}
 
 test {
   /* Print tests results to the output */
@@ -82,8 +83,12 @@ test {
     // set options for log level INFO
     info.events = ["failed", "passed", "skipped"]
   }
-}
 
+  /* Disable separated test reports, we use aggregated */
+  reports {
+    html.enabled = false
+  }
+}
 
 gretty {
   contextPath = '/api'
