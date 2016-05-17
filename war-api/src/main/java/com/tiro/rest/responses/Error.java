@@ -1,5 +1,6 @@
 package com.tiro.rest.responses;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.annotation.Nullable;
@@ -21,9 +22,13 @@ public class Error {
 
   public final Error inner;
 
-  private Error(final int code, final String url,
-                final String clazz, final String message,
-                final String[] stack, final Error inner) {
+  @JsonCreator
+  private Error(@JsonProperty("code") final int code,
+                @JsonProperty("url") final String url,
+                @JsonProperty("class") final String clazz,
+                @JsonProperty("message") final String message,
+                @JsonProperty("stack") final String[] stack,
+                @JsonProperty("inner") final Error inner) {
     this.code = code;
     this.url = url;
     this.className = clazz;
