@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
-<!-- http://www.eclipse.org/jetty/documentation/current/reference-section.html#jetty-xml-syntax -->
+<!--
+  References:
+    http://www.eclipse.org/jetty/documentation/current/reference-section.html#jetty-xml-syntax
+    http://www.eclipse.org/jetty/documentation/current/quickstart-config-what.html
+-->
 <Configure id="Server" class="org.eclipse.jetty.server.Server">
   <!-- do nothing, this is just a placeholder for future more precise configuration. -->
 </Configure>

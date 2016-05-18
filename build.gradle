@@ -63,24 +63,35 @@ allprojects {
     }
   }
 
-  /* Exclude 'nop' implementation from dependencies. We will use logback. */
+  /* Exclude SLF4J 'nop' implementation from dependencies. We will use logback. */
   configurations {
     all*.exclude group: 'org.slf4j', module: 'slf4j-nop'
   }
 
+  /* Force Jetty dependencies be upgraded to latest version */
+  def grettyResolutionStrategy = { DependencyResolveDetails details ->
+    if (details.requested.group == 'org.eclipse.jetty' ||
+        details.requested.group == 'org.eclipse.jetty.websocket') {
+      details.useVersion '+'
+    }
+
+  }
+
   /* Upgrade jetty 9 to latest release. instead of v9.2 use v9.3 */
   afterEvaluate { project ->
-    def grettyResolutionStrategy = { DependencyResolveDetails details ->
-      if (details.requested.group == 'org.eclipse.jetty' ||
-          details.requested.group == 'org.eclipse.jetty.websocket') {
-        details.useVersion '+'
+    /* Exclude old JSP module from dependencies */
+    project.configurations {
+
+      grettyRunnerJetty9 {
+        exclude group: 'org.eclipse.jetty', module: 'jetty-jsp'
+
+        resolutionStrategy.eachDependency(grettyResolutionStrategy)
       }
     }
 
-    project.configurations {
-      grettyRunnerJetty9 {
-        resolutionStrategy.eachDependency(grettyResolutionStrategy)
-      }
+    /* Include new JSP apache module */
+    project.dependencies {
+      grettyRunnerJetty9 'org.eclipse.jetty:apache-jsp:+'
     }
   }
 }
@@ -113,12 +124,12 @@ buildtimetracker {
 
 /* DEFINE SERVER CONFIGURATION FILES */
 gretty {
-  /* Jetty 9 requires proper configuration for making possible JSP running. */
+  /* Jetty v9.3 requires proper configuration for making possible JSP running. */
   //  serverConfigFile "${rootProject.projectDir}/gradle/configuration/jetty.xml"
-  //  servletContainer 'jetty9'
+  servletContainer 'jetty9'
 
   /* Tomcat8 is properly configured for JSP from the beginning, just run and enjoy! */
-  servletContainer 'tomcat8'
+//  servletContainer 'tomcat8'
 }
 
 /* CREATE A FARM FOR EXECUTING MULTIPLE WAR FILES */
