@@ -22,13 +22,12 @@ public class PagesFilter implements Filter {
     final HttpServletRequest request = (HttpServletRequest) rq;
     final HttpServletResponse response = (HttpServletResponse) rp;
 
+    doProcessing(request, response);
+
     // files inside the WEB-INF folder should be executed without additional processing
-    if (request.getRequestURI().contains("/WEB-INF")) {
-      chain.doFilter(rq, rp);
-    } else {
-      doProcessing(request, response);
-      chain.doFilter(rq, rp);
-    }
+    final boolean isWebInf = (request.getRequestURI().contains("/WEB-INF"));
+
+    chain.doFilter(rq, rp);
   }
 
   @Override

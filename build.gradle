@@ -30,6 +30,13 @@ def gitBranch() {
 
 /* GLOBAL configuration for ALL PROJECTS/MODULES */
 allprojects {
+  /* Use local maven repository before the jcenter or maven-central. */
+  repositories {
+    mavenLocal()
+    jcenter()
+    mavenCentral()
+  }
+
   /* PUBLISH GLOBAL VARIABLES FOR ALL SUB-PROJECTS */
   ext {
     GIT_REVISION = "${gitRevision()}"
@@ -47,12 +54,7 @@ allprojects {
     useJacoco = USE_TDD && Boolean.parseBoolean("${project.USE_JACOCO}")
   }
 
-  repositories {
-    mavenLocal()
-    jcenter()
-    mavenCentral()
-  }
-
+  /* Update Java compiler options for making visible all warnings. */
   tasks.withType(JavaCompile) {
     configure(options) {
       compilerArgs << '-Xlint:all' << '-Xlint:-options'
@@ -61,26 +63,26 @@ allprojects {
     }
   }
 
+  /* Exclude 'nop' implementation from dependencies. We will use logback. */
   configurations {
-    /* Exclude 'nop' implementation from dependencies. We will use logback. */
     all*.exclude group: 'org.slf4j', module: 'slf4j-nop'
   }
-}
 
-subprojects {
-  apply plugin: 'java'
+  /* Upgrade jetty 9 to latest release. instead of v9.2 use v9.3 */
+  afterEvaluate { project ->
+    def grettyResolutionStrategy = { DependencyResolveDetails details ->
+      if (details.requested.group == 'org.eclipse.jetty' ||
+          details.requested.group == 'org.eclipse.jetty.websocket') {
+        details.useVersion '+'
+      }
+    }
 
-  // Disable the test report for the individual test task
-  test {
-    reports.html.enabled = false
+    project.configurations {
+      grettyRunnerJetty9 {
+        resolutionStrategy.eachDependency(grettyResolutionStrategy)
+      }
+    }
   }
-}
-
-task testReport(type: TestReport) {
-  destinationDir = file("$buildDir/reports/tests")
-
-  // Include the results from the `test` task in all sub-projects
-  reportOn subprojects*.test
 }
 
 /* CLEANUP ROOT PROJECT TOO. */
@@ -111,7 +113,12 @@ buildtimetracker {
 
 /* DEFINE SERVER CONFIGURATION FILES */
 gretty {
-  // serverConfigFile "${rootProject.projectDir}/gradle/configuration"
+  /* Jetty 9 requires proper configuration for making possible JSP running. */
+  //  serverConfigFile "${rootProject.projectDir}/gradle/configuration/jetty.xml"
+  //  servletContainer 'jetty9'
+
+  /* Tomcat8 is properly configured for JSP from the beginning, just run and enjoy! */
+  servletContainer 'tomcat8'
 }
 
 /* CREATE A FARM FOR EXECUTING MULTIPLE WAR FILES */
@@ -128,6 +135,7 @@ farms {
 
 /**
  * http://akhikhl.github.io/gretty-doc/Farm-tasks.html
+ *
  * Run Server on Local Machine:
  *  > ./gradlew farmRunServer
  *

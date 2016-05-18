@@ -70,5 +70,6 @@ test {
 }
 
 gretty {
+  // NOTE: contextPath value should correspond TiroApplication annotation @ApplicationPath.
   contextPath = '/tasks'
 }
