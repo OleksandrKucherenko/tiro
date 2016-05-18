@@ -79,9 +79,8 @@ allprojects {
 
   /* Upgrade jetty 9 to latest release. instead of v9.2 use v9.3 */
   afterEvaluate { project ->
-    /* Exclude old JSP module from dependencies */
+    /* Exclude old JSP module from dependencies, force upgrade to latest version */
     project.configurations {
-
       grettyRunnerJetty9 {
         exclude group: 'org.eclipse.jetty', module: 'jetty-jsp'
 
@@ -124,12 +123,13 @@ buildtimetracker {
 
 /* DEFINE SERVER CONFIGURATION FILES */
 gretty {
-  /* Jetty v9.3 requires proper configuration for making possible JSP running. */
-  //  serverConfigFile "${rootProject.projectDir}/gradle/configuration/jetty.xml"
+  /* Jetty v9.3 requires proper configuration for making possible JSP running.
+      Take a look into 'allprojects' scope upper. */
   servletContainer 'jetty9'
+  //  serverConfigFile "${rootProject.projectDir}/gradle/configuration/jetty.xml"
 
   /* Tomcat8 is properly configured for JSP from the beginning, just run and enjoy! */
-//  servletContainer 'tomcat8'
+  //  servletContainer 'tomcat8'
 }
 
 /* CREATE A FARM FOR EXECUTING MULTIPLE WAR FILES */

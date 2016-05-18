@@ -1,8 +1,13 @@
 # REST API
 
-## Get Service Entry Point Specification
+- Used [Jersey framework](https://jersey.java.net/) as a implementation of Jax-RS
 
-- http://localhost:9191/api/application.wadl
+
+## Entry Point Specification
+
+- [WADL](https://en.wikipedia.org/wiki/Web_Application_Description_Language) entry points:
+  - [DEBUG port:9191](http://localhost:9191/api/application.wadl)
+  - [RELEASE port:8080](http://localhost:8080/api/application.wadl)
 
 # References
 
@@ -12,5 +17,4 @@
 - [RESTfull protocol buffer](http://sleeplessinslc.blogspot.se/2010/03/restful-representation-with-google.html)
 - [Google Protocol Buffer](https://developers.google.com/protocol-buffers/docs/overview?csw=1)
 - [JVM Serializers Benchmarks](https://github.com/eishay/jvm-serializers/wiki)
-- [jBoss Undertow](http://undertow.io/)
 - [JaxRs Performance Benchmark](https://github.com/smallnest/Jax-RS-Performance-Comparison)

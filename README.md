@@ -7,8 +7,9 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
 - create sample for future web applications development
 - create minimalistic structure for running Web Application on Jetty server
 - pack WAR, EAR files during compilation
-- 'Hello World' restfull service
-- minimalistic microservice
+- minimalistic RESTfull service with implemented common 'security pattern'
+- minimalistic micro-service
+- minimalistic Web Application based on micro-service data
 - testing of different frameworks
 
 ## Features
@@ -16,10 +17,9 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
 - GRADLE build system
 - Dependencies Update Report
     - ```./gradlew dU```
-- Jetty Farm
-- Minimalistic RESTfull service
-- Minimalistic Web Application
+- Jetty Farm (multiple WARs execution)
 - TDD Unit Testing (jUnit)
+- SLF4J as a logging framework
 
 ## Architecture
 
@@ -28,6 +28,7 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
 - NGINX should take responsibilities of: compression, security, caching; 
 - Web Application Server implements JSON, ByteBuffer etc. - additional data transfer types;
 - Implement common Group/User/Role security pattern, that is often a start point for all solutions
+- Cookieless implementation
 
 ### Persistence
 
@@ -41,31 +42,35 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
 - Hibernate Documentations:
     - https://docs.jboss.org/hibernate/orm/4.0/hem/en-US/html/index.html
 
-## Performance
+## REST
 
-- https://github.com/smallnest/Jax-RS-Performance-Comparison
-- http://www.asjava.com/jetty/jetty-vs-tomcat-performance-comparison/
-- http://menelic.com/2016/01/06/java-rest-api-benchmark-tomcat-vs-jetty-vs-grizzly-vs-undertow/
-- https://webtide.com/why-choose-jetty/
-- https://ibmadvantage.com/2015/09/22/lightweight-java-servers-and-developer-view-on-the-app-server-update/
+## Implementation
 
-## RESTfull Frameworks
+- Used [Jersey framework](https://jersey.java.net/) as a implementation of Jax-RS
+- [WADL](https://en.wikipedia.org/wiki/Web_Application_Description_Language) entry points:
+  - [DEBUG port:9191](http://localhost:9191/api/application.wadl)
+  - [RELEASE port:8080](http://localhost:8080/api/application.wadl)
+- Module: [war-api](war-api/README.md)
+- Used JSON as a main delivery data format (Jackson Library)
+
+### Alternative Frameworks
 
 - http://resteasy.jboss.org/
     - [RESTFul Web Services for Java](http://docs.jboss.org/resteasy/docs/3.0.16.Final/userguide/html_single/index.html)
 - http://vertx.io/
 
-### REST API Documentation
+### Documentation
 
 - http://apivisualizer.cuubez.com/
 - http://swagger.io/, https://github.com/swagger-api/swagger-core
 - https://blogs.oracle.com/sandoz/entry/tracing_in_jersey
 
 ### REST Tutorials
+
 - http://www.mkyong.com/webservices/jax-rs/jersey-hello-world-example/
 - http://www.vogella.com/tutorials/REST/article.html
 
-## Testing/Validation:
+## Testing & Validation
 
 - Validate persistence.xml file: ```./gradlew checkPersistenceXml```
 - Run unit tests: ```./gradlew test```
@@ -74,7 +79,7 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
 
 ## Debugging
 
-- Attach IntelliJ debugger to port 5005 (default port)
+- Attach Intellij debugger to port 5005 (default port)
     - do configuration according to images:
     ![Remote Debugger](_documentation_/intellij-remote-debug-configuration.png)
     ![Port Waiter](_documentation_/intellij-port-waiter-tool.png)
@@ -90,9 +95,21 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
 
 ## Deployment
 
-- Getty plugin used: http://akhikhl.github.io/gretty-doc/Feature-overview.html
-- Deploy ready for XCOPY and run solution with Jetty:
+- Gradle build system in use
+- Gradle plugin is responsible for web servers: [Gretty](http://akhikhl.github.io/gretty-doc/Feature-overview.html)
+- Ready for XCOPY and run as standalone solution with Jetty9 _(or Tomcat8)_:
     - Run command: ```./gradlew buildProduct```
+    - Results will be in ```build/output/tiro``` folder
+
+_Alternative to Gretty: [Spring Boost](http://projects.spring.io/spring-boot/)_
+
+## Performance
+
+- https://webtide.com/why-choose-jetty/
+- https://github.com/smallnest/Jax-RS-Performance-Comparison
+- http://www.asjava.com/jetty/jetty-vs-tomcat-performance-comparison/
+- http://menelic.com/2016/01/06/java-rest-api-benchmark-tomcat-vs-jetty-vs-grizzly-vs-undertow/
+- https://ibmadvantage.com/2015/09/22/lightweight-java-servers-and-developer-view-on-the-app-server-update/
 
 ## All references
 
@@ -105,3 +122,4 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
 - http://www.srccodes.com/p/article/7/Annotation-based-Hibernate-Hello-World-example-using-Maven-build-tool-and-SQLite-database
 - http://akhikhl.github.io/gretty-doc/Feature-overview.html
 - https://github.com/marc0der/gradle-spawn-plugin
+- [jBoss Undertow Web Server](http://undertow.io/)
