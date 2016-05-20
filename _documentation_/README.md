@@ -1,8 +1,8 @@
-  # Roadmap
+# Roadmap
 
 I will try to follow traditional way of releases: ```Alpha --> Beta --> Release Candidate --> Release```.
 
- ## Version 1.0 alpha
+## Version 1.0 alpha
 
 ### Select the frameworks:
   - ~~the code library, shared code~~
@@ -40,16 +40,16 @@ I will try to follow traditional way of releases: ```Alpha --> Beta --> Release 
   - ~~define approach for testing the performance of the server~~, Apache Benchmark Tool
   - compose script to automatic benchmarking
 
- ## Version 1.0 beta
+## Version 1.0 beta
   - Database:
     - MySQL binding configuration
   - Easy developer environment:
 
- ## Version 1.0 RC1
+## Version 1.0 RC1
   - Database, switch solution to MySQL
   - Hibernate L2 Cache
 
- ## Version 1.0
+## Version 1.0
   - Caching
     -  memcache or similar solution
   - Health Tracking:
