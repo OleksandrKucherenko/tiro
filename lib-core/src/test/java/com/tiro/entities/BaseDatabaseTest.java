@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.Arrays;
 
 /** Abstract class that creates and rollbacks transaction. Great for all Database operations. */
 public abstract class BaseDatabaseTest {
@@ -98,6 +99,10 @@ public abstract class BaseDatabaseTest {
 
   protected void dumpAll() {
     getReflections().getTypesAnnotatedWith(Entity.class).forEach(this::dump);
+  }
+
+  protected void dumpMany(@Nonnull final Class<?>... klass) {
+    Arrays.stream(klass).forEach(this::dump);
   }
 
   protected void dump(@Nonnull final Class<?> klass) {

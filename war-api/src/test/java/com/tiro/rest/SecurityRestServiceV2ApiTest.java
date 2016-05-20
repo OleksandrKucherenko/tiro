@@ -2,6 +2,7 @@ package com.tiro.rest;
 
 import com.tiro.Services;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.ServerProperties;
 import org.junit.Test;
 
 import javax.ws.rs.client.WebTarget;
@@ -13,7 +14,9 @@ import static org.assertj.core.api.Assertions.*;
 public class SecurityRestServiceV2ApiTest extends TiroJerseyTest {
   @Override
   protected Application configure() {
-    return new ResourceConfig(SecurityRestServiceV2.class);
+    return new ResourceConfig(SecurityRestServiceV2.class)
+        .property(ServerProperties.RESPONSE_SET_STATUS_OVER_SEND_ERROR, true)
+        .register(ExceptionsMapperService.class);
   }
 
   private WebTarget getTargetV2Security() {

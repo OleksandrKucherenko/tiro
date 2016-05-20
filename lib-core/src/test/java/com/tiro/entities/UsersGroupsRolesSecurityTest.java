@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 
 /**
@@ -85,6 +85,97 @@ public class UsersGroupsRolesSecurityTest extends BaseDatabaseTest {
 
     assertThat(userRoot.getGroups()).hasSize(1);
     assertThat(groupAdmins.getUsers()).hasSize(1);
+  }
+
+  @Test
+  public void testUsersRolesGroupsManyToMany() throws Exception {
+    final Role roleAdmin = mEm.find(Role.class, 1L);
+    final Group groupAdmins = mEm.find(Group.class, 1L);
+    final User userRoot = mEm.find(User.class, 1L);
+
+    userRoot.addRole(roleAdmin);
+    userRoot.addGroup(groupAdmins);
+    groupAdmins.addRole(roleAdmin);
+
+    assertThat(userRoot.getGroups()).hasSize(1);
+    assertThat(groupAdmins.getUsers()).hasSize(1);
+    assertThat(roleAdmin.getUsers()).hasSize(1);
+
+    persistAll(userRoot, roleAdmin, groupAdmins);
+
+    dumpMany(GroupsToRoles.class, GroupsToUsers.class, UsersToRoles.class);
+
+    // try to find newly created instance by composite primary key
+    final GroupsToRoles resultGTR = mEm.find(GroupsToRoles.class, new GroupsToRoles(1, 1));
+    assertThat(resultGTR).isNotNull();
+
+    final GroupsToUsers resultGTU = mEm.find(GroupsToUsers.class, new GroupsToUsers(1, 1));
+    assertThat(resultGTU).isNotNull();
+
+    final UsersToRoles resultUTR = mEm.find(UsersToRoles.class, new UsersToRoles(1, 1));
+    assertThat(resultUTR).isNotNull();
+  }
+
+  @Test
+  public void testCompositeKeysGTR() throws Exception {
+    final Role roleAdmin = mEm.find(Role.class, 1L);
+    final Group groupAdmins = mEm.find(Group.class, 1L);
+    final User userRoot = mEm.find(User.class, 1L);
+
+    userRoot.addRole(roleAdmin);
+    userRoot.addGroup(groupAdmins);
+    groupAdmins.addRole(roleAdmin);
+
+    persistAll(userRoot, roleAdmin, groupAdmins);
+    dumpMany(GroupsToRoles.class);
+
+    // try to find newly created instance by composite primary key
+    final GroupsToRoles primaryKeyGTR = new GroupsToRoles(1, 1);
+    final GroupsToRoles resultGTR = mEm.find(GroupsToRoles.class, primaryKeyGTR);
+
+    assertThat(resultGTR).isNotNull().isEqualTo(primaryKeyGTR);
+    assertThat(resultGTR.superHashCode()).isNotEqualTo(primaryKeyGTR.superHashCode());
+  }
+
+  @Test
+  public void testCompositeKeysGTU() throws Exception {
+    final Role roleAdmin = mEm.find(Role.class, 1L);
+    final Group groupAdmins = mEm.find(Group.class, 1L);
+    final User userRoot = mEm.find(User.class, 1L);
+
+    userRoot.addRole(roleAdmin);
+    userRoot.addGroup(groupAdmins);
+    groupAdmins.addRole(roleAdmin);
+
+    persistAll(userRoot, roleAdmin, groupAdmins);
+    dumpMany(GroupsToUsers.class);
+
+    final GroupsToUsers primaryKeyGTU = new GroupsToUsers(1, 1);
+    final GroupsToUsers resultGTU = mEm.find(GroupsToUsers.class, primaryKeyGTU);
+
+    assertThat(resultGTU).isNotNull();
+    assertThat(resultGTU.superHashCode()).isNotEqualTo(primaryKeyGTU.superHashCode());
+  }
+
+  @Test
+  public void testCompositeKeysUTR() throws Exception {
+    final Role roleAdmin = mEm.find(Role.class, 1L);
+    final Group groupAdmins = mEm.find(Group.class, 1L);
+    final User userRoot = mEm.find(User.class, 1L);
+
+    userRoot.addRole(roleAdmin);
+    userRoot.addGroup(groupAdmins);
+    groupAdmins.addRole(roleAdmin);
+
+    persistAll(userRoot, roleAdmin, groupAdmins);
+    dumpMany(UsersToRoles.class);
+
+    // try to find newly created instance by composite primary key
+    final UsersToRoles primaryKeyUTR = new UsersToRoles(1, 1);
+    final UsersToRoles resultUTR = mEm.find(UsersToRoles.class, primaryKeyUTR);
+
+    assertThat(resultUTR).isNotNull();
+    assertThat(resultUTR.superHashCode()).isNotEqualTo(primaryKeyUTR.superHashCode());
   }
 
   @Test

@@ -59,4 +59,9 @@ public class GroupsToRoles implements DbEntity {
 
     return hash;
   }
+
+  /** Return original hash code for instance. */
+  /* package */ int superHashCode() {
+    return super.hashCode();
+  }
 }
