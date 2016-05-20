@@ -34,7 +34,7 @@ before_deploy:
   - zip -r tiro-$TRAVIS_BUILD_NUMBER-release.zip tiro/
   - cd ../..
   - export OUT_FILE=$(ls build/output/tiro-*-release.zip)
-  - echo "release file $LIB_FILE"
+  - echo "release file $OUT_FILE"
 
 deploy:
   provider: releases
