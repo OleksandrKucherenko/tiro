@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app
-    version="3.0"
-    xmlns="http://java.sun.com/xml/ns/javaee"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
   <!--
-      References:
-          https://docs.oracle.com/cd/E24329_01/web.1211/e21049/web_xml.htm#WBAPP504
+    References:
+        https://docs.oracle.com/cd/E24329_01/web.1211/e21049/web_xml.htm#WBAPP504
+        https://docs.oracle.com/cd/E21764_01/web.1111/e13712/web_xml.htm#WBAPP502
   -->
   <session-config>
-    <session-timeout>30</session-timeout>
+    <!-- Session timeout is in minutes. -->
+    <session-timeout>1</session-timeout>
     <tracking-mode>URL</tracking-mode>
   </session-config>
-
   <!-- Custom filter, allows to inject data during the processing the request/response -->
   <filter>
     <filter-name>PagesFilter</filter-name>
@@ -22,16 +20,16 @@
     <filter-name>PagesFilter</filter-name>
     <url-pattern>/*</url-pattern>
     <!--
-    The dispatcher has five legal values: FORWARD, REQUEST, INCLUDE, ASYNC, and ERROR.
+      The dispatcher has five legal values: FORWARD, REQUEST, INCLUDE, ASYNC, and ERROR.
 
-    A value of FORWARD means the Filter will be applied under RequestDispatcher.forward() calls.
-    A value of REQUEST means the Filter will be applied under ordinary client calls to the path or servlet.
-    A value of INCLUDE means the Filter will be applied under RequestDispatcher.include() calls.
-    A value of ASYNC means the Filter will be applied under calls dispatched from an AsyncContext.
-    A value of ERROR means the Filter will be applied under the error page mechanism.
+      A value of FORWARD means the Filter will be applied under RequestDispatcher.forward() calls.
+      A value of REQUEST means the Filter will be applied under ordinary client calls to the path or servlet.
+      A value of INCLUDE means the Filter will be applied under RequestDispatcher.include() calls.
+      A value of ASYNC means the Filter will be applied under calls dispatched from an AsyncContext.
+      A value of ERROR means the Filter will be applied under the error page mechanism.
 
-    The absence of any dispatcher elements in a filter-mapping indicates a default of applying filters only
-    under ordinary client calls to the path or servlet.
+      The absence of any dispatcher elements in a filter-mapping indicates a default of applying filters only
+      under ordinary client calls to the path or servlet.
     -->
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
@@ -39,21 +37,22 @@
     <dispatcher>ASYNC</dispatcher>
     <dispatcher>ERROR</dispatcher>
   </filter-mapping>
-
+  <!-- ERROR pages mapping -->
   <error-page>
     <error-code>404</error-code>
     <location>/WEB-INF/pages/errors/404.jsp</location>
   </error-page>
-
+  <!-- Global JSP settings -->
   <jsp-config>
     <jsp-property-group>
       <url-pattern>*.jsp</url-pattern>
+      <is-xml>false</is-xml>
       <trim-directive-whitespaces>true</trim-directive-whitespaces>
+      <page-encoding>UTF-8</page-encoding>
     </jsp-property-group>
   </jsp-config>
-
+  <!-- Welcome page -->
   <welcome-file-list>
     <welcome-file>/WEB-INF/pages/index.jsp</welcome-file>
   </welcome-file-list>
-
 </web-app>

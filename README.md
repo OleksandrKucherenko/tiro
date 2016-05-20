@@ -70,6 +70,11 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
 - http://www.mkyong.com/webservices/jax-rs/jersey-hello-world-example/
 - http://www.vogella.com/tutorials/REST/article.html
 
+## Localization
+
+- http://docs.oracle.com/javase/tutorial/i18n/locale/matching.html
+
+
 ## Testing & Validation
 
 - Validate persistence.xml file: ```./gradlew checkPersistenceXml```
