@@ -1,10 +1,10 @@
 language: java
+
 sudo: false
 
 jdk:
   - oraclejdk8
 
-# ask travis to doanload all revisions, our build version depends on this
 git:
   depth: 10000
 
@@ -16,28 +16,22 @@ cache:
     - $HOME/.gradle/caches
     - $HOME/.gradle/wrapper
 
-before_install:
-  chmod +x gradlew
+before_install: chmod +x gradlew
 
 env:
   global:
-    # no coloring during the build
-    - TERM=dumb
-    #secure:
+  - TERM=dumb
+  - secure: ZReyZg422NuaGT89ho+/NuUBdxHT7wm55PQGd4yS6dG6WIzg49pKr3tIJjjLjWhDONSoui/Ru/U0A7zbhfwzoyle2nXyEz2Fqa80KqYJ3gPGnwjFtwYm3r8U+YKsyZ+jr0ij9kfASNrtZRWnfzEvTJ98OfRuT4jyXaylR7HafS818n+Pxj6aE8ktSKRmNI+/+J55sBv6lG32bUnIY74RXPs7og5pJ1iHfPV/YKONfu8PXFFjlqoqPsXM19rTneBCE8lRCYhtYnp0fdQxZ2nP9PfFKixEKiYjvc8cYdQ/+lKK3NHPMw7pvH41wZS/8ntoxrk70Itj9gg32hCA5mffvcZCMwtmAa1ycRAwoQDPIYo2XhfL0xmIwgDYFq+yp7hwZcNl6a+C1oeP1IFmVTHwlb5vX9k48KoGqBqE2mtHhLQ6KpS29IVswtA2SvT6b0WTHzWqe+3cwGJgahV7u5dpFGvJsIrlWziEhyps5XqJx+AE/PiFbF+ySFBTzaWdVxoLd+kM9yltMgwTOxxllRMH5eckIN8U2Qd0Qz5LBxzRi6JSI63Uv9JdiVxglNkY3jhfcCTKJWJo8FldbeVt28/OjmcVSGK9ly9QqbDtY+twxy/glukr/Eem2VeLyBxv3viTFl3fbQJBlFlr5+/P5dwwPUpH9fk6xXPlQETSbvX2B7M=
 
 script:
-  # build all with unit tests running
   - ./gradlew clean buildProduct
 
 after_success:
-  # publish code coverage information
   - bash <(curl -s https://codecov.io/bash)
 
 before_deploy:
-  # archive output folder before publishing
   - zip -r tiro-$TRAVIS_BUILD_NUMBER.zip build/output/tiro
 
-# http://docs.travis-ci.com/user/deployment/releases/
 deploy:
   provider: releases
   api_key:
@@ -53,7 +47,6 @@ notifications:
   webhooks:
     urls:
       - $GITTER_WEB_HOOK
-#	    - https://webhooks.gitter.im/e/f9d875b20132dda64fbe
-    on_success: always  # options: [always|never|change] default: always
-    on_failure: never   # options: [always|never|change] default: always
-    on_start: never     # options: [always|never|change] default: always
+    on_success: always
+    on_failure: never
+    on_start: never
