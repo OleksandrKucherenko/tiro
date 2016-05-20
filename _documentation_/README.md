@@ -33,8 +33,8 @@ I will try to follow traditional way of releases: ```Alpha --> Beta --> Release 
 
 ### Easy developer environment:
   - ~~command line for building the solution, gradle~~
-  - automated build and testing
-  - code coverage reports
+  - ~~automated build and testing~~
+  - ~~code coverage reports~~
 
 ### Performance
   - ~~define approach for testing the performance of the server~~, Apache Benchmark Tool
