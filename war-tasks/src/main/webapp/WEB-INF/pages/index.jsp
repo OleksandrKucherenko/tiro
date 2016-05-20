@@ -5,8 +5,8 @@
     <title>INDEX</title>
   </head>
   <body>
-    <% double num = Math.random(); %>
+    <%! double num = Math.random(); %>
     <h1>Random <%= num %></h1>
-    <a href="<%= request.getRequestURI() %>"><h3>Try Again</h3></a>
+    <a href="${RequestURL}"><h3>Try Again</h3></a>
   </body>
 </html>

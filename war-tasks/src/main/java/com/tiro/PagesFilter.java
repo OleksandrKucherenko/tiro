@@ -37,5 +37,9 @@ public class PagesFilter implements Filter {
 
   private void doProcessing(final HttpServletRequest request, final HttpServletResponse response) {
     // TODO: some request, session and response processing
+    if (null != request.getAttribute("X-Processed")) return;
+
+    request.setAttribute("X-Processed", true);
+    request.setAttribute("RequestURL", request.getRequestURL());
   }
 }
