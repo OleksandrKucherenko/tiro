@@ -2,6 +2,9 @@
 
 Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
 
+[![Build Status](https://travis-ci.org/OleksandrKucherenko/tiro.svg?branch=master)](https://travis-ci.org/OleksandrKucherenko/tiro) [![codecov](https://codecov.io/gh/OleksandrKucherenko/tiro/branch/master/graph/badge.svg)](https://codecov.io/gh/OleksandrKucherenko/tiro)
+
+
 ## Purposes
 
 - create sample for future web applications development
