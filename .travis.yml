@@ -24,19 +24,23 @@ env:
   - secure: ZReyZg422NuaGT89ho+/NuUBdxHT7wm55PQGd4yS6dG6WIzg49pKr3tIJjjLjWhDONSoui/Ru/U0A7zbhfwzoyle2nXyEz2Fqa80KqYJ3gPGnwjFtwYm3r8U+YKsyZ+jr0ij9kfASNrtZRWnfzEvTJ98OfRuT4jyXaylR7HafS818n+Pxj6aE8ktSKRmNI+/+J55sBv6lG32bUnIY74RXPs7og5pJ1iHfPV/YKONfu8PXFFjlqoqPsXM19rTneBCE8lRCYhtYnp0fdQxZ2nP9PfFKixEKiYjvc8cYdQ/+lKK3NHPMw7pvH41wZS/8ntoxrk70Itj9gg32hCA5mffvcZCMwtmAa1ycRAwoQDPIYo2XhfL0xmIwgDYFq+yp7hwZcNl6a+C1oeP1IFmVTHwlb5vX9k48KoGqBqE2mtHhLQ6KpS29IVswtA2SvT6b0WTHzWqe+3cwGJgahV7u5dpFGvJsIrlWziEhyps5XqJx+AE/PiFbF+ySFBTzaWdVxoLd+kM9yltMgwTOxxllRMH5eckIN8U2Qd0Qz5LBxzRi6JSI63Uv9JdiVxglNkY3jhfcCTKJWJo8FldbeVt28/OjmcVSGK9ly9QqbDtY+twxy/glukr/Eem2VeLyBxv3viTFl3fbQJBlFlr5+/P5dwwPUpH9fk6xXPlQETSbvX2B7M=
 
 script:
-  - ./gradlew clean jacoco buildProduct 
+  - ./gradlew clean jacoco buildProduct
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
 before_deploy:
-  - zip -r tiro-$TRAVIS_BUILD_NUMBER.zip build/output/tiro
+  - cd build/output
+  - zip -r tiro-$TRAVIS_BUILD_NUMBER-release.zip tiro/
+  - cd ../..
+  - export OUT_FILE=$(ls build/output/tiro-*-release.zip)
+  - echo "release file $LIB_FILE"
 
 deploy:
   provider: releases
   api_key:
     secure: R56pkHPRNPduhLGkABUmhhMgs3/dQbknXku21qIUKche0aZLWIsdX4Qj/qk60bKEFtHblhuCuO+X2gLQ76fHK4S1nuqfFsf1jOinXmgkZhIREq0WCAwilqRqt7m09JmWFMgQwUNYE6Ure0z21qpSOpBrDc6/VkciGIzLNc6f9Tts7GrH2akbuJvZ54NJ0yQfuM/d6m6gpP2WNm8EbllWEPFJ9Clj3pnpedYbeb1eooODQ8U5o24C4AK5kcowY28TX5TebgVLDphKFuGzBerQRWdKYGYi9rgUZ3DbLZawmi3v1J+UEHkSRwY2yeiJ9nzjlz+C+DI7bQ34iUBqmL4VqahNuVoqczTnN/tuk5l1V1+FAkTAxe+HRsmFSwXU87klK6aD4mDvjitH6hCa351xzjMae1ZDmVS2BaQGckYwHXXLuHCXIEEhQD0CDadu8W+YSyf1z+Ix3nPG+0Z1/I6/y1WLoT19kT20pqHfsGxguAPdWkZrOLzqOiBhCy4TCC0zBPxarXtdQhp5XD8uyKOIQHEFmUqeU3/xqAFRFAdK5CUENclYw0JradD3VL3pRlu1d7hAAuJdDFXtl5DBW3cOSs3m7HM0mr//6KR8mYgaDVumJfB9FFjPkdCT5geHNnIn1E+JfTGG3pUW++kaoWAh6DkfCMSKqoo4BtTLN3XlNM4=
-  file: tiro-$TRAVIS_BUILD_NUMBER.zip
+  file: "${OUT_FILE}"
   skip_cleanup: true
   on:
     tags: true
