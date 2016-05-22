@@ -1,9 +1,11 @@
 package com.tiro.rest;
 
+import com.tiro.Categories.DesignRules;
 import com.tiro.Consts;
 import com.tiro.SvcVersioning;
 import com.tiro.WarmupHelper;
 import org.junit.*;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -21,6 +23,7 @@ import static org.assertj.core.api.Assertions.*;
 
 /** Generic design rules that developer should follow during the implementing the services. */
 @RunWith(JUnit4.class)
+@Category({DesignRules.class})
 public class RestApiRulesTest {
   /** Unit test logger. */
   protected static final Logger _log = LoggerFactory.getLogger(Consts.TAG);

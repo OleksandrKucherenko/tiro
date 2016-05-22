@@ -1,6 +1,8 @@
 package com.tiro.entities;
 
+import com.tiro.Categories.DesignRules;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.ocpsoft.prettytime.PrettyTime;
@@ -19,6 +21,7 @@ import static org.assertj.core.api.Assertions.*;
 
 /** Unit test that confirms registration of all entities in JPA. */
 @RunWith(JUnit4.class)
+@Category({DesignRules.class})
 @SuppressWarnings({"unchecked"})
 public class EntitiesDesignRulesTest extends BaseDatabaseTest {
 
