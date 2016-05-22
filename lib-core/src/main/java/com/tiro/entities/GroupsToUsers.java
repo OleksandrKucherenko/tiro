@@ -23,7 +23,7 @@ public class GroupsToUsers implements DbEntity {
 
   /** Hidden constructor. Required by JPA. */
   @SuppressWarnings({"unused"})
-  private GroupsToUsers() {
+  protected GroupsToUsers() {
   }
 
   @SuppressWarnings({"unused"})

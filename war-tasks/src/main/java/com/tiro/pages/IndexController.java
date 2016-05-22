@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 /** Index.JSP page controller. */
-@WebServlet(urlPatterns = {"/", "/index.jsp"})
+@WebServlet(urlPatterns = {"/", "/index.jsp"}, name = "Home")
 public class IndexController extends HttpServlet implements Pages {
   private static final long serialVersionUID = 2789062589572783637L;
 
