@@ -37,6 +37,8 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
 
 ### Persistence
 
+![Entities Diagram](_documentation_/entities.png)
+
 - JavaX Persistence API used for working with data entities and become agnostic to DB implementation
     - Hibernate used as a concrete implementation of JPA
 - Will be used MySQL instance for storing the data in production (most common case in our life):
