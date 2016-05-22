@@ -8,6 +8,8 @@ import javax.annotation.Nonnull;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -83,6 +85,21 @@ public class User extends BaseEntity implements UserColumns {
   @Nonnull
   public Set<Role> getRoles() {
     return this.roles;
+  }
+
+  /** Get roles promoted by assigned groups. */
+  @Nonnull
+  public Set<Role> getGroupsRoles(){
+    return getGroups().stream()
+        .flatMap( g -> g.getRoles().stream() )
+        .collect(Collectors.toSet());
+  }
+
+  /** Get joined set of user roles and roles promoted by groups. */
+  @Nonnull
+  public Set<Role> getJoinedRoles(){
+    return Stream.concat(getRoles().stream(), getGroupsRoles().stream())
+        .collect(Collectors.toSet());
   }
 
   @Nonnull

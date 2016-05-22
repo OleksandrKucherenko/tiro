@@ -33,7 +33,19 @@ dependencies {
   // providedCompile 'joda-time:joda-time:+'
 
   if (useTdd) {
-    // TODO: place here unit tests dependencies
+    /* Unit Testing Frameworks */
+    testCompile 'junit:junit:+'
+    testCompile 'org.mockito:mockito-core:+'
+    testCompile 'org.assertj:assertj-core:+'
+
+    /* Reflection utilities */
+    testCompile('org.reflections:reflections:+') {
+      exclude group: 'com.google.code.findbugs', module: 'annotations'
+    }
+
+    /* Cucumber */
+    testCompile 'info.cukes:cucumber-junit:+',
+      'info.cukes:cucumber-java8:+'
   }
 }
 
@@ -68,6 +80,32 @@ test {
     html.enabled = false
   }
 }
+
+//configurations {
+//  cucumberRuntime {
+//    extendsFrom testRuntime
+//  }
+//}
+//
+//task cucumber(dependsOn: ['assemble', 'compileTestJava']) {
+//  onlyIf useTdd
+//
+//  doLast {
+//    javaexec {
+//      main = "cucumber.api.cli.Main"
+//
+//      classpath = configurations.cucumberRuntime +
+//          sourceSets.main.output +
+//          sourceSets.test.output
+//
+//      args = ['--plugin', 'pretty', '--glue', 'gradle.cucumber', 'src/test/resources']
+//    }
+//  }
+//}
+//
+//build.dependsOn cucumber
+
+/* [ WEB SERVER ] =================================================================================================== */
 
 gretty {
   contextPath = '/time'

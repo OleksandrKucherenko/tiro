@@ -33,7 +33,15 @@ dependencies {
 
   // providedCompile 'joda-time:joda-time:+'
   if (useTdd) {
-    // TODO: add testing dependencies
+    /* Unit Testing Frameworks */
+    testCompile 'junit:junit:+'
+    testCompile 'org.mockito:mockito-core:+'
+    testCompile 'org.assertj:assertj-core:+'
+
+    /* Reflection utilities */
+    testCompile('org.reflections:reflections:+') {
+      exclude group: 'com.google.code.findbugs', module: 'annotations'
+    }
   }
 }
 

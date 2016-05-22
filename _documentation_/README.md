@@ -8,7 +8,6 @@ I will try to follow traditional way of releases: ```Alpha --> Beta --> Release 
   - ~~the code library, shared code~~
   - ~~the resources library, i18n~~
   - ~~Database entities~~
-  - Web Pages, Admin pages for entities (New/Edit/Drop)
 
 ### Testing:
   - ~~unit testing of the code, low level class tests~~
@@ -21,7 +20,6 @@ I will try to follow traditional way of releases: ```Alpha --> Beta --> Release 
   - ~~JSON (de-)serialization~~
   - design REST API for all entities
   - common scenario: ```Authenticate --> Get Roles / Get Groups / Get Users```
-  - oAuth2 for REST API access
 
 ### Data storage:
   - ~~DB independent, can select any implementation~~
@@ -38,12 +36,14 @@ I will try to follow traditional way of releases: ```Alpha --> Beta --> Release 
 
 ### Performance
   - ~~define approach for testing the performance of the server~~, Apache Benchmark Tool
-  - compose script to automatic benchmarking
 
 ## Version 1.0 beta
   - Database:
     - MySQL binding configuration
   - Easy developer environment:
+  - oAuth2 for REST API access
+  - Web Pages, Admin pages for entities (New/Edit/Drop)
+  - compose script to automatic benchmarking
 
 ## Version 1.0 RC1
   - Database, switch solution to MySQL
