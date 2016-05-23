@@ -45,7 +45,7 @@ dependencies {
 
     /* Cucumber */
     testCompile 'info.cukes:cucumber-junit:+',
-      'info.cukes:cucumber-java8:+'
+        'info.cukes:cucumber-java8:+'
   }
 }
 
@@ -66,10 +66,12 @@ test {
   /* Print tests results to the output */
   testLogging {
     // set options for log level LIFECYCLE
-    events "failed", "passed"
+    events "failed", "passed", "standardOut"
 
     // set options for log level DEBUG
-    debug.events "failed", "passed", "skipped", "standardError", "standardOut", "started"
+    debug {
+      events "failed", "passed", "skipped", "standardError", "standardOut", "started"
+    }
 
     // set options for log level INFO
     info.events = ["failed", "passed", "skipped"]
@@ -80,30 +82,6 @@ test {
     html.enabled = false
   }
 }
-
-//configurations {
-//  cucumberRuntime {
-//    extendsFrom testRuntime
-//  }
-//}
-//
-//task cucumber(dependsOn: ['assemble', 'compileTestJava']) {
-//  onlyIf useTdd
-//
-//  doLast {
-//    javaexec {
-//      main = "cucumber.api.cli.Main"
-//
-//      classpath = configurations.cucumberRuntime +
-//          sourceSets.main.output +
-//          sourceSets.test.output
-//
-//      args = ['--plugin', 'pretty', '--glue', 'gradle.cucumber', 'src/test/resources']
-//    }
-//  }
-//}
-//
-//build.dependsOn cucumber
 
 /* [ WEB SERVER ] =================================================================================================== */
 
