@@ -51,6 +51,16 @@ public class Group extends BaseEntity implements GroupColumns {
     this.name = name;
   }
 
+  @Nonnull
+  public static Group from(@Nonnull final Group group, @Nonnull final String newName) {
+    final Group result = new Group(newName);
+
+    group.getRoles().forEach(result::addRole);
+    group.getUsers().forEach(result::addUser);
+
+    return result;
+  }
+
   @Override
   public String toString() {
     return "Group {" +

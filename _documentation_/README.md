@@ -10,9 +10,9 @@ I will try to follow traditional way of releases: ```Alpha --> Beta --> Release 
   - ~~Database entities~~
 
 ### Testing:
-  - ~~unit testing of the code, low level class tests~~
-  - ~~unit testing for API, REST api~~
-  - unit testing of requirements, high level language
+  - ~~unit testing of the code, low level class tests~~, jUnit/Mockito/AssertJ
+  - ~~unit testing for API, REST api~~, in memory grizzly
+  - ~~unit testing of requirements, high level language~~, Cucumber
 
 ### REST API:
   - ~~skeleton of the REST service~~
