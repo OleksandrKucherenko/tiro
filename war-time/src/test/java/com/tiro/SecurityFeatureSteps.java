@@ -1,6 +1,7 @@
 package com.tiro;
 
-import com.tiro.dao.SecurityDao;
+import com.tiro.dao.DaoFactory;
+import com.tiro.dao.GroupDao;
 import com.tiro.entities.Group;
 import com.tiro.entities.Role;
 import com.tiro.entities.User;
@@ -82,9 +83,9 @@ public class SecurityFeatureSteps {
   @When("^Duplicate '([^']*)' with new name '([^']*)'$")
   public void duplicate_group(final String groupName, final String newName) {
     final Group group = mGroups.get(groupName);
-    final SecurityDao dao = new SecurityDao();
+    final GroupDao dao = DaoFactory.get(null, GroupDao.class);
 
-    mGroups.put(newName, dao.duplicateGroup(group, newName));
+    mGroups.put(newName, dao.duplicate(group, newName));
   }
 
   @When("^Persist$")

@@ -1,34 +1,49 @@
 package com.tiro.dao;
 
-import com.tiro.entities.BaseEntity;
 import com.tiro.entities.Group;
+import com.tiro.entities.Role;
 import com.tiro.entities.User;
+import com.tiro.exceptions.CoreException;
 
 import javax.annotation.Nonnull;
+import javax.persistence.EntityManager;
 
-/** Common actions that user can do with security pattern. */
-public class SecurityDao implements Dao {
-  /** Create a clone of the provided group. */
-  @Nonnull
-  public Group duplicateGroup(@Nonnull final Group group, @Nonnull final String newName) {
-    return Group.from(group, newName);
+/** basic security operations. */
+@SuppressWarnings({"unused"})
+public class SecurityDao extends BasicDao {
+  /* package */ SecurityDao(@Nonnull final EntityManager em) {
+    super(em);
   }
 
-  public Group assignUser(@Nonnull final Group group, @Nonnull final User user) {
-    group.addUser(user);
 
-    // TODO: persist the change
-
-    return group;
+  /** Check that user has a specific role. Role and User resolved by ID. */
+  public boolean inRole(final long userId, final long roleId) throws CoreException {
+    throw CoreException.wrap(new Exception("Not implemented."));
   }
 
-  @Override
-  public void forcedPersist() {
-
+  /** Check that user has a specific role. Role resolved by name. */
+  public boolean inRole(final long userId, final String roleName) throws CoreException {
+    throw CoreException.wrap(new Exception("Not implemented."));
   }
 
-  @Override
-  public long include(@Nonnull final BaseEntity entity) {
-    return 0;
+  /** Check that user has a specific role. Role resolved by name. */
+  public boolean inRole(@Nonnull final User user, @Nonnull final Role role) throws CoreException {
+    throw CoreException.wrap(new Exception("Not implemented."));
   }
+
+  /** Check that user has a specific role. Group and User resolved by ID. */
+  public boolean inGroup(final long userId, final long groupId) throws CoreException {
+    throw CoreException.wrap(new Exception("Not implemented."));
+  }
+
+  /** Check that user has a specific role. Group resolved by name. */
+  public boolean inGroup(final long userId, final String groupName) throws CoreException {
+    throw CoreException.wrap(new Exception("Not implemented."));
+  }
+
+  /** Check that user has a specific role. Group resolved by name. */
+  public boolean inGroup(@Nonnull final User user, @Nonnull final Group group) throws CoreException {
+    throw CoreException.wrap(new Exception("Not implemented."));
+  }
+
 }

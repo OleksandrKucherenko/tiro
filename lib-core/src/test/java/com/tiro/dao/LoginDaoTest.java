@@ -9,15 +9,15 @@ import org.junit.runners.JUnit4;
 
 import static org.assertj.core.api.Assertions.*;
 
-/** Unit tests for {@link LoginDao} class. */
+/** Unit tests for {@link UserDao} class. */
 @RunWith(JUnit4.class)
 public class LoginDaoTest extends BaseDatabaseTest {
 
-  private LoginDao mDao;
+  private UserDao mDao;
 
   @Override
   protected void onSetup() {
-    mDao = new LoginDao(mEm);
+    mDao = DaoFactory.get(mEm, UserDao.class);
   }
 
   @Override
