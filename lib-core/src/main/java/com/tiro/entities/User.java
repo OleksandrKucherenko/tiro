@@ -46,6 +46,11 @@ public class User extends BaseEntity implements UserColumns {
   private User() {
   }
 
+  @Override
+  public long getId() {
+    return _id;
+  }
+
   public User(@Nonnull final String email, @Nonnull final String name) {
     super();
 
@@ -89,15 +94,15 @@ public class User extends BaseEntity implements UserColumns {
 
   /** Get roles promoted by assigned groups. */
   @Nonnull
-  public Set<Role> getGroupsRoles(){
+  public Set<Role> getGroupsRoles() {
     return getGroups().stream()
-        .flatMap( g -> g.getRoles().stream() )
+        .flatMap(g -> g.getRoles().stream())
         .collect(Collectors.toSet());
   }
 
   /** Get joined set of user roles and roles promoted by groups. */
   @Nonnull
-  public Set<Role> getJoinedRoles(){
+  public Set<Role> getJoinedRoles() {
     return Stream.concat(getRoles().stream(), getGroupsRoles().stream())
         .collect(Collectors.toSet());
   }

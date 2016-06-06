@@ -1,10 +1,11 @@
 package com.tiro.entities;
 
+import com.tiro.BaseDatabaseTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 /** Test basic SQL/Data manipulation operations. */
 @RunWith(JUnit4.class)

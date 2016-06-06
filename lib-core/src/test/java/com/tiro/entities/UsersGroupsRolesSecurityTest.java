@@ -1,5 +1,6 @@
 package com.tiro.entities;
 
+import com.tiro.BaseDatabaseTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;

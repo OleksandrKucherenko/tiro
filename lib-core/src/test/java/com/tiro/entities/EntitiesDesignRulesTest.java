@@ -1,5 +1,6 @@
 package com.tiro.entities;
 
+import com.tiro.BaseDatabaseTest;
 import com.tiro.Categories.DesignRules;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

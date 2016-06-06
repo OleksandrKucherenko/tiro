@@ -1,6 +1,5 @@
-package com.tiro.entities;
+package com.tiro;
 
-import com.tiro.Consts;
 import com.tiro.schema.DbEntity;
 import org.junit.*;
 import org.junit.rules.TestName;

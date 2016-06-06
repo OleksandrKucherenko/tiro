@@ -28,6 +28,9 @@ public abstract class BaseEntity implements BaseColumns, DbEntity {
     this.createdAt = System.nanoTime();
   }
 
+  /** Get unique identifier of the Entity. */
+  public abstract long getId();
+
   public long getVersion() {
     return this.version;
   }

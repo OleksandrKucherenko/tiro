@@ -1,10 +1,10 @@
 # tiro
 
-[![Join the chat at https://gitter.im/OleksandrKucherenko/tiro](https://badges.gitter.im/OleksandrKucherenko/tiro.svg)](https://gitter.im/OleksandrKucherenko/tiro?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/OleksandrKucherenko/tiro][7]][8]
 
 Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
 
-[![Build Status](https://travis-ci.org/OleksandrKucherenko/tiro.svg?branch=master)](https://travis-ci.org/OleksandrKucherenko/tiro) [![codecov](https://codecov.io/gh/OleksandrKucherenko/tiro/branch/master/graph/badge.svg)](https://codecov.io/gh/OleksandrKucherenko/tiro)
+[![Build Status][1]][2] [![codecov][3]][4] [![Code Climate][5]][6]
 
 
 ## Purposes
@@ -135,3 +135,13 @@ _Alternative to Gretty: [Spring Boost](http://projects.spring.io/spring-boot/)_
 - http://akhikhl.github.io/gretty-doc/Feature-overview.html
 - https://github.com/marc0der/gradle-spawn-plugin
 - [jBoss Undertow Web Server](http://undertow.io/)
+
+
+[1]: https://travis-ci.org/OleksandrKucherenko/tiro.svg?branch=master
+[2]: https://travis-ci.org/OleksandrKucherenko/tiro
+[3]: https://codecov.io/gh/OleksandrKucherenko/tiro/branch/master/graph/badge.svg
+[4]: https://codecov.io/gh/OleksandrKucherenko/tiro
+[5]: https://codeclimate.com/github/OleksandrKucherenko/tiro/badges/gpa.svg
+[6]: https://codeclimate.com/github/OleksandrKucherenko/tiro
+[7]: https://badges.gitter.im/OleksandrKucherenko/tiro.svg
+[8]: https://gitter.im/OleksandrKucherenko/tiro?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge

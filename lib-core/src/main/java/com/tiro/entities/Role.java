@@ -36,6 +36,11 @@ public class Role extends BaseEntity implements RoleColumns {
   private Role() {
   }
 
+  @Override
+  public long getId() {
+    return _id;
+  }
+
   public Role(@Nonnull final String name) {
     super();
 

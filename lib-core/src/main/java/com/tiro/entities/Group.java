@@ -71,6 +71,11 @@ public class Group extends BaseEntity implements GroupColumns {
         super.toString() + "}";
   }
 
+  @Override
+  public long getId() {
+    return _id;
+  }
+
   @Nonnull
   public Group addRole(@Nonnull final Role role) {
     this.roles.add(role);
