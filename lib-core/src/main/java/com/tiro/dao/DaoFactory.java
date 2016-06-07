@@ -12,6 +12,12 @@ import javax.persistence.EntityManager;
  */
 @SuppressWarnings({"unchecked", "unused"})
 public final class DaoFactory {
+
+  /** Hidden constructor. */
+  private DaoFactory() {
+    throw new AssertionError("Not designed for instance creation.");
+  }
+
   /** Get instance of the Dao implementation. */
   public static <T extends Dao> T get(@Nonnull final EntityManager em, @Nonnull final Class<T> clazz) {
     if (SecurityDao.class == clazz) {
@@ -22,6 +28,6 @@ public final class DaoFactory {
       return (T) new GroupDao(em);
     }
 
-    throw new Error("Not Implemented.");
+    throw new Error("Not Implemented. Class: " + clazz.getName());
   }
 }

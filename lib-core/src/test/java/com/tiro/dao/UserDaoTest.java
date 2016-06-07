@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.*;
 
 /** Unit tests for {@link UserDao} class. */
 @RunWith(JUnit4.class)
-public class LoginDaoTest extends BaseDatabaseTest {
+public class UserDaoTest extends BaseDatabaseTest {
 
   private UserDao mDao;
 

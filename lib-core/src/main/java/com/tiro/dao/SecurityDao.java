@@ -15,7 +15,6 @@ public class SecurityDao extends BasicDao {
     super(em);
   }
 
-
   /** Check that user has a specific role. Role and User resolved by ID. */
   public boolean inRole(final long userId, final long roleId) throws CoreException {
     throw CoreException.wrap(new Exception("Not implemented."));

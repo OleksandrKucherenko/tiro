@@ -15,6 +15,7 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.*;
 
 /** Implementation of steps used for testing scenarios. */
+@SuppressWarnings({"unused"})
 public class SecurityFeatureSteps {
 
   private Map<String, User> mUsers = new HashMap<>();

@@ -1,3 +1,4 @@
+# language: en
 Feature: Security
 
   Allows to define Roles, Groups and Users.

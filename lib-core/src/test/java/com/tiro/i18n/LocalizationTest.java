@@ -1,15 +1,9 @@
 package com.tiro.i18n;
 
-import com.tiro.Consts;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
+import com.tiro.BaseTest;
 import org.junit.Test;
-import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import java.util.Enumeration;
@@ -21,40 +15,7 @@ import static org.assertj.core.api.Assertions.*;
 
 /** Unit tests for localization helpers. */
 @RunWith(JUnit4.class)
-public class LocalizationTest {
-  /** Unit test logger. */
-  protected static final Logger _log = LoggerFactory.getLogger(Consts.TAG);
-
-  /** Test Method information. */
-  @Rule public TestName mTestName = new TestName();
-
-  private Locale mDefaultLocale;
-
-  @Before
-  public final void setUp() throws Exception {
-    onSetup();
-
-    _log.info("--> " + mTestName.getMethodName());
-  }
-
-  @After
-  public final void tearDown() throws Exception {
-    onTearDown();
-
-    _log.info("<-- " + mTestName.getMethodName());
-    System.out.print("\n");
-  }
-
-  protected void onSetup() {
-    // do nothing, reserved for inheritance
-    mDefaultLocale = Locale.getDefault();
-  }
-
-  protected void onTearDown() {
-    // do nothing, reserved for inheritors
-    Locale.setDefault(mDefaultLocale);
-  }
-
+public class LocalizationTest extends BaseTest {
   @Test
   public void testEnglishMessages() throws Exception {
     final Localization_En en = new Localization_En();
