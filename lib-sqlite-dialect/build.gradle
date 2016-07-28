@@ -1,0 +1,36 @@
+apply plugin: 'java'
+
+// we will use lambda
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+archivesBaseName = "lib-sqlite-dialect-${APP_VERSION}"
+
+compileJava.options.encoding = 'UTF-8'
+
+dependencies {
+  /* Hibernate Core */
+  compile 'org.hibernate:hibernate-core:+'
+}
+
+jar {
+  manifest {
+    attributes("Implementation-Title": "Sqlite Dialect",
+        "Implementation-Version": "${APP_VERSION}")
+  }
+
+  /* Remove GIT empty folder .placeholder files from final binary. */
+  exclude('**/.placeholder')
+}
+
+/* [ UNIT TESTING ] ================================================================================================= */
+
+tasks.compileTestJava.onlyIf { useTdd }
+test.onlyIf { useTdd }
+
+if (useJacoco) {
+  apply plugin: 'jacoco'
+
+  jacoco {
+    toolVersion = '+'
+  }
+}

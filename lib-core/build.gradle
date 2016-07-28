@@ -41,6 +41,8 @@ dependencies {
   /* [ TESTING ] ==================================================================================================== */
   if (useTdd) {
 
+    testCompile project(':lib-sqlite-dialect')
+
     /* SQLite */
     testCompile 'org.xerial:sqlite-jdbc:+'
 

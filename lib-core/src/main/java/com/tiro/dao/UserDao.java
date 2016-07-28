@@ -5,6 +5,10 @@ import com.tiro.exceptions.CoreException;
 
 import javax.annotation.Nonnull;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.Set;
 
 /** Data Access Object. Login/Authenticate operations. */
@@ -61,7 +65,16 @@ public class UserDao extends BasicDao {
   /** Find User by it email address. */
   @Nonnull
   public User findByEmail(final String userEmail) throws CoreException {
-    throw CoreException.wrap(new Exception("Not implemented."));
+    final CriteriaBuilder builder = mEm.getCriteriaBuilder();
+    final CriteriaQuery<User> criteria = builder.createQuery(User.class);
+    final Root<User> u = criteria.from(User.class);
+    final TypedQuery<User> query = mEm.createQuery(criteria.select(u).where(builder.equal(u.get(User.EMAIL), userEmail)));
+    final User user = query.getSingleResult();
+
+    if (null == user)
+      throw CoreException.wrap(new Exception("User not found."));
+
+    return user;
   }
 
   /** Find User by it nickname. */

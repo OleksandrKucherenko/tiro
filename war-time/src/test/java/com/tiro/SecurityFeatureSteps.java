@@ -15,16 +15,20 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 
 /** Implementation of steps used for testing scenarios. */
 @SuppressWarnings({"unused"})
 public class SecurityFeatureSteps {
+
+  /** JPA factory. */
+  private static EntityManagerFactory _factory;
 
   //region Members
   /** Cache of all created users. Lookup name-to-instance. */
@@ -42,7 +46,11 @@ public class SecurityFeatureSteps {
   //region Initialization/Finalization
   @cucumber.api.java.Before
   public void setup() {
-    mEm = mock(EntityManager.class);
+    if (null == _factory) {
+      _factory = Persistence.createEntityManagerFactory("sqlite");
+    }
+
+    mEm = _factory.createEntityManager();
   }
 
   @cucumber.api.java.After

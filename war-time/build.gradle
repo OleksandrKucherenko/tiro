@@ -33,6 +33,12 @@ dependencies {
   // providedCompile 'joda-time:joda-time:+'
 
   if (useTdd) {
+    /* SQLite support for hibernate. */
+    testCompile project(':lib-sqlite-dialect')
+
+    /* SQLite */
+    testCompile 'org.xerial:sqlite-jdbc:+'
+
     /* Unit Testing Frameworks */
     testCompile 'junit:junit:+'
     testCompile 'org.mockito:mockito-core:+'
