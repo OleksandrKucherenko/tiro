@@ -6,6 +6,11 @@ import com.tiro.exceptions.CoreException;
 
 import javax.annotation.Nonnull;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 import java.util.Set;
 
 /** Common actions that user can do with security pattern. */
@@ -32,13 +37,29 @@ public class GroupDao extends BasicDao {
   /** Find group by it id. */
   @Nonnull
   public Group findById(final long groupId) throws CoreException {
-    throw CoreException.wrap(new Exception("Not implemented."));
+    final Group group = mEm.find(Group.class, groupId);
+
+    if (null == group)
+      throw CoreException.wrap(new Exception("Group not found."));
+
+    return group;
   }
 
   /** Find group by it name. */
   @Nonnull
   public Group findByName(@Nonnull final String groupName) throws CoreException {
-    throw CoreException.wrap(new Exception("Not implemented."));
+    final CriteriaBuilder builder = mEm.getCriteriaBuilder();
+    final CriteriaQuery<Group> criteria = builder.createQuery(Group.class);
+    final Root<Group> groupTable = criteria.from(Group.class);
+    final Path<Object> columnName = groupTable.get(Group.NAME);
+
+    final TypedQuery<Group> query = mEm.createQuery(criteria.select(groupTable).where(builder.equal(columnName, groupName)));
+    final Group group = query.getSingleResult();
+
+    if (null == group)
+      throw CoreException.wrap(new Exception("Group not found."));
+
+    return group;
   }
 
   /** Assign user to group. */

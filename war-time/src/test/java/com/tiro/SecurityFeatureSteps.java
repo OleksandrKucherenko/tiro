@@ -332,8 +332,12 @@ public class SecurityFeatureSteps {
   }
 
   @Then("^I should get user '([^']*)'$")
-  public void validate_search_result_user(final String name) {
-    throw new PendingException();
+  public void validate_search_result_user(final String name) throws CoreException {
+    final UserDao dao = DaoFactory.get(mEm, UserDao.class);
+    final User user = dao.findByNickname(name);
+
+    assertThat(user).isNotNull();
+    assertThat(user.getNickName()).isEqualTo(name);
   }
 
   @Then("^I should get role '([^']*)'$")

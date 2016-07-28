@@ -46,16 +46,20 @@ public class User extends BaseEntity implements UserColumns {
   protected User() {
   }
 
-  @Override
-  public long getId() {
-    return _id;
-  }
-
   public User(@Nonnull final String email, @Nonnull final String name) {
     super();
 
     this.nickName = name;
     this.email = email;
+  }
+
+  @Override
+  public long getId() {
+    return _id;
+  }
+
+  public String getNickName() {
+    return nickName;
   }
 
   @Override

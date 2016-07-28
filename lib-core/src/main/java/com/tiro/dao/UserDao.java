@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import java.util.Set;
 
@@ -68,7 +69,9 @@ public class UserDao extends BasicDao {
     final CriteriaBuilder builder = mEm.getCriteriaBuilder();
     final CriteriaQuery<User> criteria = builder.createQuery(User.class);
     final Root<User> u = criteria.from(User.class);
-    final TypedQuery<User> query = mEm.createQuery(criteria.select(u).where(builder.equal(u.get(User.EMAIL), userEmail)));
+    final Path<String> columnEmail = u.get(User.EMAIL);
+
+    final TypedQuery<User> query = mEm.createQuery(criteria.select(u).where(builder.equal(columnEmail, userEmail)));
     final User user = query.getSingleResult();
 
     if (null == user)
@@ -80,7 +83,18 @@ public class UserDao extends BasicDao {
   /** Find User by it nickname. */
   @Nonnull
   public User findByNickname(final String userNickname) throws CoreException {
-    throw CoreException.wrap(new Exception("Not implemented."));
+    final CriteriaBuilder builder = mEm.getCriteriaBuilder();
+    final CriteriaQuery<User> criteria = builder.createQuery(User.class);
+    final Root<User> u = criteria.from(User.class);
+    final Path<String> columnNickname = u.get(User.NICKNAME);
+
+    final TypedQuery<User> query = mEm.createQuery(criteria.select(u).where(builder.equal(columnNickname, userNickname)));
+    final User user = query.getSingleResult();
+
+    if (null == user)
+      throw CoreException.wrap(new Exception("User not found."));
+
+    return user;
   }
 
   /** Is specific user disabled or not. */
