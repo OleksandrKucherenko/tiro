@@ -28,7 +28,9 @@ public abstract class BasicDao implements Dao {
   }
 
   @Override
+  @SuppressWarnings("try")
   public void forcedPersist() {
+
     try (final AutoTransaction t = AutoTransaction.from(mEm)) {
 
       // persist each entity

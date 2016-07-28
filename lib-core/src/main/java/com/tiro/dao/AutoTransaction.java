@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 /** Create automatically closable transaction. */
+@SuppressWarnings("try")
 class AutoTransaction implements AutoCloseable {
   /** Reference on transaction. */
   private final EntityTransaction mTransaction;
