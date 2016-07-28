@@ -37,6 +37,9 @@ dependencies {
   // providedCompile 'joda-time:joda-time:+'
 
   if (useTdd) {
+    /* Include testCompile configuration of core library into out module. */
+    /* testCompile project(path: ':lib-core', configuration: 'testCompile') */
+
     /* Unit Testing Frameworks */
     testCompile 'junit:junit:+'
     testCompile 'org.mockito:mockito-core:+'

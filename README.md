@@ -17,6 +17,8 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
 - minimalistic Web Application based on micro-service data
 - testing of different frameworks
 
+[Roadmap](_documentation_/README.md)
+
 ## Features
 
 - GRADLE build system
@@ -26,7 +28,7 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
 - TDD Unit Testing (jUnit)
 - SLF4J as a logging framework
 
-## Architecture
+## Global Architecture
 
 - Web Application Server should stay behind the NGINX;
 - Web Application Server implements only HTTP protocol, NGINX takes HTTPS side;
@@ -81,13 +83,13 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
 
 - http://docs.oracle.com/javase/tutorial/i18n/locale/matching.html
 
-
 ## Testing & Validation
 
 - Validate persistence.xml file: ```./gradlew checkPersistenceXml```
 - Run unit tests: ```./gradlew test```
 - jUnit tests for low-level system tests (frameworks integration)
 - Cucumber for high-level business rules
+  ![Run All Tests](_documentation_/intellij-testing-configuration.png)
 
 ## Debugging
 

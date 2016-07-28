@@ -26,6 +26,8 @@ public final class DaoFactory {
       return (T) new UserDao(em);
     } else if (GroupDao.class == clazz) {
       return (T) new GroupDao(em);
+    } else if (RoleDao.class == clazz) {
+      return (T) new RoleDao(em);
     }
 
     throw new Error("Not Implemented. Class: " + clazz.getName());

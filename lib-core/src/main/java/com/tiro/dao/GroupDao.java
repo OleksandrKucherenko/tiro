@@ -6,12 +6,19 @@ import com.tiro.exceptions.CoreException;
 
 import javax.annotation.Nonnull;
 import javax.persistence.EntityManager;
-import java.util.List;
+import java.util.Set;
 
 /** Common actions that user can do with security pattern. */
 @SuppressWarnings({"unused"})
 public class GroupDao extends BasicDao {
 
+  /**
+   * Hidden constructor. Available only for inheritors and {@link DaoFactory}.
+   * Inject entity manager instance. Instead of calling constructor use:
+   * <pre>
+   *   GroupDao dao = DaoFactory.get(entityManagerInstance, GroupDao.class);
+   * </pre>
+   */
   /* package */ GroupDao(@Nonnull final EntityManager em) {
     super(em);
   }
@@ -23,16 +30,19 @@ public class GroupDao extends BasicDao {
   }
 
   /** Find group by it id. */
-  public Group findGroup(final long groupId) throws CoreException {
+  @Nonnull
+  public Group findById(final long groupId) throws CoreException {
     throw CoreException.wrap(new Exception("Not implemented."));
   }
 
   /** Find group by it name. */
-  public Group findGroup(@Nonnull final String groupName) throws CoreException {
+  @Nonnull
+  public Group findByName(@Nonnull final String groupName) throws CoreException {
     throw CoreException.wrap(new Exception("Not implemented."));
   }
 
   /** Assign user to group. */
+  @Nonnull
   public Group assign(@Nonnull final Group group, @Nonnull final User user) throws CoreException {
     group.addUser(user);
 
@@ -42,6 +52,7 @@ public class GroupDao extends BasicDao {
   }
 
   /** Assign multiple users to one group. */
+  @Nonnull
   public Group assign(@Nonnull final Group group, @Nonnull final User... users) throws CoreException {
     throw CoreException.wrap(new Exception("Not implemented."));
 
@@ -49,22 +60,26 @@ public class GroupDao extends BasicDao {
   }
 
   /** Enable group. */
+  @Nonnull
   public Group enable(@Nonnull final Group group) throws CoreException {
     throw CoreException.wrap(new Exception("Not implemented."));
   }
 
   /** Disable group. */
+  @Nonnull
   public Group disable(@Nonnull final Group group) throws CoreException {
     throw CoreException.wrap(new Exception("Not implemented."));
   }
 
   /** Get list of all disabled groups. */
-  public List<Group> findAllDisabled() throws CoreException {
+  @Nonnull
+  public Set<Group> findAllDisabled() throws CoreException {
     throw CoreException.wrap(new Exception("Not implemented."));
   }
 
   /** Get list of all enabled groups. */
-  public List<Group> findAllEnabled() throws CoreException {
+  @Nonnull
+  public Set<Group> findAllEnabled() throws CoreException {
     throw CoreException.wrap(new Exception("Not implemented."));
   }
 }

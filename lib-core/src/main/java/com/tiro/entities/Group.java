@@ -42,7 +42,7 @@ public class Group extends BaseEntity implements GroupColumns {
 
   /** private constructor. Required by JPA. */
   @SuppressWarnings({"unused"})
-  private Group() {
+  protected Group() {
   }
 
   public Group(@Nonnull final String name) {

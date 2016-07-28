@@ -33,7 +33,7 @@ public class Role extends BaseEntity implements RoleColumns {
 
   /** Hidden constructor. Required by JPA. */
   @SuppressWarnings({"unused"})
-  private Role() {
+  protected Role() {
   }
 
   @Override

@@ -22,6 +22,7 @@ public abstract class BasicDao implements Dao {
   /** Counter of included, not serialized items. */
   protected final AtomicLong mCounter = new AtomicLong(-1L);
 
+  /** Hidden constructor, available only for inheritors. */
   /* package */ BasicDao(@Nonnull final EntityManager em) {
     mEm = em;
   }

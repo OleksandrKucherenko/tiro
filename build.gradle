@@ -10,13 +10,18 @@ buildscript {
     /* DEPENDENCIES UPDATES REPORTS */
     classpath 'com.github.ben-manes:gradle-versions-plugin:+'
     /* RECORD TIME OF TASKS EXECUTION, https://github.com/passy/build-time-tracker-plugin */
-    classpath "net.rdrei.android.buildtimetracker:gradle-plugin:+"
+    if (Boolean.parseBoolean(project.BUILD_TIMING_TRACKING)) {
+      classpath "net.rdrei.android.buildtimetracker:gradle-plugin:+"
+    }
   }
 }
 
 apply plugin: 'org.akhikhl.gretty'
 apply plugin: 'com.github.ben-manes.versions'
-apply plugin: "build-time-tracker"
+
+if (Boolean.parseBoolean(project.BUILD_TIMING_TRACKING)) {
+  apply plugin: "build-time-tracker"
+}
 
 /** Get GIT revision unique number. */
 def gitRevision() {
@@ -72,7 +77,7 @@ allprojects {
   def grettyResolutionStrategy = { DependencyResolveDetails details ->
     if (details.requested.group == 'org.eclipse.jetty' ||
         details.requested.group == 'org.eclipse.jetty.websocket') {
-      details.useVersion '+'
+      details.useVersion "${project.JETTY_VERSION}"
     }
 
   }
@@ -98,26 +103,28 @@ allprojects {
 /* CLEANUP ROOT PROJECT TOO. */
 task clean(type: Delete) {
   delete rootProject.buildDir
-  //delete fileTree(dir: rootProject.rootDir, include: '**/*.log')
+  delete fileTree(dir: rootProject.rootDir, include: '**/*.log')
 }
 
 /* BUILD TASKS EXECUTION TIME TRACKING */
-buildtimetracker {
-  reporters {
-    csv {
-      output "build/times.csv"
-      append true
-      header false
-    }
+if (Boolean.parseBoolean(project.BUILD_TIMING_TRACKING)) {
+  buildtimetracker {
+    reporters {
+      csv {
+        output "build/times.csv"
+        append true
+        header false
+      }
 
-    summary {
-      ordered false
-      threshold 50
-      barstyle "none" /* unicode | ascii | none */
-    }
+      summary {
+        ordered false
+        threshold 50
+        barstyle "none" /* unicode | ascii | none */
+      }
 
-    csvSummary {
-      csv "build/times.csv"
+      csvSummary {
+        csv "build/times.csv"
+      }
     }
   }
 }
@@ -127,7 +134,7 @@ gretty {
   /* Jetty v9.3 requires proper configuration for making possible JSP running.
       Take a look into 'allprojects' scope upper. */
   servletContainer 'jetty9'
-  //  serverConfigFile "${rootProject.projectDir}/gradle/configuration/jetty.xml"
+  serverConfigFile "${rootProject.projectDir}/gradle/configuration/jetty.xml"
 
   /* Tomcat8 is properly configured for JSP from the beginning, just run and enjoy! */
   //  servletContainer 'tomcat8'

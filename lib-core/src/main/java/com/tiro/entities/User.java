@@ -43,7 +43,7 @@ public class User extends BaseEntity implements UserColumns {
 
   /** Hidden constructor. Required by JPA. */
   @SuppressWarnings({"unused"})
-  private User() {
+  protected User() {
   }
 
   @Override
