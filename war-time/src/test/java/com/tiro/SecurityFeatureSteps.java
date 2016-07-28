@@ -9,6 +9,7 @@ import com.tiro.entities.Group;
 import com.tiro.entities.Role;
 import com.tiro.entities.User;
 import com.tiro.exceptions.CoreException;
+import com.tiro.schema.Tables;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -55,6 +56,22 @@ public class SecurityFeatureSteps {
 
   @cucumber.api.java.After
   public void teardown() {
+
+    // clean DB
+    mEm.getTransaction().begin();
+
+    final String sqlDrop = "DELETE FROM ";
+    final String sqlPrefix = "";
+
+    mEm.createNativeQuery(sqlDrop + Tables.GROUPS_TO_USERS + sqlPrefix).executeUpdate();
+    mEm.createNativeQuery(sqlDrop + Tables.USERS_TO_ROLES + sqlPrefix).executeUpdate();
+    mEm.createNativeQuery(sqlDrop + Tables.GROUPS_TO_ROLES + sqlPrefix).executeUpdate();
+
+    mEm.createNativeQuery(sqlDrop + Tables.USERS + sqlPrefix).executeUpdate();
+    mEm.createNativeQuery(sqlDrop + Tables.ROLES + sqlPrefix).executeUpdate();
+    mEm.createNativeQuery(sqlDrop + Tables.GROUPS + sqlPrefix).executeUpdate();
+
+    mEm.getTransaction().commit();
   }
   //endregion
 
@@ -183,7 +200,21 @@ public class SecurityFeatureSteps {
 
   @When("^I do persist$")
   public void persistAll() {
-    // TODO: persist all on disk
+    mEm.getTransaction().begin();
+
+    for (final Role role : mRoles.values()) {
+      mEm.persist(role);
+    }
+
+    for (final User user : mUsers.values()) {
+      mEm.persist(user);
+    }
+
+    for (final Group group : mGroups.values()) {
+      mEm.persist(group);
+    }
+
+    mEm.getTransaction().commit();
   }
 
   @When("^I search user by email '([^']*)'$")
