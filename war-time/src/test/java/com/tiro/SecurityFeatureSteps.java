@@ -14,6 +14,8 @@ import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -28,6 +30,8 @@ import static org.assertj.core.api.Assertions.*;
 @SuppressWarnings({"unused"})
 public class SecurityFeatureSteps {
 
+  /** Unit test logger. */
+  protected static final Logger _log = LoggerFactory.getLogger(Consts.TAG);
   /** JPA factory. */
   private static EntityManagerFactory _factory;
 
@@ -333,8 +337,9 @@ public class SecurityFeatureSteps {
 
   @Then("^I should get user '([^']*)'$")
   public void validate_search_result_user(final String name) throws CoreException {
-    final UserDao dao = DaoFactory.get(mEm, UserDao.class);
-    final User user = dao.findByNickname(name);
+    assertThat(mSearchResult).isInstanceOf(User.class);
+
+    final User user = (User) mSearchResult;
 
     assertThat(user).isNotNull();
     assertThat(user.getNickName()).isEqualTo(name);
@@ -342,12 +347,20 @@ public class SecurityFeatureSteps {
 
   @Then("^I should get role '([^']*)'$")
   public void validate_search_result_role(final String name) {
-    throw new PendingException();
+    assertThat(mSearchResult).isInstanceOf(Role.class);
+
+    final Role role = (Role) mSearchResult;
+
+    assertThat(role.getName()).isEqualTo(name);
   }
 
   @Then("^I should get group '([^']*)'$")
   public void validate_search_result_group(final String name) {
-    throw new PendingException();
+    assertThat(mSearchResult).isInstanceOf(Group.class);
+
+    final Group group = (Group) mSearchResult;
+
+    assertThat(group.getName()).isEqualTo(name);
   }
 
   @Then("^I should get disabled user '([^']*)'$")

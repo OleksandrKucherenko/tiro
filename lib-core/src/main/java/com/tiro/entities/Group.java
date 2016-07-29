@@ -15,6 +15,10 @@ import static javax.persistence.GenerationType.IDENTITY;
 /** Security Group. */
 @Entity
 @Table(name = Tables.GROUPS)
+@NamedQuery(
+    name = Tables.GROUPS + ".findByName",
+    query = "SELECT g FROM " + Tables.GROUPS + " g WHERE g." + GroupColumns.NAME + " = :name"
+)
 public class Group extends BaseEntity implements GroupColumns {
   /** Serialization unique identifier. */
   private static final long serialVersionUID = -8271144716636578493L;
@@ -77,6 +81,21 @@ public class Group extends BaseEntity implements GroupColumns {
   }
 
   @Nonnull
+  public String getName() {
+    return name;
+  }
+
+  @Nonnull
+  public Set<User> getUsers() {
+    return this.users;
+  }
+
+  @Nonnull
+  public Set<Role> getRoles() {
+    return this.roles;
+  }
+
+  @Nonnull
   public Group addRole(@Nonnull final Role role) {
     this.roles.add(role);
 
@@ -93,15 +112,5 @@ public class Group extends BaseEntity implements GroupColumns {
     user.getGroups().add(this);
 
     return this;
-  }
-
-  @Nonnull
-  public Set<User> getUsers() {
-    return this.users;
-  }
-
-  @Nonnull
-  public Set<Role> getRoles() {
-    return this.roles;
   }
 }
