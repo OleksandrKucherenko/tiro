@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import java.util.Set;
 
@@ -30,7 +31,9 @@ public class RoleDao extends BasicDao {
     final CriteriaBuilder builder = mEm.getCriteriaBuilder();
     final CriteriaQuery<Role> criteria = builder.createQuery(Role.class);
     final Root<Role> r = criteria.from(Role.class);
-    final TypedQuery<Role> query = mEm.createQuery(criteria.select(r).where(builder.equal(r.get(Role.NAME), name)));
+    final Path<String> columnName = r.get(getFieldNameByColumnName(Role.NAME, Role.class));
+
+    final TypedQuery<Role> query = mEm.createQuery(criteria.select(r).where(builder.equal(columnName, name)));
     final Role role = query.getSingleResult();
 
     if (null == role)

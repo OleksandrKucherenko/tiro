@@ -15,10 +15,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 /** Security Group. */
 @Entity
 @Table(name = Tables.GROUPS)
-@NamedQuery(
-    name = Tables.GROUPS + ".findByName",
-    query = "SELECT g FROM " + Tables.GROUPS + " g WHERE g." + GroupColumns.NAME + " = :name"
-)
 public class Group extends BaseEntity implements GroupColumns {
   /** Serialization unique identifier. */
   private static final long serialVersionUID = -8271144716636578493L;

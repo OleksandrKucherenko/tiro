@@ -3,11 +3,14 @@ package com.tiro.dao;
 import com.tiro.entities.Group;
 import com.tiro.entities.User;
 import com.tiro.exceptions.CoreException;
-import com.tiro.schema.Tables;
 
 import javax.annotation.Nonnull;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 import java.util.Set;
 
 /** Common actions that user can do with security pattern. */
@@ -45,17 +48,17 @@ public class GroupDao extends BasicDao {
   /** Find group by it name. */
   @Nonnull
   public Group findByName(@Nonnull final String groupName) throws CoreException {
-//    final CriteriaBuilder builder = mEm.getCriteriaBuilder();
-//    final CriteriaQuery<Group> criteria = builder.createQuery(Group.class);
-//    final Root<Group> groupTable = criteria.from(Group.class);
-//    final Path<Object> columnName = groupTable.get(Group.NAME);
-//
-//    final TypedQuery<Group> query = mEm.createQuery(criteria.select(groupTable).where(builder.equal(columnName, groupName)));
-//    final Group group = query.getSingleResult();
+    final CriteriaBuilder builder = mEm.getCriteriaBuilder();
+    final CriteriaQuery<Group> criteria = builder.createQuery(Group.class);
+    final Root<Group> groupTable = criteria.from(Group.class);
+    final Path<String> columnName = groupTable.get(getFieldNameByColumnName(Group.NAME, Group.class));
 
-    final TypedQuery<Group> queryFindByName = mEm.createNamedQuery(Tables.GROUPS + ".findByName", Group.class);
-    queryFindByName.setParameter("name", groupName);
-    final Group group = queryFindByName.getSingleResult();
+    final TypedQuery<Group> query = mEm.createQuery(criteria.select(groupTable).where(builder.equal(columnName, groupName)));
+    final Group group = query.getSingleResult();
+
+//    final TypedQuery<Group> queryFindByName = mEm.createNamedQuery(Tables.GROUPS + ".findByName", Group.class);
+//    queryFindByName.setParameter("name", groupName);
+//    final Group group = queryFindByName.getSingleResult();
 
     if (null == group)
       throw CoreException.wrap(new Exception("Group not found."));
