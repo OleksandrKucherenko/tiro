@@ -10,7 +10,6 @@ import com.tiro.entities.Role;
 import com.tiro.entities.User;
 import com.tiro.exceptions.CoreException;
 import com.tiro.schema.Tables;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -37,15 +36,17 @@ public class SecurityFeatureSteps {
 
   //region Members
   /** Cache of all created users. Lookup name-to-instance. */
-  private Map<String, User> mUsers = new HashMap<>();
+  private final Map<String, User> mUsers = new HashMap<>();
   /** Cache of all created roles. Lookup name-to-instance. */
-  private Map<String, Role> mRoles = new HashMap<>();
+  private final Map<String, Role> mRoles = new HashMap<>();
   /** Cache of all created groups. Lookup name-to-instance. */
-  private Map<String, Group> mGroups = new HashMap<>();
+  private final Map<String, Group> mGroups = new HashMap<>();
   /** Temporary reference on search result. */
   private BaseEntity mSearchResult;
   /** Entity manager for our DAO calls. */
   private EntityManager mEm;
+  /** Captured Exception. */
+  private Throwable mException;
   //endregion
 
   //region Initialization/Finalization
@@ -56,6 +57,8 @@ public class SecurityFeatureSteps {
     }
 
     mEm = _factory.createEntityManager();
+    mException = null;
+    mSearchResult = null;
   }
 
   @cucumber.api.java.After
@@ -123,17 +126,30 @@ public class SecurityFeatureSteps {
 
     mUsers.put(name, user);
 
+    dao.include(user);
     dao.forcedPersist();
   }
 
   @Given("^I have role '([^']*)'$")
   public void create_role(final String name) {
-    mRoles.put(name, new Role(name));
+    final RoleDao dao = DaoFactory.get(mEm, RoleDao.class);
+    final Role role = new Role(name);
+
+    mRoles.put(name, role);
+
+    dao.include(role);
+    dao.forcedPersist();
   }
 
   @Given("^I have group '([^']*)'$")
   public void create_group(final String name) {
-    mGroups.put(name, new Group(name));
+    final GroupDao dao = DaoFactory.get(mEm, GroupDao.class);
+    final Group group = new Group(name);
+
+    mGroups.put(name, group);
+
+    dao.include(group);
+    dao.forcedPersist();
   }
 
   @Given("^I have group '([^']*)' with assigned user '([^']*)'$")
@@ -251,17 +267,29 @@ public class SecurityFeatureSteps {
 
   @When("^I create user '([^']*)' with email '([^']*)'$")
   public void action_create_user(final String name, final String email) {
-    create_user(name, email);
+    try {
+      create_user(name, email);
+    } catch (final Throwable ignored) {
+      mException = ignored;
+    }
   }
 
   @When("^I create role '([^']*)'$")
   public void action_create_role(final String name) {
-    create_role(name);
+    try {
+      create_role(name);
+    } catch (final Throwable ignored) {
+      mException = ignored;
+    }
   }
 
   @When("^I create group '([^']*)'$")
   public void action_create_group(final String name) {
-    create_group(name);
+    try {
+      create_group(name);
+    } catch (final Throwable ignored) {
+      mException = ignored;
+    }
   }
 
   @When("^I disable user '([^']*)'$")
@@ -332,7 +360,7 @@ public class SecurityFeatureSteps {
 
   @Then("^it should fail with unhandled exception$")
   public void validate_fail() {
-    throw new PendingException();
+    assertThat(mException).isNotNull().isInstanceOf(CoreException.class);
   }
 
   @Then("^I should get user '([^']*)'$")
@@ -365,22 +393,34 @@ public class SecurityFeatureSteps {
 
   @Then("^I should get disabled user '([^']*)'$")
   public void validate_disabled_user(final String name) {
-    throw new PendingException();
+    final User user = mUsers.get(name);
+
+    assertThat(user).isNotNull();
+    assertThat(user.isDisabled()).isTrue();
   }
 
   @Then("^I should get disabled group '([^']*)'$")
   public void validate_disabled_group(final String name) {
-    throw new PendingException();
+    final Group group = mGroups.get(name);
+
+    assertThat(group).isNotNull();
+    assertThat(group.isDisabled()).isTrue();
   }
 
   @Then("^I should get enabled user '([^']*)'$")
   public void validate_enabled_user(final String name) {
-    throw new PendingException();
+    final User user = mUsers.get(name);
+
+    assertThat(user).isNotNull();
+    assertThat(user.isDisabled()).isFalse();
   }
 
   @Then("^I should get enabled group '([^']*)'$")
   public void validate_enabled_group(final String name) {
-    throw new PendingException();
+    final Group group = mGroups.get(name);
+
+    assertThat(group).isNotNull();
+    assertThat(group.isDisabled()).isFalse();
   }
   //endregion
 

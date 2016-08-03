@@ -18,6 +18,7 @@ public class AutoTransactionTest extends BaseTest {
 
   /** Create a new instance from entity manager reference. */
   @Test
+  @SuppressWarnings("try")
   public void testNewInstance() throws Exception {
     EntityManager mockManager = mock(EntityManager.class);
     EntityTransaction mockTransaction = Mockito.mock(EntityTransaction.class);

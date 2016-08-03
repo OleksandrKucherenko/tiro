@@ -26,6 +26,9 @@ public class Group extends BaseEntity implements GroupColumns {
   /** Group name. */
   @Column(name = NAME) private String name;
 
+  /** Is group disabled or not. */
+  @Column(name = DISABLED) private boolean disabled;
+
   /** Get a list of roles assigned to this group. */
   @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinTable(name = Tables.GROUPS_TO_ROLES,
@@ -79,6 +82,14 @@ public class Group extends BaseEntity implements GroupColumns {
   @Nonnull
   public String getName() {
     return name;
+  }
+
+  public boolean isDisabled() {
+    return disabled;
+  }
+
+  public void setDisabled(boolean disable) {
+    disabled = disable;
   }
 
   @Nonnull

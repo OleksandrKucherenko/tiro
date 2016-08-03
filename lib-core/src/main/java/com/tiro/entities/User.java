@@ -30,6 +30,9 @@ public class User extends BaseEntity implements UserColumns {
   /** User email address. */
   @Column(name = EMAIL) private String email;
 
+  /** Is user disabled or not. */
+  @Column(name = DISABLED) private boolean disabled;
+
   /** Get the list of roles associated directly with a user. */
   @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinTable(name = Tables.USERS_TO_ROLES,
@@ -60,6 +63,14 @@ public class User extends BaseEntity implements UserColumns {
 
   public String getNickName() {
     return nickName;
+  }
+
+  public boolean isDisabled() {
+    return disabled;
+  }
+
+  public void setDisabled(boolean disable) {
+    disabled = disable;
   }
 
   @Override

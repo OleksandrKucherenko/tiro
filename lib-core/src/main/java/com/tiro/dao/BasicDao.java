@@ -53,6 +53,13 @@ public abstract class BasicDao implements Dao {
     }
   }
 
+  /** Include multiple entities in one call. */
+  protected void include(@Nonnull final BaseEntity... entities) {
+    for (BaseEntity entity : entities) {
+      include(entity);
+    }
+  }
+
   @Override
   public long include(@Nonnull final BaseEntity entity) {
     final long identifier = (0 == entity.getId()) ? mCounter.getAndDecrement() : entity.getId();
