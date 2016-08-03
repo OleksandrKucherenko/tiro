@@ -32,12 +32,11 @@ public abstract class BasicDao implements Dao {
     mEm = em;
   }
 
+  /** {@inheritDoc} */
   @Override
   @SuppressWarnings("try")
-  public void forcedPersist() {
-
+  public void forcedPersist() throws CoreException {
     try (final AutoTransaction t = AutoTransaction.from(mEm)) {
-
       // persist each entity
       mPersistContext.forEach((entity, identifier) -> {
         mEm.persist(entity);
@@ -50,16 +49,11 @@ public abstract class BasicDao implements Dao {
       t.ok();
     } catch (final Throwable ignored) {
       _log.error("Unexpected exception during the persist operation.", ignored);
+      throw CoreException.wrap(ignored);
     }
   }
 
-  /** Include multiple entities in one call. */
-  protected void include(@Nonnull final BaseEntity... entities) {
-    for (BaseEntity entity : entities) {
-      include(entity);
-    }
-  }
-
+  /** {@inheritDoc} */
   @Override
   public long include(@Nonnull final BaseEntity entity) {
     final long identifier = (0 == entity.getId()) ? mCounter.getAndDecrement() : entity.getId();
@@ -67,6 +61,13 @@ public abstract class BasicDao implements Dao {
     mPersistContext.put(entity, identifier);
 
     return identifier;
+  }
+
+  /** Include multiple entities in one call. */
+  protected void include(@Nonnull final BaseEntity... entities) {
+    for (BaseEntity entity : entities) {
+      include(entity);
+    }
   }
 
   /** Find field name by assigned column name annotation. */

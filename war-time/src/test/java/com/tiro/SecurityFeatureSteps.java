@@ -89,14 +89,14 @@ public class SecurityFeatureSteps {
   }
 
   @Given("^I have users:$")
-  public void create_users_table(final List<NameEmail> table) {
+  public void create_users_table(final List<NameEmail> table) throws CoreException {
     for (NameEmail ne : table) {
       create_user(ne.name, ne.email);
     }
   }
 
   @Given("^I have roles:$")
-  public void create_roles_table(final List<Named> table) {
+  public void create_roles_table(final List<Named> table) throws CoreException {
     // Write code here that turns the phrase above into concrete actions
     // For automatic transformation, change DataTable to one of
     // List<YourType>, List<List<E>>, List<Map<K,V>> or Map<K,V>.
@@ -108,7 +108,7 @@ public class SecurityFeatureSteps {
   }
 
   @Given("^I have groups:$")
-  public void create_groups_table(final List<Named> table) {
+  public void create_groups_table(final List<Named> table) throws CoreException {
     // Write code here that turns the phrase above into concrete actions
     // For automatic transformation, change DataTable to one of
     // List<YourType>, List<List<E>>, List<Map<K,V>> or Map<K,V>.
@@ -120,7 +120,7 @@ public class SecurityFeatureSteps {
   }
 
   @Given("^I have user '([^']*)' with email '([^']*)'$")
-  public void create_user(final String name, final String email) {
+  public void create_user(final String name, final String email) throws CoreException {
     final UserDao dao = DaoFactory.get(mEm, UserDao.class);
     final User user = dao.newUser(email, name);
 
@@ -131,7 +131,7 @@ public class SecurityFeatureSteps {
   }
 
   @Given("^I have role '([^']*)'$")
-  public void create_role(final String name) {
+  public void create_role(final String name) throws CoreException {
     final RoleDao dao = DaoFactory.get(mEm, RoleDao.class);
     final Role role = new Role(name);
 
@@ -142,7 +142,7 @@ public class SecurityFeatureSteps {
   }
 
   @Given("^I have group '([^']*)'$")
-  public void create_group(final String name) {
+  public void create_group(final String name) throws CoreException {
     final GroupDao dao = DaoFactory.get(mEm, GroupDao.class);
     final Group group = new Group(name);
 

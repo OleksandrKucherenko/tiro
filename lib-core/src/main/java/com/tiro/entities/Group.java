@@ -24,7 +24,7 @@ public class Group extends BaseEntity implements GroupColumns {
   @Column(name = ID) private long _id;
 
   /** Group name. */
-  @Column(name = NAME) private String name;
+  @Column(name = NAME, unique = true) private String name;
 
   /** Is group disabled or not. */
   @Column(name = DISABLED) private boolean disabled;

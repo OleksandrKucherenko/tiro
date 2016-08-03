@@ -25,10 +25,10 @@ public class User extends BaseEntity implements UserColumns {
   @Column(name = ID) private long _id;
 
   /** User nick name. */
-  @Column(name = NICKNAME) private String nickName;
+  @Column(name = NICKNAME, unique = true) private String nickName;
 
   /** User email address. */
-  @Column(name = EMAIL) private String email;
+  @Column(name = EMAIL, unique = true) private String email;
 
   /** Is user disabled or not. */
   @Column(name = DISABLED) private boolean disabled;
