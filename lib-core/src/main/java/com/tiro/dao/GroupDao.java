@@ -143,6 +143,7 @@ public class GroupDao extends BasicDao {
     return queryFindAllByDisabled(false);
   }
 
+  /** Compose query for finding all groups with specified 'disabled' column state. */
   private TypedQuery<Group> queryFindAllByDisabled(final boolean disabled) throws CoreException {
     final CriteriaBuilder builder = mEm.getCriteriaBuilder();
     final CriteriaQuery<Group> criteria = builder.createQuery(Group.class);

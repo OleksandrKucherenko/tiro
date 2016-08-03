@@ -145,18 +145,21 @@ public class UserDao extends BasicDao {
     return mEm.createQuery(criteria.select(u).where(builder.equal(columnNickname, userNickname)));
   }
 
+  /** Compose query for finding all disabled users. */
   private TypedQuery<User> queryFindAllDisabled() throws CoreException {
     /* SELECT u FROM users u WHERE u.is_disabled = true */
 
     return queryFindAllByDisabled(true);
   }
 
+  /** Compose query for finding all enabled users. */
   private TypedQuery<User> queryFindAllEnabled() throws CoreException {
     /* SELECT u FROM users u WHERE u.is_disabled = false */
 
     return queryFindAllByDisabled(false);
   }
 
+  /** Compose query for finding all users with specified 'disabled' column state. */
   private TypedQuery<User> queryFindAllByDisabled(final boolean disabled) throws CoreException {
     final CriteriaBuilder builder = mEm.getCriteriaBuilder();
     final CriteriaQuery<User> criteria = builder.createQuery(User.class);
