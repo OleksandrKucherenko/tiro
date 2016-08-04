@@ -10,6 +10,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /** Data Access Object. Login/Authenticate operations. */
@@ -124,13 +126,17 @@ public class UserDao extends BasicDao {
   /** Get all disabled in system users. */
   @Nonnull
   public Set<User> findAllDisabled() throws CoreException {
-    throw CoreException.wrap(new Exception("Not implemented."));
+    final List<User> users = queryFindAllDisabled().getResultList();
+
+    return new HashSet<>(users);
   }
 
   /** Get all enabled in system users. */
   @Nonnull
   public Set<User> findAllEnabled() throws CoreException {
-    throw CoreException.wrap(new Exception("Not implemented."));
+    final List<User> users = queryFindAllEnabled().getResultList();
+
+    return new HashSet<>(users);
   }
 
   /** Compose query for searching entity by nickname. */

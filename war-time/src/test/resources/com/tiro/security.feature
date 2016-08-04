@@ -111,8 +111,17 @@ Feature: Security
     Then I should get enabled group 'admins'
 
   Scenario: Can find all disabled users
+    Given default
+    When I disable user 'admin'
+    Then I should get 1 disabled user(s)
+    And I should get 3 enabled user(s)
 
   Scenario: Can find all disabled groups
+    Given default
+    When I disable group 'admins'
+    Then I should get 1 disabled group(s)
+    And I should get 3 enabled group(s)
 
   # First scenario that can compromise the architecture/implementation
   Scenario: Disabled group roles are not included into user joined roles
+    Given default

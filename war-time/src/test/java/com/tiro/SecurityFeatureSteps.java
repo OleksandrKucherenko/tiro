@@ -22,6 +22,7 @@ import javax.persistence.Persistence;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -422,7 +423,38 @@ public class SecurityFeatureSteps {
     assertThat(group).isNotNull();
     assertThat(group.isDisabled()).isFalse();
   }
-  //endregion
+
+  @Then("^I should get (\\d+) disabled group\\(s\\)$")
+  public void validate_disabled_groups_size(final int size) throws CoreException {
+    final GroupDao dao = DaoFactory.get(mEm, GroupDao.class);
+    final Set<Group> groups = dao.findAllDisabled();
+
+    assertThat(groups).isNotNull().hasSize(size);
+  }
+
+  @Then("^I should get (\\d+) enabled group\\(s\\)$")
+  public void validate_enabled_groups_size(final int size) throws CoreException {
+    final GroupDao dao = DaoFactory.get(mEm, GroupDao.class);
+    final Set<Group> groups = dao.findAllEnabled();
+
+    assertThat(groups).isNotNull().hasSize(size);
+  }
+
+  @Then("^I should get (\\d+) disabled user\\(s\\)$")
+  public void validate_disabled_users_size(final int size) throws CoreException {
+    final UserDao dao = DaoFactory.get(mEm, UserDao.class);
+    final Set<User> users = dao.findAllDisabled();
+
+    assertThat(users).isNotNull().hasSize(size);
+  }
+
+  @Then("^I should get (\\d+) enabled user\\(s\\)$")
+  public void validate_enabled_users_size(final int size) throws CoreException {
+    final UserDao dao = DaoFactory.get(mEm, UserDao.class);
+    final Set<User> users = dao.findAllEnabled();
+
+    assertThat(users).isNotNull().hasSize(size);
+  }  //endregion
 
   //region Nested declarations
   static class NameEmail {
