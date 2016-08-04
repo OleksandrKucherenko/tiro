@@ -102,8 +102,8 @@ allprojects {
 
 /* CLEANUP ROOT PROJECT TOO. */
 task clean(type: Delete) {
+  delete fileTree(dir: rootProject.rootDir, include: '**/*.log')
   delete rootProject.buildDir
-  //delete fileTree(dir: rootProject.rootDir, include: '**/*.log')
 }
 
 /* BUILD TASKS EXECUTION TIME TRACKING */

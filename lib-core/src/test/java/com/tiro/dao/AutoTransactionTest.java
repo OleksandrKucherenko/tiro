@@ -35,6 +35,7 @@ public class AutoTransactionTest extends BaseTest {
 
   /** Create a new instance from transaction reference. */
   @Test
+  @SuppressWarnings("try")
   public void testAutoCloseFinally() throws Exception {
     EntityTransaction mockTransaction = Mockito.mock(EntityTransaction.class);
     when(mockTransaction.isActive()).thenReturn(false);
@@ -48,6 +49,7 @@ public class AutoTransactionTest extends BaseTest {
 
   /** Confirm auto-close call on exception raising. */
   @Test
+  @SuppressWarnings("try")
   public void testAutoCloseOnException() throws Exception {
     EntityTransaction mockTransaction = Mockito.mock(EntityTransaction.class);
     when(mockTransaction.isActive()).thenReturn(false);
@@ -63,6 +65,7 @@ public class AutoTransactionTest extends BaseTest {
 
   /** Confirm that auto-close do nothing in case of nested transaction detection. */
   @Test
+  @SuppressWarnings("try")
   public void testNestedTransaction() throws Exception {
     EntityTransaction mockTransaction = Mockito.mock(EntityTransaction.class);
     when(mockTransaction.isActive()).thenReturn(true);
