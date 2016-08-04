@@ -40,4 +40,10 @@ if (useJacoco) {
       destinationFile = file("$rootProject.buildDir/jacoco/lib-sqlite-dialect-jacoco.ec")
     }
   }
+
+  jacocoTestReport {
+    reports {
+      xml.enabled true
+    }
+  }
 }

@@ -73,6 +73,12 @@ if (useJacoco) {
       destinationFile = file("$rootProject.buildDir/jacoco/war-time-jacoco.ec")
     }
   }
+
+  jacocoTestReport {
+    reports {
+      xml.enabled true
+    }
+  }
 }
 
 test {

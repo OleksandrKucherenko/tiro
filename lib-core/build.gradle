@@ -89,6 +89,12 @@ if (useJacoco) {
       destinationFile = file("$rootProject.buildDir/jacoco/lib-core-jacoco.ec")
     }
   }
+
+  jacocoTestReport {
+    reports {
+      xml.enabled true
+    }
+  }
 }
 
 test {

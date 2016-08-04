@@ -79,6 +79,12 @@ if (useJacoco) {
       destinationFile = file("$rootProject.buildDir/jacoco/war-api-jacoco.ec")
     }
   }
+
+  jacocoTestReport {
+    reports {
+      xml.enabled true
+    }
+  }
 }
 
 test {

@@ -39,6 +39,12 @@ if (useJacoco) {
       destinationFile = file("$rootProject.buildDir/jacoco/ear-app-jacoco.ec")
     }
   }
+
+  jacocoTestReport {
+    reports {
+      xml.enabled true
+    }
+  }
 }
 
 test {
