@@ -71,6 +71,7 @@ public class Group extends BaseEntity implements GroupColumns {
         ", name='" + name + '\'' +
         ", roles=" + roles.size() +
         ", users=" + users.size() +
+        ", disabled=" + disabled +
         super.toString() + "}";
   }
 

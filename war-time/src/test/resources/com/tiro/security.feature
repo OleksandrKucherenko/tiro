@@ -123,5 +123,21 @@ Feature: Security
     And I should get 3 enabled group(s)
 
   # First scenario that can compromise the architecture/implementation
-  Scenario: Disabled group roles are not included into user joined roles
+  Scenario: Disabled group roles are not included into user joined roles, part 1
     Given default
+    And I have group 'developers' with assigned role 'developer'
+    And I have group 'testers' with assigned role 'tester'
+    And I have group 'developers' with assigned user 'user'
+    And I have group 'testers' with assigned user 'user'
+    When I disable group 'developers'
+    Then I should get user 'user' with 1 joined role(s)
+
+  Scenario: Disabled group roles are not included into user joined roles, part 2
+    Given default
+    And I have user 'user' with assigned role 'root'
+    And I have group 'developers' with assigned role 'developer'
+    And I have group 'testers' with assigned role 'tester'
+    And I have group 'developers' with assigned user 'user'
+    And I have group 'testers' with assigned user 'user'
+    When I disable group 'developers'
+    Then I should get user 'user' with 2 joined role(s)

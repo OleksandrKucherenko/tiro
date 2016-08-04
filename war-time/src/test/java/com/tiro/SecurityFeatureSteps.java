@@ -454,7 +454,18 @@ public class SecurityFeatureSteps {
     final Set<User> users = dao.findAllEnabled();
 
     assertThat(users).isNotNull().hasSize(size);
-  }  //endregion
+  }
+
+  @Then("^I should get user '([^']*)' with (\\d+) joined role\\(s\\)$")
+  public void validate_user_joined_roles(final String userName, final int size) throws CoreException {
+    final UserDao dao = DaoFactory.get(mEm, UserDao.class);
+    final User user = dao.findByNickname(userName);
+
+    assertThat(user).isNotNull();
+    assertThat(user.getJoinedRoles()).hasSize(size);
+
+  }
+  //endregion
 
   //region Nested declarations
   static class NameEmail {

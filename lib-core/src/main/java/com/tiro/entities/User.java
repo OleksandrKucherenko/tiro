@@ -81,6 +81,7 @@ public class User extends BaseEntity implements UserColumns {
         ", email='" + email + '\'' +
         ", roles=" + roles.size() +
         ", groups=" + groups.size() +
+        ", disabled=" + disabled +
         super.toString() + "}";
   }
 
@@ -111,6 +112,7 @@ public class User extends BaseEntity implements UserColumns {
   @Nonnull
   public Set<Role> getGroupsRoles() {
     return getGroups().stream()
+        .filter(g -> !g.isDisabled())
         .flatMap(g -> g.getRoles().stream())
         .collect(Collectors.toSet());
   }
