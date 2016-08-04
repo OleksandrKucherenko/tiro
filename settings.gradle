@@ -1,4 +1,5 @@
 // JAR libraries
+include ':lib-sqlite-dialect'
 include ':lib-core'
 
 // WAR packages

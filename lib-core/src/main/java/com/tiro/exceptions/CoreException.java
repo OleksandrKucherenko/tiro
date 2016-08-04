@@ -15,6 +15,8 @@ public abstract class CoreException extends Exception {
   /** Wrap system exception into our managed exceptions. */
   public static CoreException wrap(@Nonnull final Throwable exception) {
     return new CoreException(exception) {
+      /** Serialization unique id. */
+      private static final long serialVersionUID = -5432838992434317835L;
     };
   }
 }

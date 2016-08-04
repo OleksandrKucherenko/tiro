@@ -24,7 +24,10 @@ public class Group extends BaseEntity implements GroupColumns {
   @Column(name = ID) private long _id;
 
   /** Group name. */
-  @Column(name = NAME) private String name;
+  @Column(name = NAME, unique = true) private String name;
+
+  /** Is group disabled or not. */
+  @Column(name = DISABLED) private boolean disabled;
 
   /** Get a list of roles assigned to this group. */
   @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -42,7 +45,7 @@ public class Group extends BaseEntity implements GroupColumns {
 
   /** private constructor. Required by JPA. */
   @SuppressWarnings({"unused"})
-  private Group() {
+  protected Group() {
   }
 
   public Group(@Nonnull final String name) {
@@ -77,6 +80,29 @@ public class Group extends BaseEntity implements GroupColumns {
   }
 
   @Nonnull
+  public String getName() {
+    return name;
+  }
+
+  public boolean isDisabled() {
+    return disabled;
+  }
+
+  public void setDisabled(boolean disable) {
+    disabled = disable;
+  }
+
+  @Nonnull
+  public Set<User> getUsers() {
+    return this.users;
+  }
+
+  @Nonnull
+  public Set<Role> getRoles() {
+    return this.roles;
+  }
+
+  @Nonnull
   public Group addRole(@Nonnull final Role role) {
     this.roles.add(role);
 
@@ -93,15 +119,5 @@ public class Group extends BaseEntity implements GroupColumns {
     user.getGroups().add(this);
 
     return this;
-  }
-
-  @Nonnull
-  public Set<User> getUsers() {
-    return this.users;
-  }
-
-  @Nonnull
-  public Set<Role> getRoles() {
-    return this.roles;
   }
 }

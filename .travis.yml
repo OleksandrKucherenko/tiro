@@ -24,7 +24,7 @@ env:
   - secure: ZReyZg422NuaGT89ho+/NuUBdxHT7wm55PQGd4yS6dG6WIzg49pKr3tIJjjLjWhDONSoui/Ru/U0A7zbhfwzoyle2nXyEz2Fqa80KqYJ3gPGnwjFtwYm3r8U+YKsyZ+jr0ij9kfASNrtZRWnfzEvTJ98OfRuT4jyXaylR7HafS818n+Pxj6aE8ktSKRmNI+/+J55sBv6lG32bUnIY74RXPs7og5pJ1iHfPV/YKONfu8PXFFjlqoqPsXM19rTneBCE8lRCYhtYnp0fdQxZ2nP9PfFKixEKiYjvc8cYdQ/+lKK3NHPMw7pvH41wZS/8ntoxrk70Itj9gg32hCA5mffvcZCMwtmAa1ycRAwoQDPIYo2XhfL0xmIwgDYFq+yp7hwZcNl6a+C1oeP1IFmVTHwlb5vX9k48KoGqBqE2mtHhLQ6KpS29IVswtA2SvT6b0WTHzWqe+3cwGJgahV7u5dpFGvJsIrlWziEhyps5XqJx+AE/PiFbF+ySFBTzaWdVxoLd+kM9yltMgwTOxxllRMH5eckIN8U2Qd0Qz5LBxzRi6JSI63Uv9JdiVxglNkY3jhfcCTKJWJo8FldbeVt28/OjmcVSGK9ly9QqbDtY+twxy/glukr/Eem2VeLyBxv3viTFl3fbQJBlFlr5+/P5dwwPUpH9fk6xXPlQETSbvX2B7M=
 
 script:
-  - ./gradlew clean jacoco buildProduct
+  - ./gradlew test jacocoTestReport buildProduct
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

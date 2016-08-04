@@ -7,4 +7,6 @@ public interface UserColumns extends BaseColumns {
   String NICKNAME = "nickName";
 
   String EMAIL = "email";
+
+  String DISABLED = "is_disabled";
 }

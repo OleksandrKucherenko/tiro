@@ -21,7 +21,7 @@ public class Role extends BaseEntity implements RoleColumns {
   @Id @GeneratedValue(strategy = IDENTITY)
   @Column(name = ID) private long _id;
   /** User friendly name of the Role. */
-  @Column(name = NAME) private String name;
+  @Column(name = NAME, unique = true) private String name;
   /** User friendly description of the Role purpose. */
   @Column(name = INFO) private String info = "";
   /** Groups that use the role. For easier many-to-many resolving. */
@@ -33,7 +33,7 @@ public class Role extends BaseEntity implements RoleColumns {
 
   /** Hidden constructor. Required by JPA. */
   @SuppressWarnings({"unused"})
-  private Role() {
+  protected Role() {
   }
 
   @Override

@@ -25,10 +25,13 @@ public class User extends BaseEntity implements UserColumns {
   @Column(name = ID) private long _id;
 
   /** User nick name. */
-  @Column(name = NICKNAME) private String nickName;
+  @Column(name = NICKNAME, unique = true) private String nickName;
 
   /** User email address. */
-  @Column(name = EMAIL) private String email;
+  @Column(name = EMAIL, unique = true) private String email;
+
+  /** Is user disabled or not. */
+  @Column(name = DISABLED) private boolean disabled;
 
   /** Get the list of roles associated directly with a user. */
   @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -43,12 +46,7 @@ public class User extends BaseEntity implements UserColumns {
 
   /** Hidden constructor. Required by JPA. */
   @SuppressWarnings({"unused"})
-  private User() {
-  }
-
-  @Override
-  public long getId() {
-    return _id;
+  protected User() {
   }
 
   public User(@Nonnull final String email, @Nonnull final String name) {
@@ -56,6 +54,23 @@ public class User extends BaseEntity implements UserColumns {
 
     this.nickName = name;
     this.email = email;
+  }
+
+  @Override
+  public long getId() {
+    return _id;
+  }
+
+  public String getNickName() {
+    return nickName;
+  }
+
+  public boolean isDisabled() {
+    return disabled;
+  }
+
+  public void setDisabled(boolean disable) {
+    disabled = disable;
   }
 
   @Override

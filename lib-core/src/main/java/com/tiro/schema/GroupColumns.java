@@ -5,4 +5,6 @@ public interface GroupColumns extends BaseColumns {
   String ID = "group_id";
 
   String NAME = "group_name";
+
+  String DISABLED = "is_disabled";
 }

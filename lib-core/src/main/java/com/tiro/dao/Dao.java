@@ -1,6 +1,7 @@
 package com.tiro.dao;
 
 import com.tiro.entities.BaseEntity;
+import com.tiro.exceptions.CoreException;
 
 import javax.annotation.Nonnull;
 
@@ -17,7 +18,7 @@ import javax.annotation.Nonnull;
  */
 public interface Dao {
   /** Force instance of DAO class do persistence of the entities to storage/DB. */
-  void forcedPersist();
+  void forcedPersist() throws CoreException;
 
   /**
    * Attach entity to persistence context.

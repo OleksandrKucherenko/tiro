@@ -31,7 +31,7 @@ public class UserDaoTest extends BaseDatabaseTest {
     mDao.include(newUser);
     mDao.forcedPersist();
 
-    final User user = mDao.findUser(1L);
+    final User user = mDao.findById(1L);
 
     assertThat(user).isNotNull();
   }
@@ -39,7 +39,7 @@ public class UserDaoTest extends BaseDatabaseTest {
   @Test
   public void testFindByIdNonExistingUser() throws Exception {
     assertThatThrownBy(() -> {
-      mDao.findUser(-1L);
+      mDao.findById(-1L);
     }).isInstanceOf(CoreException.class);
   }
 }
