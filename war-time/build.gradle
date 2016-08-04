@@ -66,6 +66,19 @@ if (useJacoco) {
   jacoco {
     toolVersion = '+'
   }
+
+  test {
+    jacoco {
+      // change extension from *.exec to *.ec, otherwise codecov.io will not find the results
+      destinationFile = file("$rootProject.buildDir/jacoco/war-time-jacoco.ec")
+    }
+  }
+
+  jacocoTestReport {
+    reports {
+      xml.enabled true
+    }
+  }
 }
 
 test {
