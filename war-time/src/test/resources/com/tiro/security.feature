@@ -1,4 +1,5 @@
 # language: en
+# noinspection CucumberUndefinedStep
 Feature: Security
 
   Allows to define Roles, Groups and Users.
@@ -122,7 +123,6 @@ Feature: Security
     Then I should get 1 disabled group(s)
     And I should get 3 enabled group(s)
 
-  # First scenario that can compromise the architecture/implementation
   Scenario: Disabled group roles are not included into user joined roles, part 1
     Given default
     And I have group 'developers' with assigned role 'developer'

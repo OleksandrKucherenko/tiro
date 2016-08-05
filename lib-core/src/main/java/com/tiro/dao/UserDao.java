@@ -68,13 +68,7 @@ public class UserDao extends BasicDao {
   /** Find User by it email address. */
   @Nonnull
   public User findByEmail(final String userEmail) throws CoreException {
-    final CriteriaBuilder builder = mEm.getCriteriaBuilder();
-    final CriteriaQuery<User> criteria = builder.createQuery(User.class);
-    final Root<User> u = criteria.from(User.class);
-    final Path<String> columnEmail = u.get(User.EMAIL);
-
-    final TypedQuery<User> query = mEm.createQuery(criteria.select(u).where(builder.equal(columnEmail, userEmail)));
-    final User user = query.getSingleResult();
+    final User user = queryFindByEmail(userEmail).getSingleResult();
 
     if (null == user)
       throw CoreException.wrap(new Exception("User not found."));
@@ -170,8 +164,18 @@ public class UserDao extends BasicDao {
     final CriteriaBuilder builder = mEm.getCriteriaBuilder();
     final CriteriaQuery<User> criteria = builder.createQuery(User.class);
     final Root<User> u = criteria.from(User.class);
-    final Path<String> columnNickname = u.get(getFieldNameByColumnName(User.DISABLED, User.class));
+    final Path<Boolean> columnNickname = u.get(getFieldNameByColumnName(User.DISABLED, User.class));
 
     return mEm.createQuery(criteria.select(u).where(builder.equal(columnNickname, disabled)));
+  }
+
+  /** Compose query for finding user by email column. */
+  private TypedQuery<User> queryFindByEmail(String userEmail) throws CoreException {
+    final CriteriaBuilder builder = mEm.getCriteriaBuilder();
+    final CriteriaQuery<User> criteria = builder.createQuery(User.class);
+    final Root<User> u = criteria.from(User.class);
+    final Path<String> columnEmail = u.get(getFieldNameByColumnName(User.EMAIL, User.class));
+
+    return mEm.createQuery(criteria.select(u).where(builder.equal(columnEmail, userEmail)));
   }
 }

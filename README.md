@@ -4,7 +4,7 @@
 
 Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
 
-[![Build Status][1]][2] [![codecov][3]][4] [![Code Climate][5]][6]
+[![Build Status][1]][2] [![codecov][3]][4] [![codebeat badge][9]][10]
 
 
 ## Purposes
@@ -147,3 +147,5 @@ _Alternative to Gretty: [Spring Boost](http://projects.spring.io/spring-boot/)_
 [6]: https://codeclimate.com/github/OleksandrKucherenko/tiro
 [7]: https://badges.gitter.im/OleksandrKucherenko/tiro.svg
 [8]: https://gitter.im/OleksandrKucherenko/tiro?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+[9]: https://codebeat.co/badges/72fcce0d-d3da-4b32-8e62-7f524e5be27a
+[10]: https://codebeat.co/projects/github-com-oleksandrkucherenko-tiro
