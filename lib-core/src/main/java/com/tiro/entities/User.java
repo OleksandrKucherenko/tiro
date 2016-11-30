@@ -3,6 +3,7 @@ package com.tiro.entities;
 import com.tiro.schema.RoleColumns;
 import com.tiro.schema.Tables;
 import com.tiro.schema.UserColumns;
+import org.hibernate.annotations.SQLDelete;
 
 import javax.annotation.Nonnull;
 import javax.persistence.*;
@@ -16,13 +17,17 @@ import static javax.persistence.GenerationType.IDENTITY;
 /** User entity. */
 @Entity
 @Table(name = Tables.USERS)
+@SQLDelete(sql = "UPDATE " + Tables.USERS +
+    " SET " + UserColumns.DISABLED + " = 1" +
+    " WHERE " + UserColumns.ID + " = ?" +
+    " AND " + UserColumns.NICKNAME + " = ?" +
+    " AND " + UserColumns.EMAIL + " = ? ")
 public class User extends BaseEntity implements UserColumns {
   /** Serialization unique identifier. */
   private static final long serialVersionUID = -4479053420502713622L;
 
   /** Unique identifier, */
-  @Id @GeneratedValue(strategy = IDENTITY)
-  @Column(name = ID) private long _id;
+  @Id @GeneratedValue(strategy = IDENTITY) @Column(name = ID) private long _id;
 
   /** User nick name. */
   @Column(name = NICKNAME, unique = true) private String nickName;

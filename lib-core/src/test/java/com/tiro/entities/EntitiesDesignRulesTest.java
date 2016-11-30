@@ -2,6 +2,7 @@ package com.tiro.entities;
 
 import com.tiro.BaseDatabaseTest;
 import com.tiro.Categories.DesignRules;
+import org.hibernate.annotations.SQLDelete;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -9,16 +10,21 @@ import org.junit.runners.JUnit4;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.reflections.ReflectionUtils;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.metamodel.Type;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.reflections.ReflectionUtils.getFields;
+import static org.reflections.ReflectionUtils.withAnnotation;
 
 /** Unit test that confirms registration of all entities in JPA. */
 @RunWith(JUnit4.class)
@@ -69,12 +75,12 @@ public class EntitiesDesignRulesTest extends BaseDatabaseTest {
 
   /** All entities should implement 'private static final long serialVersionUID'. */
   @Test
-  public void testSerialVersionUIDExists() {
+  public void testSerialVersionUIDExists() throws Exception {
     final Set<Class<?>> types = getReflections().getTypesAnnotatedWith(Entity.class);
 
     types.forEach(t -> {
       // check that field exists
-      final Set<Field> fields = ReflectionUtils.getFields(t, f -> "serialVersionUID".equals(f.getName()));
+      final Set<Field> fields = getFields(t, f -> "serialVersionUID".equals(f.getName()));
 
       assertThat(fields)
           .withFailMessage("Expected serialVersionUID in class: %s", t.getName())
@@ -84,13 +90,13 @@ public class EntitiesDesignRulesTest extends BaseDatabaseTest {
 
   /** All entities should implement 'private static final long serialVersionUID'. */
   @Test
-  public void testSerialVersionUIDIsUnique() {
+  public void testSerialVersionUIDIsUnique() throws Exception {
     final Set<Class<?>> types = getReflections().getTypesAnnotatedWith(Entity.class);
     final Set<Long> unique = new HashSet<>();
 
     // check unique value of serialization version UID
     types.forEach(t -> {
-      ReflectionUtils.getFields(t, f -> "serialVersionUID".equals(f.getName()))
+      getFields(t, f -> "serialVersionUID".equals(f.getName()))
           .forEach(f -> {
             final long value = safeGetLong(f);
             _log.info("found: {}, serialVersionUID = {}L", t.getName(), value);
@@ -105,6 +111,7 @@ public class EntitiesDesignRulesTest extends BaseDatabaseTest {
     });
   }
 
+  /**  */
   @Test
   public void testTimestamps() throws Exception {
     final long created, start = System.nanoTime();
@@ -136,6 +143,39 @@ public class EntitiesDesignRulesTest extends BaseDatabaseTest {
     // do some pretty time printing
     final PrettyTime pt = new PrettyTime(new Date(TimeUnit.NANOSECONDS.toMillis(start)));
     _log.info("ROLE deleted {}", pt.format(new Date(TimeUnit.NANOSECONDS.toMillis(roleTest.getTimeDeleted()))));
+  }
+
+  /** 'Soft Delete' feature is very specific, SQL should contains a specific number of parameters. */
+  @Test
+  public void testConfirmSqlDeleteParametersNumber() throws Exception {
+    final Set<Class<?>> types = getReflections().getTypesAnnotatedWith(SQLDelete.class);
+
+    types.forEach(t -> {
+      final SQLDelete delete = t.getAnnotation(SQLDelete.class);
+      final Set<Field> fields = getFields(t, withAnnotation(Column.class));
+      final Set<Field> fieldsIds = getFields(t, withAnnotation(Id.class), withAnnotation(Column.class));
+
+      // extract column definition for all @Id annotated fields
+      final Set<Column> ids = fieldsIds.stream()
+          .map(f -> f.getAnnotation(Column.class))
+          .collect(Collectors.toSet());
+
+      // extract all columns that should take action in sql delete query (composite key)
+      final Set<Column> columns = fields
+          .stream()
+          .map(f -> f.getAnnotation(Column.class))
+          .filter(c -> c.unique() || ids.contains(c))
+          .collect(Collectors.toSet());
+
+      long totalParameters = Arrays.stream(delete.sql().split("\\?")).count();
+
+      // check that number of parameters is matching
+      assertThat(totalParameters).isGreaterThanOrEqualTo(columns.size()).isLessThan(columns.size() + 2);
+
+      // check that all needed columns are in SQL
+      columns.forEach(c -> assertThat(delete.sql()).contains(c.name()));
+    });
+
   }
 
   private static long safeGetLong(final Field f) {

@@ -4,7 +4,13 @@
 ::
 SET ScriptPath="%~dp0"
 call :DeQuote ScriptPath
-SET CURL="%ScriptPath%..\tools\win\curl.exe"
+`
+
+:: update PATH variable by own folder with binaries
+SET mypath=%~dp0
+SET "PATH=%mypath:~0,-1%\..\tools\win;%PATH%;"
+
+SET CURL="curl.exe"
 SET CallParams=-i --connect-timeout 1 --max-time 5
 
 :: get version of the API
