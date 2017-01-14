@@ -89,16 +89,23 @@ Simplest Java Web Application, Gradle + Jetty + EAR + WAR + JPA + RESTfull
 - Run unit tests: ```./gradlew test```
 - jUnit tests for low-level system tests (frameworks integration)
 - Cucumber for high-level business rules
-  ![Run All Tests](_documentation_/intellij-testing-configuration.png)
+
+![Run All Tests](_documentation_/intellij-testing-configuration.png)
+
+_Notes: try to add `-noverify` flag into VM options for preventing JVM code
+verification errors of Mockito/Asm libraries._
 
 ## Debugging
 
 - Attach Intellij debugger to port 5005 (default port)
     - do configuration according to images:
+
     ![Remote Debugger](_documentation_/intellij-remote-debug-configuration.png)
+
     ![Port Waiter](_documentation_/intellij-port-waiter-tool.png)
 - Run the configuration in IntelliJ
 - Run in terminal ```./gradlew farmRunDebugServer```
+
     ![Console Output](_documentation_/intellij-console-output.png)
 
 ### What happens? How it works?

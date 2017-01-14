@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /** Implementation of steps used for testing scenarios. */
 @SuppressWarnings({"unused"})
@@ -214,7 +214,7 @@ public class SecurityFeatureSteps {
   @When("^I duplicate '([^']*)' with new name '([^']*)'$")
   public void duplicate_group(final String groupName, final String newName) {
     final Group group = mGroups.get(groupName);
-    final GroupDao dao = DaoFactory.get(null, GroupDao.class);
+    final GroupDao dao = DaoFactory.get(mEm, GroupDao.class);
 
     mGroups.put(newName, dao.duplicate(group, newName));
   }

@@ -22,10 +22,18 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /** Jersey API testing for class {@link SecurityRestServiceV1}. */
 public class SecurityRestServiceV1ApiTest extends TiroJerseyTest {
+
+  private static final TypeReference<List<Role>> sTypeListRole = new TypeReference<List<Role>>() {
+  };
+  private static final TypeReference<List<User>> sTypeListUser = new TypeReference<List<User>>() {
+  };
+  private static final TypeReference<List<Group>> sTypeListGroup = new TypeReference<List<Group>>() {
+  };
 
   private static class EmFactory extends AbstractBinder implements Factory<EntityManager> {
 
@@ -83,8 +91,7 @@ public class SecurityRestServiceV1ApiTest extends TiroJerseyTest {
 
     assertThat(json).isNotEmpty();
 
-    final List<Role> roles = JsonBinding.fromJson(json, new TypeReference<List<Role>>() {
-    });
+    final List<Role> roles = JsonBinding.fromJson(json, sTypeListRole);
 
     assertThat(roles).isNotEmpty();
 
@@ -97,8 +104,7 @@ public class SecurityRestServiceV1ApiTest extends TiroJerseyTest {
 
     assertThat(json).isNotEmpty();
 
-    final List<User> users = JsonBinding.fromJson(json, new TypeReference<List<User>>() {
-    });
+    final List<User> users = JsonBinding.fromJson(json, sTypeListUser);
 
     assertThat(users).isNotEmpty();
 
@@ -111,8 +117,7 @@ public class SecurityRestServiceV1ApiTest extends TiroJerseyTest {
 
     assertThat(json).isNotEmpty();
 
-    final List<Group> groups = JsonBinding.fromJson(json, new TypeReference<List<Group>>() {
-    });
+    final List<Group> groups = JsonBinding.fromJson(json, sTypeListGroup);
 
     assertThat(groups).isNotEmpty();
 

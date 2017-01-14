@@ -69,6 +69,7 @@ public abstract class BaseEntity implements BaseColumns, DbEntity {
   }
 
   /** Utility class that updates timestamps of the entities during the Update/Delete operations. */
+  @SuppressWarnings("WeakerAccess")
   public static class Timestamps {
 
     @PrePersist

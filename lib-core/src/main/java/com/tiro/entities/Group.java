@@ -4,6 +4,7 @@ import com.tiro.schema.GroupColumns;
 import com.tiro.schema.RoleColumns;
 import com.tiro.schema.Tables;
 import com.tiro.schema.UserColumns;
+import org.hibernate.annotations.SQLDelete;
 
 import javax.annotation.Nonnull;
 import javax.persistence.*;
@@ -15,6 +16,10 @@ import static javax.persistence.GenerationType.IDENTITY;
 /** Security Group. */
 @Entity
 @Table(name = Tables.GROUPS)
+@SQLDelete(sql = "UPDATE " + Tables.GROUPS +
+    " SET " + GroupColumns.DISABLED + " = 1" +
+    " WHERE " + GroupColumns.ID + " = ?" +
+    " AND " + GroupColumns.NAME + " = ?")
 public class Group extends BaseEntity implements GroupColumns {
   /** Serialization unique identifier. */
   private static final long serialVersionUID = -8271144716636578493L;

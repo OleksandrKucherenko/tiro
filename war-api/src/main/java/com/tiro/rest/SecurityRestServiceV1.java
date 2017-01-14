@@ -11,6 +11,7 @@ import com.tiro.entities.Role;
 import com.tiro.entities.User;
 
 import javax.annotation.Nonnull;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -31,7 +32,7 @@ import java.util.List;
 public class SecurityRestServiceV1 implements SvcVersioning {
 
   /** Get the reference on Entity manager */
-//  @Inject
+  @Inject
   private EntityManager mEm;
 
   @Nonnull
