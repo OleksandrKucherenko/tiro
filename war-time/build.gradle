@@ -51,7 +51,7 @@ dependencies {
 
     /* Cucumber */
     testCompile 'info.cukes:cucumber-junit:+',
-        'info.cukes:cucumber-java8:+'
+        'info.cukes:cucumber-java:+'
   }
 }
 

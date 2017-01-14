@@ -134,7 +134,12 @@ gretty {
   /* Jetty v9.3 requires proper configuration for making possible JSP running.
       Take a look into 'allprojects' scope upper. */
   servletContainer 'jetty9'
-  serverConfigFile "${rootProject.projectDir}/gradle/configuration/jetty.xml"
+
+  /* Configurations of servers: http://akhikhl.github.io/gretty-doc/jetty.xml-support.html */
+  serverConfigFile "${rootProject.projectDir}/gradle/configuration/" /* jetty9.xml */
+
+  /* Configurations of servers: http://akhikhl.github.io/gretty-doc/jetty-env.xml-support.html */
+  contextConfigFile "${rootProject.projectDir}/gradle/configuration/" /* jetty9-env.xml */
 
   /* Tomcat8 is properly configured for JSP from the beginning, just run and enjoy! */
   //  servletContainer 'tomcat8'
